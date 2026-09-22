@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to CHEM 101, Elements of General Chemistry I. I am truly glad you're here. Whether you are preparing for a career in nursing, haven't touched a science textbook since middle school, or just need a solid refresher before diving into General Chemistry, you are in the right place. My goal is to make this feel manageable, so we are going to build your knowledge piece by piece. We'll start today with the most fundamental question of all: what exactly is chemistry, and how do scientists actually go about studying it? Chemistry is essentially the study of matter and how it changes, and it's the foundation for almost everything in the healthcare field. By the end of this first lecture, you'll have a clear sense of what chemistry covers and why it matters so much for your future professional work. We will also touch on the history of the field and explore the scientific method. Think of the scientific method as a reliable roadmap; it's the structured way we ask questions and find dependable answers about the natural world around us. I'm excited to start this journey with you, so let's jump in and get started with our first topic."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome everyone! Before we dive into the deep end, let\u2019s walk through our roadmap for today. We'll start by defining what chemistry actually is. More importantly, we\u2019ll discuss why this subject is a cornerstone for those of you heading into healthcare careers. Whether you're going into nursing or radiology, chemistry is the language of how the body functions. From there, we'll take a brief tour through history. We'll see how we moved from the mystical world of ancient alchemy to the rigorous, evidence-based modern science we use today. Next, we are going to slow things down to focus on the scientific method. This isn't just a list of steps for a test; it is the actual framework you will use in every single topic this semester and during your time in the lab. It's all about how we ask questions and prove our answers. Finally, we'll wrap up by reviewing some essential vocabulary. Science can sometimes feel like learning a foreign language, so we'll establish a shared set of terms that you can build on as the course progresses. I want to make sure everyone feels confident with the basics before we move forward. Let's get started!"
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "So, let's start with the basics. When we talk about chemistry, we're really talking about the study of matter. Now, 'matter' sounds like a technical term, but it's actually just anything that has mass and takes up space. That includes the water you drink, the air you breathe, and every single cell in your body. When chemists look at the world, they're essentially asking three big questions. First, what is this substance actually made of? We dive deep into the composition, looking at the atoms and molecules that build everything. Second, what are its properties? This is where we observe how a substance behaves\u2014like how it reacts to heat, pressure, or whether it dissolves in water. Finally, we look at change. We want to know how matter transforms. This could be a physical change, like an ice cube melting into water, or a chemical change, like how your body digests food to create energy. Chemistry is often called the central science because it sits right underneath biology and medicine. Once you understand these three pillars\u2014composition, properties, and change\u2014you have the key to understanding how almost every other science in this college actually works."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, I know some of you might be wondering why a nursing or healthcare student needs a full chemistry course. The truth is, almost everything you will do at the bedside is rooted in chemistry. Think about medications. It isn't just about following a prescription; it\u2019s about understanding drug concentrations and how the body actually absorbs and breaks down those chemicals. You are the final line of defense for your patient, so that foundation is vital.\\n\\nThen we have IV fluids. Managing electrolytes like sodium and potassium is essentially a balancing act of chemical concentrations to keep the heart and brain functioning. Even the way your body maintains a steady blood pH or uses enzymes for metabolism is chemistry in action. When you eventually look at a patient's blood work or diagnostic lab results, you're really looking at a chemical snapshot of their health.\\n\\nMy goal this semester isn't to turn you into professional chemists for the sake of the science itself. Instead, I want to give you the conceptual tools you need now. That way, when you encounter these complex ideas in your advanced clinical courses, they won't feel like a foreign language\u2014they'll feel like common sense."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Now, it's helpful to realize that chemistry isn't just one single subject; it\u2019s more like a tree with several specialized branches. For instance, organic chemistry focuses on carbon-based compounds, which are the building blocks of life and most of our medications. If it isn't carbon-based\u2014like metals, minerals, or salts\u2014it falls under inorganic chemistry. Then we have biochemistry, which zooms in on the specific chemical reactions happening inside living organisms. This is a huge area if any of you are heading into healthcare. If you're more interested in the 'what' and 'how much,' that's analytical chemistry\u2014think of a toxicology screen identifying a specific substance. Physical chemistry is where we blend physics and chemistry to understand the energy driving these behaviors, while environmental chemistry examines the complex systems in our air, water, and soil. You might be wondering where this class fits in. Well, this course is general chemistry, which serves as the foundation for every single one of these disciplines. Whether you want to study medicine, forensics, or ecology, the concepts we master this semester are the essential tools you'll use in all those fields. We'll be borrowing a little bit from each area as we go."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Let\u2019s take a step back for a moment and think about where chemistry actually came from. It\u2019s easy to imagine that this science started in a modern lab with beakers and safety goggles, but it actually began thousands of years ago. It started simply with people observing the world and trying to manipulate the materials around them to see what would happen. We are going to walk through four pivotal moments that turned that basic human curiosity into a formal science. First, we'll explore the age of alchemy, then move to Lavoisier\u2019s law of conservation of mass, followed by Dalton\u2019s atomic theory, and finally, Mendeleev\u2019s periodic table. Now, please don't worry about memorizing specific dates or names for a test right now. That isn't the goal here. What really matters is that you see the narrative\u2014how each discovery acted as a stepping stone, building directly on the one before it. Chemistry is essentially one long, global conversation where each scientist added a new piece to the puzzle. By understanding this evolution, the complex formulas we'll encounter later will actually make a lot more sense because you'll see the logic behind why we think about matter the way we do today."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "To understand where we are today, we have to go back to our roots with alchemy. For thousands of years, across Egypt, China, and the Islamic world, these early practitioners were obsessed with two big goals: turning ordinary metals into gold and discovering an elixir of life to cure all diseases. Now, it's important to realize that alchemy wasn't 'science' in the way we define it now. It was a strange, fascinating blend of early observation and mysticism. They didn't really use a systematic method or testable hypotheses, so a lot of their theories were more like magic than chemistry. However, they weren't just dreaming; they were doing. While their goals were unrealistic, their hands-on experimentation gave us the actual tools we still use in our labs today. Think about distillation, which we use for spirits, extraction, which gives us our morning coffee, and crystallization, which is vital for synthesizing modern medicines. So, while the philosophy of alchemy eventually faded, the practical toolkit they built stayed behind. They essentially laid the groundwork, providing the physical techniques that allowed chemistry to eventually emerge as a rigorous, evidence-based science. It's a great example of how practical trial and error often precedes theoretical understanding."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, let's talk about a major turning point in science: Antoine Lavoisier. Working in the late seventeen hundreds, Lavoisier is often called the father of modern chemistry. Why? Because he insisted on something that earlier alchemists largely ignored: precise measurement. He didn't just observe reactions; he weighed every single substance going in and every single product coming out.\\n\\nThis meticulous approach led him to the Law of Conservation of Mass. Put simply, this means that in a chemical reaction, mass is neither created nor destroyed. It just changes form. If you start with ten grams of material, you must end with ten grams, even if it looks like some of it vanished into the air as a gas.\\n\\nThis discovery was huge because it completely debunked the 'phlogiston theory.' Back then, people believed a mysterious 'fire element' called phlogiston was released during burning. Lavoisier proved that wasn't happening. By focusing on the numbers, he shifted chemistry away from philosophical guesswork and transformed it into a quantitative science. As we move into chemical reactions later this week, keep this law in mind. It is the golden rule for everything we will calculate in this lab."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let's move forward about a decade. An English chemist named John Dalton took those precise measurements from Lavoisier and used them to propose the first formal atomic theory. Dalton suggested that everything in the universe is made of tiny, indivisible particles called atoms. In fact, the word 'atom' comes from the Greek term meaning 'not cuttable.' \\n\\nHe proposed a few key rules: first, that every atom of a specific element is identical to every other atom of that same element. However, if you switch to a different element, those atoms will be different. He also noted that atoms don't just blend randomly; they combine in fixed, whole-number ratios to create compounds. \\n\\nBut here is the most important part: Dalton argued that chemical reactions simply rearrange these atoms. They aren't being created from nothing, and they aren't vanishing into thin air. This is a huge breakthrough because it provides the physical explanation for Lavoisier\u2019s law of conservation of mass. It tells us why the mass stays the same\u2014the pieces are just being shuffled around. We will dive much deeper into the actual structure of the atom when we hit Topic 4, but for now, just focus on this foundational logic."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "To wrap up our history tour, we have to talk about Dmitri Mendeleev. Back in 1869, he took the sixty-three known elements and organized them by their atomic mass. But he noticed something fascinating: the chemical properties of these elements repeated in a predictable cycle. This is actually where we get the term 'periodic.' He arranged them into rows and columns to highlight these patterns, but here is the part that really makes his work a masterpiece. Mendeleev didn't just map what he knew; he deliberately left empty gaps in his table. He was confident that there were elements out there that simply hadn't been discovered yet. He even went a step further and predicted exactly how those missing elements would behave. Years later, when those elements were finally found, they matched his predictions almost perfectly. It is a brilliant example of how science uses patterns to make testable predictions about the unknown. Now, I don't want us to get bogged down in the weeds just yet. We are going to spend a huge chunk of time later this semester\u2014specifically in Topic 5\u2014diving deep into the modern periodic table and the trends it reveals. For now, just appreciate the foresight Mendeleev had."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Think of chemistry not as a list of facts, but as a long, evolving story. It started with alchemy, which was more of an art than a science. While alchemists didn't have a systematic method, they gave us the curiosity and the basic lab tools we still use today. Then came Lavoisier, who shifted the focus to precision. He proved the law of conservation of mass, showing us that matter isn't created or destroyed\u2014it just changes form. Building on that, Dalton introduced the atomic theory, giving us the idea that matter is made of tiny, indivisible units. Finally, Mendeleev took all these elements and organized them into the periodic table, revealing a predictable pattern to the universe. The most important thing to realize here is that none of these breakthroughs happened in a vacuum. Each discovery acted as a stepping stone for the next. Modern chemistry is simply the latest chapter in this ongoing process of refinement. Now that we have a sense of where these big ideas came from, let's shift our focus to the actual engine that drives these discoveries: the scientific method. This is the rigorous process that turns a curious observation into a proven scientific law."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now, we're diving into what is arguably the most important part of today's session. We're talking about the scientific method. Now, I don't want you to think of this as just another chemistry topic to memorize for a test. Instead, think of it as a universal toolkit for curiosity. This is the exact process you'll use in every single lab we do this semester. But more importantly, for those of you heading into nursing or healthcare, this is the foundation of clinical reasoning. Whether you're analyzing a chemical reaction in a beaker or assessing a patient's symptoms in a clinic, you're using this same logical flow to solve a mystery. It's all about observing the world, asking the right questions, and testing your ideas systematically to find the truth. Let's break down exactly how that process works step-by-step."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "So, what exactly is the scientific method? Think of it as a systematic, evidence-based toolkit we use to ask questions about the natural world and actually test the answers. There are three core features that make this process so powerful. First, it\u2019s objective. This means we rely on hard evidence and precise measurements rather than personal opinions, traditions, or assumptions. We let the data do the talking. Next, it has to be repeatable. If a study is designed well, another scientist\u2014whether they are across the hall or across the ocean\u2014should be able to run that same test and get the same result. That\u2019s how we verify the truth. Finally, science is self-correcting. This is a part that sometimes confuses people, but it's vital. When new evidence emerges that contradicts an old conclusion, we don't ignore it; we revise or even throw out the old idea. Now, some people see that as a weakness, but in reality, that is exactly how science is supposed to work. It\u2019s a living process that constantly refines itself to get closer to the truth. It ensures that our understanding of the world evolves as our tools and our evidence improve."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, let's walk through how we actually do science. It all starts with a simple observation\u2014just noticing something interesting in the world around you. That spark of curiosity naturally leads to a question: why is this happening, or how does this work? To answer that, we form a hypothesis. Think of this as an educated guess, but it must be testable. You can't just guess; you have to be able to prove it wrong. Next, we design a controlled experiment. This is where we put that guess to the test under specific conditions to see if it holds up. Once the test is done, we analyze the data. We look at the numbers and the results to see what they're actually telling us. Finally, we reach a conclusion. The evidence might support your idea, or it might tell you that your hypothesis was wrong and needs to be rejected. But here is the most important part: science isn't a straight line from start to finish. It's a loop. Often, a surprising result leads to a brand new observation, which sends you right back to the beginning to start the whole process over again."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let's clear up a few terms that often get mixed up in everyday conversation. First, we have the hypothesis. Think of this as a starting point\u2014a testable, educated guess based on a few observations. It's flexible; if new data comes in, we simply revise it or toss it out. But as we gather massive amounts of evidence from many different experiments, we move toward a scientific theory. In your daily life, you might say, 'I have a theory about why the bus is late,' meaning a hunch. But in this classroom, a theory is a powerhouse. It is a well-substantiated explanation that tells us why something happens. Then we have laws. A law doesn't explain the 'why'; it simply describes what consistently happens, often using a mathematical formula to show a pattern. This is why the phrase 'it's just a theory' is actually a myth. In science, calling something a theory doesn't mean it's a guess\u2014it means it is one of the most reliable, well-supported conclusions we can possibly reach. It's the gold standard of explanation. Keep this distinction in mind as we move forward into our lab work, because precision with these terms is key."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let's make these concepts concrete with a real healthcare example, as this maps directly onto your future work as nurses. Back in the 1840s, a physician named Ignaz Semmelweis noticed something alarming: new mothers on one maternity ward were dying from infections far more often than mothers on a different ward in the same hospital. This observation led to a critical question: why would two wards in one building have such different outcomes? Semmelweis hypothesized that doctors, who performed autopsies earlier in the day, were carrying invisible 'cadaverous particles' on their hands and spreading them to patients. To test this, he designed a simple experiment. He required all doctors to wash their hands with a chlorinated lime solution before examining patients. The results were dramatic. Death rates on that ward plummeted, providing strong evidence that his hypothesis was correct. Today, hand hygiene is a non-negotiable cornerstone of clinical practice. As you follow along, notice how this story perfectly mirrors the scientific method: we start with an observation, move to a question and a hypothesis, test it through an experiment, and reach a conclusion based on the evidence. It is a clear, real-world cycle of scientific discovery."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we wrap up today, let's take a moment to ground ourselves in the core vocabulary. These terms are the foundation you'll need before we dive into Topic 2. We start with chemistry itself\u2014the study of what matter is made of and how it changes. It's helpful to remember that chemistry evolved from alchemy, which was more of a mystical practice than a rigorous science. As we moved toward modern science, we got Dalton\u2019s atomic theory, the idea that everything is made of tiny, indivisible building blocks. This leads us to the law of conservation of mass, which simply means that in a reaction, matter doesn't just vanish or appear out of nowhere; it just changes form. Now, don't confuse your terms when it comes to the scientific method. A hypothesis is your starting point\u2014a testable guess. A law describes a consistent pattern we see, often using math. But a theory is the gold standard; it's a deep explanation backed by a mountain of evidence. All of this is tied together by the scientific method, our systematic way of observing, questioning, and testing the world around us. Take a second to review these, and I'll see you in the next module."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Let's bring everything together. At its heart, chemistry is the study of matter. For those of you heading into health care, this is the foundation for almost everything you'll encounter, from how medications interact with a patient to interpreting critical lab values and understanding how the human body functions at a cellular level. It is important to remember that these concepts didn't appear overnight. They built up over centuries, evolving from early alchemy into the precise science we use today through a series of incremental discoveries and a few massive breakthroughs. The engine driving all that progress is the scientific method. By moving from observation and questioning to hypothesis, experimentation, and analysis, we can objectively test our ideas. This is the exact same process you will rely on in every single lab we do this semester. As you wrap up, please review this lecture alongside your assigned reading to make sure the concepts stick. Next time, we dive into the practical tools of the trade: the metric system, scientific notation, and significant figures. These are the essential measurement tools you'll use for every chemistry calculation moving forward. Thanks for watching, and I will see you in the next lesson."
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
