@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic Six. Now, if you've ever looked at a chemical formula and felt like you were staring at a secret code, you are not alone. Chemistry has its own unique language, and today, we're going to learn how to translate that code. We'll be focusing on the relationship between a chemical name\u2014which is how we describe a substance in words\u2014and its formula, which is the shorthand using symbols and numbers that tells us exactly what atoms are involved. Think of this as learning the grammar of science. By the end of this session, you'll be able to move fluently between these two formats without feeling overwhelmed. Whether you're working through the online modules or reviewing these recordings, just take it one step at a time. Let's dive in and start decoding these formulas together!"
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome to Topic Six! Today, we are tackling one of the most important skills in chemistry: the language of names and formulas. Think of this as learning the grammar of the molecular world. If we can't name a substance correctly, we can't communicate our results or follow a lab protocol. We'll start with ionic compounds, where we distinguish between metals that always have the same charge and those that can shift, along with those larger groups of atoms we call polyatomic ions. Once we have that down, we'll move to nonmetals. These use a different system based on prefixes\u2014like 'di' or 'tri'\u2014to tell us exactly how many atoms are present. We will also cover the specific rules for acids, salts, and hydrates, which are compounds that actually trap water molecules inside their structure. The real goal here is flexibility. I want you to feel comfortable working in both directions: taking a chemical name and translating it into a formula, and then taking a formula and decoding it back into a name. It takes a bit of practice to get the patterns right, but we will walk through plenty of examples together to make sure it clicks."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we spend so much time on these naming rules. In a healthcare setting, a tiny mistake in reading a formula can lead to a serious medication error. Think about the IV bags you'll see in the clinic. They don't just say 'salt water'; they list 'sodium chloride.' If you understand the chemistry, you can instantly verify exactly what is entering a patient's bloodstream. It's the same story with lab panels. When you see reports for bicarbonate or chloride ions, you're seeing the very naming conventions we are practicing right now. Even the common supplements you'll encounter, like ferrous sulfate for iron or calcium carbonate, follow these specific patterns. One detail that often trips people up is the concept of hydrates. Take Epsom salt, which is magnesium sulfate heptahydrate. That 'heptahydrate' part tells us there are seven water molecules attached to the compound. This isn't just a trivia point; those water molecules add actual weight to the powder, which directly affects how the medication is dosed and dispensed. By mastering these formulas, you aren't just passing a chemistry test\u2014you are building a critical safety skill for your entire professional career."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, let's dive into naming ionic compounds. Think of this as a simple matching game between a metal and a nonmetal. We're going to learn how to translate a chemical formula into a clear name, and vice versa. It might feel like a new language at first, but once you see the pattern of how these elements pair up, it becomes second nature. Let's walk through the first few examples together."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "So, what actually happens when an ionic compound forms? Think of it as a trade. We have a metal and a nonmetal, and the metal decides to give away one or more of its electrons to the nonmetal. This transfer changes their identities. The metal becomes a positively charged ion, which we call a cation, and the nonmetal becomes a negatively charged ion, known as an anion. Now, remember that opposites attract. These two ions snap together like powerful magnets, locking into a specific ratio. The goal here is perfect balance; the total positive charges must exactly equal the total negative charges so the overall compound is neutral. It is also a great reminder of the law of conservation of mass\u2014we aren't creating or destroying any electrons here; we are simply moving them from one place to another. When it comes to naming these pairs, we keep it simple: name the cation first, then the anion, but we tweak the ending of the nonmetal to '-ide.' For example, if chlorine is involved, it becomes chloride. We will walk through several practice examples in your upcoming assignments to get this rhythm down, but for now, just focus on that pull between the positive and negative."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let's get into the actual rhythm of naming these binary ionic compounds. When we're dealing with fixed-charge metals, the process is actually very predictable. First, we identify our metal. If it's from Group one, it's always a plus-one charge; Group two is always plus-two, and aluminum is always plus-three. This consistency is great because it means we don't have to guess the charge. Next, we look at the nonmetal. We keep the start of the name but swap the ending to '-ide.' So, chlorine becomes chloride, and oxygen becomes oxide. Think of that '-ide' ending as a signal that says, 'I'm the negative ion here.' Finally, we just put the two names together. The metal always comes first, followed by the nonmetal. One important tip: when writing these names, we leave out the charges and we don't use prefixes like 'di-' or 'tri-.' For example, NaCl is simply sodium chloride. Even with something like aluminum fluoride, where we have three fluorines, we don't say 'trifluoride.' We just say aluminum fluoride. It's a clean, simple system once you get the hang of the pattern. Does that make sense?"
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Now, things get a little trickier when we encounter transition metals. Unlike the metals in groups one or two, these elements are like chemical chameleons\u2014they can carry different charges depending on the compound they're in. Take iron, for example. If we see the formula Fe\u2082O\u2083, we can't just call it 'iron oxide' because that doesn't tell us which version of iron we're dealing with.\\n\\nTo figure this out, we look at the partner first. Oxygen is in group 6A, so it always carries a negative two charge. Since we have three oxygen atoms, that's a total negative charge of six. Because the whole compound must be neutral, our two iron atoms have to balance that out with a total positive charge of six. Divide that by two, and we find that each individual iron ion is actually plus three.\\n\\nTo communicate this clearly, we use Roman numerals in parentheses. So, we call this iron(III) oxide. This is a crucial distinction because it separates this compound from iron(II) oxide, which has a completely different ratio. Just remember: always let the non-metal guide you to the correct charge for the metal."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, let's talk about polyatomic ions. I know that sounds like a mouthful, but it's actually a pretty simple concept. 'Poly' just means many, so a polyatomic ion is essentially a little team of nonmetal atoms that are bonded together. The key thing to remember is that this group carries a net electrical charge and behaves as one single unit. Think of them like a package deal; they move and react together, rather than as individual atoms. One of the best parts about these is that their names are consistent. Unlike some of the other rules we've covered, the name of a polyatomic ion never changes, regardless of what compound it ends up in. This makes your life much easier when we start naming complex molecules. Just memorize the group name and the charge, and you're good to go."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Let\u2019s put these rules into practice with a real example: calcium nitrate. First, we identify our players. We have calcium, which carries a positive two charge, and nitrate, which is a polyatomic ion with a negative one charge. Now, remember that nature loves balance. Since calcium is plus two, a single nitrate isn't enough to neutralize it. We actually need two nitrate ions to cancel out that one calcium ion, bringing the total charge to zero. When we write this out, we have to be careful. Because nitrate is a group of atoms acting as one unit, we wrap it in parentheses before adding the subscript two. This tells anyone reading the formula that we have two entire nitrate groups, not just two oxygen atoms. Finally, let's name it. We simply list the metal and then the polyatomic ion. It\u2019s just calcium nitrate. A common mistake is trying to change the ending to 'nitride,' but remember, polyatomic ions keep their original names exactly as they are. They don't get that '-ide' suffix. Once you get the hang of balancing those charges, these formulas start to feel like a simple puzzle."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, things shift a bit as we move into binary compounds made of two nonmetals. You'll notice that the naming rules we used for metals just don't work here. Because nonmetals can bond in several different combinations, we need a completely new system to keep track of exactly how many atoms of each element are present. Let's dive into how these new naming conventions actually work."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's shift gears. Up until now, we've dealt with ionic bonds where electrons are stolen. But when two nonmetals get together, they don't steal; they share. Because they're sharing, we can't rely on charges to tell us the formula. Instead, we use a simple system of Greek prefixes to describe exactly how many atoms are involved. Think of these prefixes as a counting system that tells you the recipe for the molecule. For the first element, just use its regular name. One quick tip: we never start a name with 'mono-'. If there's only one of the first element, just leave the prefix off entirely. However, the second element is different. It always gets a prefix\u2014even 'mono-'\u2014and we change its ending to '-ide' to show it's the second part of the pair. A great example is carbon monoxide. We don't say 'monocarbon,' just carbon, but we definitely use 'mono-' for the oxygen. It\u2019s a small distinction, but it's the key to being precise in the lab. Once you memorize those few Greek prefixes, naming these compounds becomes like reading a map. You're just counting atoms and following a pattern."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Let\u2019s walk through another example together to make sure these rules feel natural. We have N\u2082O\u2084 here. Since both nitrogen and oxygen are nonmetals, we know we're dealing with a covalent compound, so those Greek prefixes are essential. Starting with the first element, we see two nitrogen atoms. That gives us 'dinitrogen.' A quick tip here: always keep that prefix if there is more than one atom of the first element. Don't let it slip away! Now, moving to the second element, we have four oxygen atoms. Normally, the prefix for four is 'tetra,' but when it sits right next to 'oxide,' which starts with a vowel, we drop the 'a' to make it flow better. It becomes 'tetroxide' instead of 'tetraoxide.' It\u2019s just a small tweak for easier pronunciation. When we put those two pieces together, we get dinitrogen tetroxide. It might feel like a lot of tiny rules at first, but once you spot the patterns, it becomes second nature. Take a moment to say the name out loud and notice how the prefixes tell you exactly what's happening inside the molecule. Does that sequence make sense to everyone before we move on?"
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, we\u2019re moving into some specialized territory. Up until now, we've focused on standard binary compounds, but chemistry gets a bit more interesting when we deal with acids, salts, and hydrates. These aren't just random categories; they represent specific ways elements interact when they dissolve in water or bond together after a chemical reaction. For instance, when we talk about hydrates, we're looking at compounds that have water molecules physically trapped inside their crystal structure. Each of these groups has its own set of naming rules that might feel a bit different from what we've done so far. Don't let the new terminology intimidate you. We're going to break these down one by one, focusing on the patterns so you can recognize exactly which rule to apply based on the compound's structure. Let's dive into acids first."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, naming acids can feel like learning a secret code at first, but there is actually a very predictable pattern here. Let's start with the simplest ones: binary acids. These are just hydrogen paired with one other nonmetal. For these, we always start with the prefix 'hydro-', add the root of the element, and end with 'ic acid.' So, hydrogen chloride simply becomes hydrochloric acid. It's straightforward. Things get a bit more interesting when we deal with oxyacids, which contain polyatomic ions. The trick here is to look at the ending of that polyatomic ion. If the ion ends in '-ate,' like sulfate, the acid name changes to '-ic acid,' giving us sulfuric acid. Think of it as the 'stronger' sounding ending. However, if the ion ends in '-ite,' like nitrite, the acid name shifts to '-ous acid,' resulting in nitrous acid. A helpful way to remember this is that '-ite' becomes '-ous.' I know it's a lot of suffixes to juggle, but once you identify whether you have a simple nonmetal or a polyatomic ion, the rest is just following the map. Take a moment to practice these transitions in your notes."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Let\u2019s put these rules into practice with a common example: H\u2082SO\u2084. When we break this formula down, we see hydrogen paired with the sulfate ion. Now, the secret to naming acids is all in the ending of that polyatomic ion. Since sulfate ends in '-ate,' we follow our specific naming convention for oxyacids. Think of it as a simple swap: whenever you see an '-ate' ion, it transforms into an '-ic acid' in the final name. So, because we started with sulfate, we change that ending to 'uric acid,' giving us sulfuric acid. It might feel like a lot of memorization at first, but once you spot that '-ate' pattern, the rest falls right into place. Just remember: 'ate' becomes 'ic.' It's a handy shortcut that will save you a lot of time during your lab reports!"
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Now, let's clear up a common misconception about salts. In your kitchen, salt means sodium chloride, but in chemistry, a salt is actually any ionic compound created when an acid and a base neutralize each other. So, whether it's table salt or something more exotic, if it's an ionic compound formed this way, we call it a salt. You name these just like any other ionic compound you've already learned. Next, we have hydrates. Imagine a crystal lattice where water molecules are actually trapped inside the structure. They aren't just wet; the water is chemically built-in. In a formula, we show this with a dot followed by the number of water molecules. For example, if you see a five and a formula for water, that means five water molecules are tucked into every single unit of that salt. To name these, simply name the ionic compound first, then use a Greek prefix to tell us how many water molecules are present. So, for five molecules, we use 'penta,' making it a pentahydrate. It sounds fancy, but it's really just a counting game. Take a moment to look at the copper sulfate example and see how that naming pattern flows."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Now, before we dive into the practice problems, let's get our vocabulary squared away. Chemistry can feel like learning a new language, so think of these terms as your toolkit. First, remember that ionic compounds happen when a metal and nonmetal trade electrons. If an atom loses an electron, it becomes a positive cation; if it gains one, it's a negative anion. Sometimes, a whole group of atoms sticks together and carries a charge\u2014we call those polyatomic ions. They act as one single unit, which is a huge help when balancing equations.\\n\\nWhen we name these, keep an eye on whether it's a binary compound, meaning only two elements are involved. For nonmetals, we use those Greek prefixes\u2014like mono or di\u2014to show exactly how many atoms are present. We also need to distinguish between acids, which release hydrogen ions in water, and salts, which are the ionic results of acid-base reactions. Finally, keep an eye out for hydrates. These are special ionic compounds that actually have water molecules trapped inside their crystal structure. Take a moment to review these terms, as they are the foundation for everything we'll do in the coming week."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Alright, let's take a breath and tie everything together. Naming compounds can feel like learning a new language, but it really comes down to a few consistent patterns. For ionic bonds, remember the simple order: the metal cation always comes first, followed by the nonmetal anion, which we tweak to end in '-ide.' If you're dealing with a transition metal that has multiple possible charges, just pop in a Roman numeral to be specific. Now, polyatomic ions are actually easier because their names stay exactly as they are\u2014no changes needed. When we shift to covalent bonds between two nonmetals, we stop worrying about charges entirely and use those Greek prefixes, like mono- or di-, to tell us exactly how many atoms are present. Once you've mastered these basics, naming acids, salts, and hydrates becomes much more intuitive because they build on these same foundations. You've put in the hard work here, and it's going to pay off. Next time, we move into Topic Seven. We'll start exploring chemical reactions, where we'll learn how to write and balance equations and figure out which substances actually dissolve in water. I'll see you all in the next module!"
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>

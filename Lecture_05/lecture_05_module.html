@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic Five. Up until now, we\u2019ve treated the periodic table mostly as a map to help us find elements, but now we\u2019re going to start treating it like a predictive tool. Instead of just memorizing where things are, we\u2019re going to explore the 'why' behind the arrangement. We'll be diving into periodic trends, which are essentially the patterns that emerge as you move across a row or down a column. By understanding these trends, you can actually predict how an element will behave\u2014like how strongly it holds onto its electrons or how reactive it will be\u2014without even having to look at a data table. It\u2019s almost like learning the secret code of chemistry. I'm excited to walk through this with you, so let's jump in and see what the table is trying to tell us."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome everyone! Today we are diving into the periodic table. Now, it might look like just a big, intimidating grid of letters and numbers, but it is actually a beautifully organized map of the universe. We will start by chatting about the history of the table, specifically how Mendeleev spotted patterns that allowed him to predict elements before they were even discovered. Once we have that context, we will learn how to actually read the map. We will break down the difference between periods and groups and identify the major families of elements. From there, we get into the 'why' behind the layout. We will explore periodic trends, which is just a fancy way of saying we are looking at how things like atomic size and energy shift as you move across or down the table. Finally, we will wrap up with some practical skills. I will show you how to predict the charge an element forms and how to use electron dot notation to visualize those outer electrons. By the end of this session, you will see that the table isn't just a reference sheet\u2014it is a tool that tells you exactly how an element is going to behave."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we spend so much time on these patterns. In healthcare, the periodic table isn't just a chart; it\u2019s a roadmap for how the body functions. Take electrolytes like sodium, potassium, calcium, and magnesium. Because they live in Groups 1 and 2, they behave predictably, forming the specific positive charges your nerves and muscles need to fire correctly. If we understand the group, we understand the chemistry of a heartbeat. We see this same logic with halogens like chlorine and iodine. Their high reactivity makes them perfect for killing microbes, which is why they are staples in surgical scrubs and water treatment. But chemistry also warns us about danger. Heavy metals like lead and mercury sit low on the table, and their specific positions explain why they are so toxic to human organs. Finally, we have to consider drug absorption. Whether a medication is charged or neutral at your body's pH determines if it can slip through a cell membrane or get blocked. By mastering these periodic properties, you aren't just memorizing elements\u2014you're learning how to predict how a patient's body will react to a treatment or a toxin."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, when we talk about the periodic table, Dmitri Mendeleev usually gets the spotlight. But it's important to remember that science is rarely a solo act. Mendeleev was building on the work of other chemists who noticed patterns in how elements behaved, and he spent years refining his ideas through trial and error. Even then, his original version wasn't the final word. He organized elements by atomic mass, but as we'll discover, that led to some confusing contradictions. It took later discoveries about the nucleus and protons to truly unlock the logic of the table we use in lab today. Think of the periodic table not as a static map, but as a living document that evolved as our understanding of the atom grew. It\u2019s a great example of how scientific theories are constantly polished and improved over time."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Think of the periodic table not as a static chart, but as a puzzle that took nearly a century to solve. Early chemists noticed patterns, like D\u00f6bereiner, who found groups of three elements with similar traits. Then Newlands noticed a musical quality to the elements, where properties seemed to repeat every eighth element. It was a great start, but it didn't quite fit everything. Enter Mendeleev. He was the real game-changer because he realized that if the pattern didn't fit, the element might not have been discovered yet. He actually left blank spaces in his table, predicting elements that didn't even exist to the public yet. However, Mendeleev based his order on atomic mass, which caused a few confusing glitches. That\u2019s where Moseley comes in. In 1913, he discovered that the true organizing principle isn't mass, but the atomic number\u2014the number of protons in the nucleus. This one correction fixed those glitches and gave us the Modern Periodic Law. Now we know that when we arrange elements by increasing atomic number, their chemical and physical properties repeat in a predictable cycle. This predictability is exactly why the table is such a powerful tool for us in the lab."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, when you first glance at the periodic table, it might just look like a giant, confusing grid of boxes. But here is the secret: the layout is actually a sophisticated map. Nothing is placed there by accident. The specific row and column an element occupies isn't just for organization; it actually encodes the element's entire personality. By simply knowing where an element sits, we can predict its internal structure\u2014like how its electrons are arranged\u2014and how it will behave when it reacts with other elements. Think of it as a cheat sheet for chemistry. Instead of memorizing every single element individually, we can use the table's geography to spot patterns. As we move forward, we'll learn how to read these patterns to understand why some elements are aggressive and reactive, while others are perfectly content to stay stable."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Now, let's get a feel for how the periodic table is actually organized, because it isn't random\u2014it's a map. First, we have the horizontal rows called periods. As you move from left to right across a period, the atom simply adds one proton and one electron. This gradual change is why the properties shift slowly as you move across. Then, we have the vertical columns, which we call groups. These are really the 'families' of the table. Elements in the same group share the same number of valence electrons, which means they tend to react and behave in very similar ways. You'll notice the table is split into the main groups and the transition metals in the center. Finally, let's look at the big divide. On the left, we have the metals\u2014think shiny and conductive. On the right, we have the nonmetals, which are typically brittle. Separating them is that zig-zag staircase of metalloids. I like to call these the 'semi-metals.' They have a bit of both personalities, which is exactly why they are so incredibly important for the electronics we use every day, like the chips in your smartphone. It's all about where they sit on the map."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, let's get familiar with a few specific neighborhoods on the periodic table. First, we have the Alkali Metals in Group one. These are the high-energy personalities of the chemistry world. Because they have just one valence electron, they are desperate to get rid of it, which is why they react so violently when they touch water. Right next door are the Alkaline Earth Metals. They're still very reactive, but since they have two valence electrons to manage, they're a bit more stable than their neighbors. Moving across to the other side, we find the Halogens. I like to think of these as the 'salt-formers.' They have seven valence electrons, meaning they are just one tiny step away from a full shell, making them incredibly aggressive nonmetals. Finally, we reach the Noble Gases. These elements are the gold standard of stability. Because their outer shells are completely full, they don't feel the need to react with anyone or anything. They're perfectly content staying solitary. As you study these, try to notice the pattern: the closer an element is to having a full shell, the more it's going to drive its chemical behavior. Does that connection make sense?"
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let's talk about the 'big picture' of the periodic table. It isn't just a random list; it's actually a map. When we talk about periodic trends, we're looking for patterns in how elements behave based on where they live. For example, if you move from left to right or top to bottom, things like atomic size and reactivity change in very predictable ways. Think of it like a gradient. As we shift positions, the pull between the nucleus and the electrons changes, which fundamentally alters how that atom interacts with others. Understanding these trends is like having a cheat code for chemistry; once you see the pattern, you can predict how an element will react without having to memorize every single detail. Let's dive into the specific forces that drive these changes and see how they play out across the rows."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let\u2019s talk about the actual size of these atoms. It might seem intuitive that adding more particles makes an atom bigger, but chemistry has a few surprises. As we move across a period from left to right, the atoms actually shrink. Why? Because we're adding more protons to the nucleus. This creates a stronger positive charge that acts like a powerful magnet, pulling those outer electrons in tighter toward the center. However, when we move down a group, the atoms get significantly larger. This is because we are adding entirely new energy levels\u2014think of it like adding layers to an onion\u2014which pushes the electrons much further away from the nucleus. This logic also applies to ions. When an atom becomes a cation by losing electrons, it often loses an entire outer shell, making it much smaller than the original neutral atom. On the flip side, anions gain electrons. This creates more negative repulsion, meaning the electrons push away from each other, causing the cloud to expand. So, remember: it's all a tug-of-war between the pull of the nucleus and the space required by the electron shells. Does that distinction between the horizontal and vertical trends make sense to everyone?"
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's talk about ionization energy. In simple terms, this is just the amount of energy it takes to snatch an electron away from a neutral atom. Think of it as a tug-of-war between the nucleus and the electron. As we move across a period from left to right, the nucleus gains more protons, creating a stronger positive pull. This makes the electrons hold on tighter, so the ionization energy increases. It's much harder to pull an electron away when the nucleus has a stronger grip. However, as we move down a group, the opposite happens. The outer electrons are now much farther from the nucleus and are shielded by layers of inner electrons. Because that attraction is weaker, the energy needed to remove an electron drops significantly. This is actually why elements like sodium are so important in medicine. Sodium has a very low ionization energy, meaning it gives up its electron incredibly easily. This is exactly why it forms the reactive positive ions, or cations, that are so critical for the electrical signaling in your body fluids. Understanding this pull helps us predict how these elements will behave in a biological system."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now that we've looked at these properties individually, let's step back and see the big picture. You might notice a really satisfying symmetry emerging here. Essentially, the periodic table has a built-in mirror effect. If a property\u2014like ionization energy or electronegativity\u2014increases as you move from left to right across a period, it will almost always do the exact opposite and decrease as you move down a group. It\u2019s like a balancing act. Why does this happen? It all comes back to the tug-of-war between the nucleus and the outer electrons. As we add more shells of electrons moving down, that distance weakens the pull, reversing the trend we saw across the row. Once you recognize this inverse relationship, you don't have to memorize every single element; you just need to understand the direction of the flow."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let's talk about how atoms actually become ions. Most atoms are striving for stability, which usually means they want a full outer shell of electrons. Think of it as a goal for balance. If an atom only has one or two valence electrons, it's much easier to just give those away than to find six or seven more. When an atom loses a negatively charged electron, it ends up with a positive charge. Conversely, if it's almost full, it will pull electrons in, becoming negatively charged. To visualize this, we use electron dot notation. By placing dots around the element's symbol, we can see exactly how many electrons are in that outer shell. This simple drawing is our roadmap; it tells us exactly how many electrons need to move to reach that stable state and what the resulting charge will be."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, let's talk about how we can actually predict the charge of an ion just by knowing where an element lives on the periodic table. Think of it as a quest for stability. Most atoms just want a full outer shell of electrons. For metals on the left side, it's much easier to just dump their few outer electrons. Since they're losing negative charges, they become positive ions, or cations. If you're in Group 1, you lose one electron to get a plus-one charge; Group 2 becomes plus-two, and so on. It's very straightforward. Nonmetals on the right side do the opposite. They are hungry for electrons to fill those gaps. To figure out their charge, just subtract the group number from eight. For example, Group 7 elements only need one more electron to be complete, so they take one and end up with a minus-one charge. These are our anions. Finally, we have the noble gases. These elements are already perfectly stable with full shells, so they generally don't feel the need to gain or lose anything at all. They're the happy loners of the chemical world, staying neutral and avoiding the drama of bonding."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let's talk about how we actually visualize these valence electrons using Lewis Dot Diagrams. Think of these as a shorthand map for chemists. Instead of drawing every single electron shell, we only care about the outermost layer because those are the only ones that actually do the work during chemical bonding. To figure out how many dots to draw, just look at the group number on your periodic table. For the main group elements, the group number tells you exactly how many valence electrons you have. For example, Sodium is in group one, so it gets one dot. Carbon is in group fourteen, so it gets four. But there is a specific way we place these dots to keep things organized. Imagine the element symbol is a square. You want to place one dot on each of the four sides\u2014top, bottom, left, and right\u2014before you start pairing them up. It\u2019s a bit like people boarding a bus; everyone wants their own seat first before they start sitting next to someone else. Once you've filled all four sides, then you go back and add the second electron to each side. This simple pattern helps us predict how atoms will bond later on."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let\u2019s put this into practice with chlorine. Since chlorine lives in Group 17, we know a neutral atom has seven valence electrons. Now, when we draw this, there is a specific rhythm to follow so we don't get confused. First, imagine the chlorine symbol as a square. We place one single dot on each of the four sides\u2014top, right, bottom, and left. Think of this as giving every side a fair start before we begin pairing them up. Since we've used four dots, we have three left to place. We\u2019ll pair those remaining three onto any of the sides. Once you're finished, you'll notice something very important: one side still has a single, unpaired electron. This isn't a mistake; it's actually the key to chlorine's personality. That one lonely electron is exactly why chlorine is so reactive. It is essentially 'searching' for one more electron to fill that gap and complete its outer shell. In chemistry, achieving a full shell is like finding stability, and chlorine will do almost anything to get that final piece of the puzzle. This drive to complete the set is what fuels the chemical reactions we see in the lab."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we dive into the patterns of the periodic table, let's get our vocabulary squared away. Think of the table as a map. The horizontal rows are called periods, while the vertical columns are groups. Groups are especially important because the elements within them usually share the same number of valence electrons\u2014those are the electrons hanging out in the outermost shell, which basically dictate how an atom behaves. Now, when atoms trade or steal these electrons, they become ions. If an atom loses an electron, it becomes a positively charged cation. If it gains one, it's a negatively charged anion. To understand why this happens, we look at atomic radius\u2014essentially the size of the atom\u2014and ionization energy, which is just the amount of effort or energy required to pull one of those outer electrons away. Finally, we have metalloids. These are the 'middle-ground' elements that don't quite fit the mold of a metal or a nonmetal, acting like a bridge between the two. I know this is a lot of terminology at once, but don't worry. As we move forward, these terms will start to feel like a second language. Just take a breath, and let's keep moving."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "We have covered a lot of ground in this unit. It is fascinating to see how our understanding of the elements evolved, moving from D\u00f6bereiner\u2019s simple triads to Mendeleev\u2019s vision, and finally to the modern periodic law we use today. Remember, the table isn't just a list; it is a map. By knowing if an element is a metal, nonmetal, or metalloid, and identifying its group and period, you can predict its behavior. We saw how atomic radius and ionization energy act like a seesaw\u2014when one goes up, the other typically goes down. This predictability is the real power of chemistry. Plus, by using electron dot notation, you can visualize those valence electrons, which tells you exactly what kind of ion an atom will form. Now that we understand how the elements are organized and why they behave the way they do, we can finally start putting them together. In our next topic, we will dive into names and formulas. We will learn how to name ionic and binary compounds, as well as the specific rules for acids, salts, and hydrates. I recommend reviewing your trend notes before we start, as that foundation will make naming these compounds much more intuitive."
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
