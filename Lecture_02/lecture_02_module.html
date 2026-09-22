@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Welcome back, everyone! In our first topic, we explored the big picture of chemistry and how the scientific method allows us to test our ideas. But there is a critical piece of the puzzle we haven't touched on yet: measurement. Think of today as the moment we build your professional toolkit. We are going to dive into the metric system, scientific notation, significant figures, temperature scales, and density. Now, I know these can sometimes feel like abstract math hurdles, but in the world of science, they are practical, essential skills. These are the exact tools used to calculate a precise medication dose, read a laboratory thermometer, or interpret a critical patient value. If these measurements are off, the entire experiment fails. Because we will be using these methods in every single lab and assignment for the rest of the semester, I want us to take our time here. My goal is for you to feel completely comfortable and confident with these basics before we start building more complex concepts on top of them. Let's slow down, take it step-by-step, and make sure we have a solid foundation. I'm excited to get started with you all, so let's jump into our first set of tools."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome to our second topic! Today, we\u2019re focusing on the fundamental tools of measurement. Think of this as the 'language' of chemistry. If we aren't speaking the same numerical language, our experiments simply won't work. We'll start with the metric system. Instead of guessing, I'm going to show you how to use dimensional analysis to convert units confidently. It's a foolproof method that removes the guesswork from your calculations. Next, we\u2019ll tackle scientific notation. In this lab, we deal with atoms that are incredibly tiny and stars that are unimaginably huge; we can't spend our whole class period writing rows of zeros, so we use a shorthand that keeps things clean. Then, we'll dive into significant figures. This is often the trickiest part for students, but it's really just about honesty in science. It tells us exactly how precise our tools are and ensures we don't claim more accuracy than we actually have. Finally, we'll wrap everything up by applying these concepts to temperature and density, which are two of the most common measurements you'll encounter in the lab. By the end of this session, you'll feel much more comfortable handling the data side of your chemistry experiments."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Before we dive into the actual mechanics of the math, I want us to take a moment to talk about the stakes. In a chemistry lab, a measurement error might just mean a lost point on a quiz. But in a healthcare setting, these numbers represent human lives. Let\u2019s think about medication dosing. If you accidentally misplace a decimal or confuse micrograms with milligrams, you aren't just off by a little bit\u2014you could potentially give a patient a thousand times the intended dose. That is a critical, life-threatening mistake. This precision extends to everything you'll do on the job. Whether you are recording vital signs like blood pressure and temperature, or interpreting complex lab reports, the numbers are meaningless unless you fully understand the units attached to them. Even something as routine as setting an IV infusion rate is really just a real-world application of the dimensional analysis we are studying this week. I know this part of the course can feel tedious, but mastering these conversions now ensures that when you are in the clinic, your patients are safe. This is exactly where the chemistry we learn in this classroom meets the professional reality of your future career."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, let's talk about why we use the metric system. In chemistry, precision is everything, and the metric system makes that possible because it's built entirely on powers of ten. Think about how frustrating it is to remember that there are twelve inches in a foot or three feet in a yard. Those odd conversions just create more room for error. With metric, we avoid that entirely by using one single base unit for each type of measurement. For length, we have the meter; for mass, we use the gram; and for volume, we use the liter. You'll also frequently encounter seconds for time and Kelvin or Celsius for temperature, which essentially measures the energy within a substance. The real beauty of this system is its simplicity. Every other unit you'll see in this lab is just one of these base units scaled up or down using a prefix. Instead of switching to a completely different unit, we just shift the decimal point. It keeps our calculations clean and consistent, which is exactly what we need when we're dealing with the tiny, precise world of atoms and molecules. Once you get the hang of these base units, the rest of the course becomes much smoother."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Think of the metric system as a giant sliding scale based on powers of ten. At the center, we have our base units\u2014the meter, gram, or liter. These are our anchors. When we add a prefix, we're simply telling ourselves how far to move away from that anchor. For instance, 'kilo' means we've jumped up a thousand times. So, one kilogram is just one thousand grams. Moving the other way, we head into the smaller scales. 'Deci' is a tenth, 'centi' is a hundredth, and 'milli' is a thousandth of that base unit. We can go even smaller, too. You'll often see 'micro' in medication dosages; a microgram is one-millionth of a gram. It sounds like a lot to memorize, but here is the secret: the pattern is always the same. You aren't doing complex math; you are simply shifting the decimal point to the left or right based on that power of ten. Once you realize that the prefix is just a set of directions for your decimal point, converting between these units becomes a mechanical process. It\u2019s all about scaling. Just keep track of which direction you're moving, and the numbers will fall right into place."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let's dive into dimensional analysis. I can't stress this enough: this is genuinely the single most useful tool you'll take from this entire course, whether you're in the lab or working clinically. It turns complex conversions into a simple, mechanical process. First, pinpoint exactly what you're starting with\u2014both the number and the unit. Then, clearly identify the unit you actually need to end up with. Once you have those two, find your conversion factor. This is just the equality that connects them, like knowing one thousand milligrams equals one gram. The secret is in how you set up your fractions. You want to arrange that factor so the unit you're trying to get rid of appears on both the top and bottom, allowing them to cancel out. From there, it's just basic math: multiply straight across and divide. Finally, before you move on, always do a quick sanity check. Does the size of your answer make sense? Did you keep the correct number of significant figures? If you follow these steps every time, you'll stop guessing where the numbers go and start trusting your results. Let's try a few examples together."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Let\u2019s put dimensional analysis into practice with a scenario you'll encounter constantly in healthcare. Imagine a physician orders two hundred fifty micrograms of a medication, but when you check the pharmacy stock, the tablets are labeled in milligrams. To solve this, we need our conversion factor: one milligram equals one thousand micrograms. Now, here is the trick to the setup. We multiply our starting dose by a fraction: one milligram over one thousand micrograms. By placing micrograms on the bottom, those units cancel each other out, leaving us with only milligrams. When we do the math\u2014two hundred fifty divided by one thousand\u2014we get zero point two five milligrams. Before you move on, always perform a quick sanity check. We are moving from a tiny unit, micrograms, to a larger unit, milligrams. Because the unit is getting larger, the actual number should get smaller. Since zero point two five is much smaller than two hundred fifty, our answer makes perfect sense. Taking this extra second to verify your work is exactly how we ensure medication dosing remains safe for every single patient. It's not just about the math; it's about precision and patient safety."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "In chemistry, we deal with scales that are honestly a bit mind-blowing. On one end, we have the number of atoms in a tiny sample, which can reach into the trillions of trillions. On the other end, we have the mass of a single atom, which is a decimal point followed by over twenty zeros. Now, imagine trying to write those numbers out by hand in your lab notebook every single day. Not only is that incredibly tedious, but it is a recipe for disaster. It is far too easy to accidentally add or skip a zero, and in science, one misplaced digit can change your entire result. This is exactly why we use scientific notation. Think of it as a mathematical shorthand that lets us strip away all those repetitive zeros while keeping the actual value intact. It allows us to focus on the significant digits\u2014the parts of the number that actually matter\u2014and use a simple exponent to tell us where the decimal point lives. By condensing these extreme values, we make our calculations cleaner, our data more readable, and our lives as students and scientists much easier. Let's walk through how to actually build these expressions together."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "In chemistry, we deal with extremes\u2014from the massive number of atoms in a beaker to the tiny mass of a single electron. Writing out all those zeros is tedious and leads to mistakes, which is why we use scientific notation. Think of this as a shorthand that keeps our numbers manageable. The goal is to rewrite any value as a single digit between one and ten, multiplied by ten raised to a power. If you're dealing with a huge number, you'll move the decimal to the left to shrink it down, which gives you a positive exponent. For example, moving the decimal five places in four hundred fifty-six thousand gives us 4.56 times ten to the fifth. Now, it works the opposite way for those tiny decimals. To get a number like 0.00713 into that one-to-ten range, you move the decimal to the right. Since you're moving right, your exponent becomes negative\u2014in this case, ten to the negative third. It might feel a bit strange at first, but once you get comfortable counting those decimal jumps, this process becomes second nature. It\u2019s all about finding that sweet spot between one and ten to keep your data clean and readable."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let\u2019s see why we actually use this in the lab. In chemistry, we deal with scales that are honestly hard to wrap our heads around. Take Avogadro\u2019s number, for example. This represents the number of particles in one mole, and it is a massive value\u2014six hundred two sextillion. Writing out twenty-three zeros every time you do a calculation isn't just tedious; it's an invitation for a mistake. That is why we simplify it to 6.02 times ten to the twenty-third. It\u2019s much cleaner and far more manageable. On the flip side, we have the incredibly small. The mass of a single hydrogen atom is so tiny that you\u2019d have to write twenty-three zeros after the decimal point before you even hit a meaningful digit. By using a negative exponent, we can express that as 1.67 times ten to the negative twenty-fourth grams. Even something slightly larger, like the diameter of a red blood cell, is much easier to read as 7 times ten to the negative sixth meters rather than counting a string of zeros. Scientific notation isn't just a math rule; it's a tool that keeps our data clear and accurate."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's talk about significant figures. This sounds like a dry set of rules, but it's actually about honesty in science. Think about every tool you use in the lab\u2014whether it's a digital balance, a ruler, or a graduated cylinder. None of these tools are perfect; they all have a built-in limit to how precise they can actually be. If you use a cheap ruler, you can't suddenly claim your measurement is accurate to a thousandth of a millimeter just because your calculator gave you a long string of decimals. Significant figures are simply the system we use to communicate that limit. They tell other scientists exactly how much confidence we have in our numbers. By following these rules, we ensure that our final calculations don't claim more precision than our original measurements ever allowed. It keeps our data grounded in reality."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Let\u2019s talk about significant figures. Now, don't let the name intimidate you; essentially, these are just the digits in a measurement that actually carry meaningful precision. Think about it this way: when you use a tool like a ruler or a graduated cylinder, most of the numbers you record are 'certain.' You can see them clearly marked on the scale, so there's no guessing involved. However, in science, we always go one step further. We estimate one final digit\u2014just one\u2014that falls between the smallest markings on your instrument. That combination of certain digits plus that one estimated guess is what we call your significant figures.\\n\\nNow, you might be wondering why we go through all this trouble. It comes down to honesty in our data. If you use a crude ruler to measure a piece of metal and then a high-precision laser for another part, your final calculated result can only be as reliable as your least precise measurement. Significant figure rules act as a safeguard. They ensure that when we report our final answers, we aren't accidentally claiming a level of precision that our tools simply couldn't provide. It keeps our results grounded in reality."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let's tackle the rules for counting significant figures. Think of this as determining which digits actually tell us something about the precision of a measurement. First, the easy part: any number from one to nine always counts. Zeros also count if they are sandwiched between those non-zero digits\u2014so in 405, that zero is locked in and significant. However, leading zeros are different. In a number like 0.0025, those zeros are just placeholders to show us where the decimal sits; they don't add precision, so we don't count them. When we get to the end of a number, trailing zeros only count if a decimal point is visible. For example, 2.50 tells us the measurement was precise to that hundredths place. But if you see a number like 100 without a decimal, it's ambiguous and usually only has one significant figure. Finally, we have exact numbers. If you count twelve eggs in a carton or use a defined conversion, those are considered perfectly precise. We treat them as having infinite significant figures, meaning they won't limit the precision of your final calculated answer. Take a moment to let those patterns sink in before we try a few examples together."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, this is where things get a little tricky because we actually have two different sets of rules depending on the math you're doing. It\u2019s easy to mix them up, so the first thing you should always do is identify your operation before you even think about rounding. When we add or subtract, we only care about the precision of the decimal places. For example, if you add 56.231 and 91.3, your final answer can only be as precise as that 91.3, which has just one decimal place. So, we round our result to 147.5. But, the moment you switch to multiplication or division, the rules shift completely. Now, we aren't looking at decimals; we're looking at the total count of significant figures. If we multiply those same two numbers, we see that 91.3 has only three significant figures. That means our final answer must be rounded to three figures as well, giving us 5.13 times ten to the third. It feels like a lot to remember, but just take a breath and ask yourself: 'Am I adding or multiplying?' Once you answer that, the rounding part becomes much simpler. Just take it one step at a time."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "To wrap things up today, let's put everything we've practiced into action. We've spent a lot of time mastering units, conversions, and those tricky significant figures, but those are really just tools. Now, we get to use those tools on two of the most practical measurements in the lab: temperature and density. Think of these as the 'fingerprints' of a substance. Temperature tells us about the energy within a system, while density reveals how tightly packed the matter is within a specific space. When we combine these concepts, we can start identifying unknown substances and predicting how they'll behave during a chemical reaction. It all connects back to the precision we've been discussing. So, let's dive into how these two properties work together and see how our math skills make these measurements actually meaningful in a real-world setting."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Now, let's talk about temperature. Throughout this course, you'll need to move confidently between three different scales. First, we have Celsius. This is our everyday scientific standard, designed around water, which freezes at zero and boils at one hundred degrees. Then there's Fahrenheit. While we don't use it for most lab work, you'll still see it constantly in U.S. clinical settings and patient charts. To switch from Celsius to Fahrenheit, you'll multiply by nine-fifths and add thirty-two. Finally, we have Kelvin. This is what we call an absolute scale. To find Kelvin, you simply add two hundred seventy-three to your Celsius value. But why do we need a third scale? Well, Kelvin is essential for our calculations involving gas behavior and energy because it starts at absolute zero. Absolute zero is the theoretical point where all molecular motion stops\u2014the coldest temperature possible in the universe. Because it doesn't have negative numbers, it makes the math much cleaner when we're calculating how gases expand or contract. I know these conversions can feel like a lot of juggling at first, but once you get the hang of the formulas, they'll become second nature to you."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Let's wrap up this section with density. Conceptually, density is just a measure of how much mass is packed into a specific volume, which we typically express in grams per milliliter. In a clinical setting, you'll see this applied as 'urine specific gravity.' Essentially, we are comparing the density of a patient's urine to the density of pure water to check their hydration levels and kidney function. Let's walk through a quick example together. Imagine we have a fifteen milliliter urine sample with a mass of fifteen point three zero grams. To find the density, we simply divide that mass by the volume. Fifteen point three zero divided by fifteen gives us one point zero two grams per milliliter. Now, why does that number matter? Well, typical urine specific gravity usually falls between one point zero zero five and one point zero three zero. Since our result is one point zero two, this patient falls comfortably within the normal range. As you can see, while the clinical application sounds complex, the math is just another unit calculation. If you stay methodical and follow the steps we've used throughout the lecture, you'll get it right every time. Just take it one step at a time."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Before we wrap up, let's take a breath and recap the essential tools we've covered today. Think of the metric system as our universal language; it's built on powers of ten, which makes the math much smoother. At the heart of this are our base units\u2014the anchors like the meter, gram, or liter\u2014that give us a starting point. To move between these units, we use dimensional analysis. This is really just a fancy way of saying we use conversion factors to cancel out units we don't want until we reach the one we do. When numbers get too massive or tiny, we use scientific notation to keep things tidy. Now, remember that not every digit in a measurement is equal; significant figures tell us exactly how much precision we actually have. For temperature, we move beyond Celsius to Kelvin, the absolute scale, by simply adding 273. Finally, let's touch on density, which is just the mass of a substance divided by its volume. If you want to compare that density to water, you're looking at specific gravity. These concepts are the building blocks for everything coming next, so take a moment to ensure these feel intuitive."
+    },
+    {
+        "slide_number": 19,
+        "voiceover_script": "Let\u2019s take a moment to bring everything together. We've covered a lot of ground, but these tools are the foundation for everything else we'll do. By pairing the metric system with dimensional analysis, you now have a reliable way to convert between any units confidently and safely. This isn't just for the classroom; it's about precision. Similarly, using scientific notation and significant figures ensures that whether you're dealing with massive numbers or tiny particles, your data remains honest and usable without losing track of accuracy. You'll also find that calculating temperature and density becomes second nature, as these are measurements you will use constantly, both in this course and eventually in your clinical practice at the bedside. Before we move forward, please review this lecture and work through the practice conversions in your reading to make sure those steps feel comfortable. Next time, we dive into Topic 3: Matter and Energy. We will explore physical states, elements, compounds, and mixtures, and we'll discuss the fundamental laws regarding the conservation of mass and energy. I know this section can feel like a lot of math, but you're doing great. Thanks for watching, and I will see you in our next session!"
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
