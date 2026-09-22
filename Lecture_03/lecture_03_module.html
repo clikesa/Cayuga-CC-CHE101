@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic 3. Now that we've covered the basics, it's time to dive into the heart of chemistry: matter and energy. Think about everything around you right now\u2014your phone, the air you're breathing, even the coffee in your mug. All of that is matter, but it doesn't all behave the same way. Over the next few lessons, we're going to explore how we classify these materials and why some things act like rigid solids while others flow like liquids or drift as gases. We'll also look at the 'magic' behind the scenes\u2014the energy\u2014that allows matter to switch between these states. Whether you're watching this on your lunch break or late at night, I'm glad you're here. Let's get started by breaking down what matter actually is and how it organizes itself in our universe."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome to Topic Three! Today, we\u2019re diving into the fundamental building blocks of our universe: matter and energy. First, we'll explore the states of matter. Instead of just memorizing definitions, we're going to look at what's actually happening at the molecular level to make a solid feel different from a liquid or a gas. From there, we'll move into classifying matter. We'll distinguish between pure elements, compounds, and mixtures, and I'll show you some practical ways we can physically separate those mixtures back into their original parts. Now, one of the trickiest parts of chemistry is telling the difference between a physical change and a chemical change. I'll give you a few 'tell-tale signs' to look for so you can confidently identify when a true chemical reaction has occurred. Finally, we'll wrap up with the laws of conservation. This is a big conceptual pillar in science\u2014the idea that in our universe, nothing is ever truly created or destroyed. It's simply rearranged or transformed from one state to another. It sounds like a lot, but we'll take it step-by-step. If any of this feels overwhelming, just remember that we're building a foundation here. Let's get started with the states of matter."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we\u2019re spending so much time on the basic definitions of matter and energy. The truth is, these concepts are the foundation of everything you'll do in a clinical setting. Take IV fluids, for example. When you use saline or dextrose, you're working with homogeneous mixtures. Because the solute is perfectly dissolved, the fluid stays consistent. That is a world away from a suspension, where particles can settle at the bottom, requiring you to shake the medication to ensure the dose is accurate. We see these same principles in how our bodies regulate temperature. When you sweat, your body uses evaporation to pull heat away from the skin. That is a phase change in action, and it follows the exact energy laws we are studying today. Even your own metabolism is just a continuous cycle of energy conversion, turning the chemical energy from your food into the fuel that keeps your heart beating. Whether you are dosing a medication or monitoring a patient's fever, you are applying the laws of chemistry. Understanding the 'why' behind these physical states ensures that you provide safe, precise care to every single patient you treat."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Think of the states of matter as a balancing act between energy and attraction. It all comes down to how much the particles are moving and how tightly they're hugging each other. In a solid, energy is at its lowest. The particles are packed so closely that they can't move around; they just vibrate in place, which is why your desk doesn't suddenly change shape. As we add energy, we hit the liquid phase. Here, the particles have enough kick to break away from those rigid positions, allowing them to slide past one another. This is why water flows to fit whatever glass you pour it into. Now, if we crank up the energy even more, we get a gas. These particles are moving so fast they fly apart, filling every inch of available space. But there is a fourth, more extreme state called plasma. This happens when gas particles get so incredibly energized that they actually strip away their electrons. This process is called ionization. While we don't see it sitting on a shelf in the lab, plasma is actually the most common state in the universe\u2014it's what powers the stars and creates the flash of a lightning bolt."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Now, let's think about how these three states actually behave. Imagine the particles in a solid are locked in a tight dance, barely moving. In a liquid, they've loosened up and can slide past one another. But in a gas? They're completely free, zooming around and filling whatever space they can find. It all comes down to how much energy those particles have and how strongly they're clinging to each other."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let's talk about how matter shifts from one state to another. The most important thing to remember here is that while the physical form changes, the actual identity of the substance stays exactly the same. Think about an ice cube melting into a puddle; it looks different, but it's still just H2O molecules. It hasn't turned into a new chemical; it just changed its arrangement. These shifts happen because of energy. When we add energy\u2014usually as heat\u2014we're essentially giving the molecules a push to move faster and break away from each other. This is what happens during melting, vaporization, or even sublimation, where a solid jumps straight to a gas. On the flip side, when matter releases energy, it slows down and settles into a more structured state. We see this during freezing, condensation, or deposition. I like to think of it as a cosmic dance: add energy and the molecules dance wildly apart; remove energy and they slow down to huddle together. It's all about that balance of energy absorption and release. If you can keep that core concept in mind, the specific names for these transitions will be much easier to memorize."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Let\u2019s put these concepts into a real-world scenario you've all experienced: sweating. When you're exercising and your body temperature rises, your sweat glands release liquid water onto your skin. Now, here is the key part: for that liquid to turn into a gas\u2014which we call vaporization\u2014it needs a significant amount of energy. It gets that energy by absorbing heat directly from your skin. Remember, heat always moves from warmer matter to colder matter. I like to think of it as a thermal hill; the warm object is at the top, and the cold object is at the bottom. Energy naturally rolls down that hill. In this case, the heat rolls off your skin and into the water. Because that energy is leaving your body, your skin feels cooler. However, this system relies on having enough fluid. If you're severely dehydrated, or if a high fever disrupts your body's regulation, you lose this vital cooling mechanism. This is why staying hydrated isn't just about thirst; it's about maintaining your body's ability to manage energy transfer. It's a perfect example of how the physics of matter and energy directly impact your health and survival."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now that we know what matter is, we need a way to organize it. Think of this as sorting a giant toolbox. We categorize everything based on its composition\u2014whether it's a pure element, a chemical compound, or a mixture of different substances. By breaking matter down into these three groups, we can better predict how a substance will behave during an experiment. Let's dive into what actually separates these categories."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let's think about how we actually categorize everything around us. Every single sample of matter falls into one of two big buckets: it's either a pure substance or a mixture. If it's a pure substance, we dive a bit deeper. First, we have elements. Think of these as the 'building blocks' of the universe. An element, like the copper in your home plumbing or the carbon in your pencil lead, is in its simplest form. You can't break it down into anything smaller using chemical reactions. Then, we have compounds. This happens when two or more elements bond together in a very specific, fixed ratio. What's fascinating here is that the compound takes on entirely new properties. For example, sodium is a reactive metal and chlorine is a toxic gas, but together, they form common table salt. Finally, we have mixtures. Unlike compounds, mixtures are just physically blended together. There's no chemical bond, and the ratio can vary. Because they aren't permanently locked together, we can use physical methods\u2014like filtering or evaporating\u2014to separate them back out. It's all about whether those particles are chemically bonded or just hanging out in the same space."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let\u2019s dive into how we categorize mixtures. First, we have homogeneous mixtures. Think of these as 'uniform.' This means the components are blended so perfectly that you can't see the individual parts, even if you used a microscope. In chemistry, we often call these solutions. A great example is the saline fluid used in IVs, or even your morning coffee once the sugar has completely dissolved. Everything looks like one single phase.\\n\\nOn the flip side, we have heterogeneous mixtures. These are non-uniform, meaning the different parts remain distinct. You can often see the separate pieces, or they might settle to the bottom over time. Think about whole blood; it looks uniform to the naked eye, but under a lens, you see distinct cells floating in plasma. This is why some liquid medications tell you to 'shake well before use'\u2014they are suspensions where the active ingredients have settled.\\n\\nTo make it even simpler, think about an oatmeal raisin cookie. One bite might have three raisins, while the next has none. That inconsistency is exactly what makes it heterogeneous. Whether it's a lab sample or a snack, it all comes down to whether the mix is consistent throughout."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, here is the great thing about mixtures: because the substances inside them don't actually bond chemically, they keep their own original identities. This means we can use those unique physical properties to pull them apart. Think of it like sorting a bowl of mixed nuts; you're just using your senses to separate them. For example, if we have different particle sizes, we use filtration. This is exactly how kidney dialysis works in a clinical setting, trapping waste while letting the healthy blood pass through. If the components have different boiling points, we use distillation. We heat the mixture until one part turns into a gas, then cool it back down into a pure liquid\u2014which is how we purify water or create spirits. Finally, there is chromatography. This technique relies on how fast different molecules travel through a medium. It's an incredibly powerful tool in forensics for identifying specific toxins or drugs in a sample. Whether we are looking at size, phase, or boiling points, we are simply exploiting a physical difference to get a pure substance. It might seem technical, but it's really just a game of 'spot the difference' at a molecular level."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now, let's distinguish between physical and chemical changes. Think of a physical change as a makeover\u2014the appearance changes, like ice melting, but the substance is still water. A chemical change is more like a total transformation, where you create something entirely new. But here is the key: regardless of the change, the total amount of matter stays the same. Nothing is truly lost; it's just rearranged."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let's talk about how matter changes. First, we have physical changes. Think of these as changes in 'look' or 'form.' The substance itself stays exactly the same; it just looks different. For example, when ice melts, it\u2019s still H2O\u2014it just shifted from a solid to a liquid. Even if you crush a tablet into powder or dissolve salt into water, the actual molecules haven't changed their identity. Because of that, physical changes are usually pretty easy to reverse. You can just freeze that water back into ice. Chemical changes are a different story. Here, the original substances actually react to create something entirely new with different properties. Think about a piece of iron rusting. The iron reacts with oxygen to create iron oxide\u2014a brand new substance. The same thing happens when wood burns or when your body digests food. You aren't just changing the shape of the fuel; you're transforming it into energy and waste. Unlike melting ice, you can't simply 'un-burn' a log or 'un-rust' a nail. Once those chemical bonds shift and new substances form, there is no easy way to go back to the start."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, how do we actually know if a chemical reaction is happening? Since we can't see atoms rearranging with our naked eyes, we have to look for specific clues. First, keep an eye out for a color change. If your clear liquid suddenly turns bright pink, that's a huge hint that a new substance has formed. You might also see bubbling or fizzing, which tells us a gas is being released into the air. Then there's temperature. If your test tube suddenly feels hot or ice-cold, energy is moving, which often signals a chemical shift. One term that often trips people up is 'precipitate.' In your weather app, precipitation means rain or snow, but in this lab, it means something entirely different. A precipitate is a solid that suddenly appears out of a clear solution, almost like a cloud of powder forming in the liquid. It\u2019s a physical sign that two liquids have reacted to create something completely new. While these signs are helpful, remember that they are just clues. We use these visual and physical measurements to gather evidence before we conclude that a chemical change has officially taken place."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let\u2019s talk about two fundamental rules that act as the 'golden laws' for everything we will study this semester. First, we have the conservation of mass. Essentially, this means that in any chemical reaction, matter doesn't just vanish into thin air, nor does it appear out of nowhere. If you start with ten grams of a substance, you will end with ten grams, even if those atoms have rearranged themselves into something entirely new. It\u2019s all about changing form, not disappearing. Along with that, we have the conservation of energy. Just like mass, energy cannot be created or destroyed; it only switches formats. Think about how chemical energy in your food converts into heat to keep you warm or kinetic energy to help you move. For those of you heading into nursing or healthcare, these principles are vital. Whether you are calculating a medication dosage or monitoring a patient's metabolic rate, you are relying on the fact that every single gram and every unit of energy must be accounted for. In the world of science, nothing simply vanishes; it just moves or transforms. Keep that in mind as we move forward."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let\u2019s put the law of conservation of mass into a real-world scenario. Imagine we have a sealed container with ten grams of wood and just enough oxygen to let it burn completely. Now, if you watch this happen, it looks like a magic trick. Once the fire goes out, you're left with a tiny pile of ash. Your eyes tell you that most of the mass simply vanished into thin air as smoke. But in science, nothing ever truly disappears; it just changes form. What actually happened is that the carbon in the wood combined with the oxygen gas to create carbon dioxide and water vapor. Because these are invisible gases, they're hiding in plain sight, trapped inside that sealed container. If we were to place the entire setup on a scale after the fire, we would find something fascinating. The total mass of the ash plus those invisible gases equals exactly the original mass of the wood and the oxygen we started with. The atoms didn't vanish; they just rearranged themselves into new molecules. This is the core of chemistry: the total amount of matter stays constant, regardless of how the reaction looks to the naked eye."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we dive into the lab, let's get our vocabulary squared away. Everything we see around us is matter\u2014basically, if it has mass and takes up space, it counts. Now, the simplest version of matter is an element. Think of this as a primary color; you can't break it down into anything simpler. But when elements bond chemically in a strict recipe, we get a compound. Unlike compounds, mixtures are just substances tossed together physically. They don't have a fixed ratio, so they're much easier to separate. Some mixtures are homogeneous, meaning they look identical throughout\u2014like a well-stirred cup of coffee. Others are heterogeneous, where you can clearly see the different parts, like a bowl of cereal. Finally, we need to distinguish between physical and chemical changes. A physical change is just a makeover; the substance looks different, but it's still the same stuff inside. A chemical change, however, is a total transformation. You're actually creating a brand new substance with entirely different properties. I know this is a lot of terminology at once, so take a moment to breathe. These terms are the building blocks for everything else we'll cover this semester, so feel free to pause and review them."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Alright, let\u2019s take a breath and tie everything together. We\u2019ve covered a lot of ground. Remember, the state of matter\u2014whether it's a solid, liquid, or gas\u2014really just comes down to how much energy those particles have and how they're arranged. We also learned to categorize matter by its composition, distinguishing between pure elements, compounds, and mixtures. Now, when we talk about change, keep it simple: physical changes are just a shift in form, while chemical changes actually rebuild the substance into something entirely new. But here is the golden rule for this course: whether it's a physical or chemical shift, mass and energy are always conserved. Nothing is truly lost; it just changes shape. This foundation is crucial because we are now ready to zoom in even further. Next, we move into Topic Four: Atomic Structure. We'll explore the history of how we discovered the atom, dive into atomic notation, and start mapping out where electrons actually live within those energy levels and orbitals. It can feel like a lot of detail, but we'll take it step-by-step. I'll see you in the next module, and please reach out if any of these core concepts still feel a bit fuzzy."
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>

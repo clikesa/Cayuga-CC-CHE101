@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic 4. Today, we are diving into one of the most fascinating journeys in all of science: the story of the atom. Now, when we think of atoms, we often picture those little solar-system-like diagrams from high school, but the reality is much more mysterious and exciting. We are going to trace the evolution of this idea, starting with the ancient philosophers who first wondered what the world was made of, and moving all the way forward to the modern quantum model. We'll explore how scientists moved from guessing to proving, using evidence to refine our understanding of the invisible building blocks of the universe. Whether you are watching this on your commute or at home, I encourage you to keep an open mind as we shift from classical logic into the strange, wonderful world of quantum chemistry."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome everyone! Today we are diving into the heart of chemistry: atomic structure. Now, the atom can feel a bit abstract because we can't see it, so we're going to build our understanding in layers. First, we'll travel back in time to see how our mental picture of the atom evolved. We'll move from early philosophical guesses to the complex quantum mechanics we use today. It's a fascinating journey of trial and error. Next, we'll get practical with atomic notation. We will break down the roles of protons, neutrons, and electrons, and I'll show you how to read those numbers on the periodic table to identify isotopes. Once we have the nucleus sorted, we'll shift our focus outward to the electrons. Instead of thinking of them as little planets orbiting a sun, we'll explore energy levels and orbitals\u2014which are really just the high-probability zones where electrons hang out. Finally, we will master electron configurations. I'll give you a set of simple rules that act like a map, allowing you to predict exactly where every single electron lives within an atom. By the end of this session, the periodic table will start to feel less like a chart and more like a logical map."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we spend so much time on the tiny details of an atom. In healthcare, these small particles are actually the difference between a diagnosis and a mystery. Take radioisotopes, for example. By using unstable atoms with specific neutron counts, we can create PET scans to see inside the brain or target tumors with radiation therapy. It is all about nuclear stability. Then we have electrolytes, like sodium and potassium. These aren't just ingredients in sports drinks; they are atoms that have gained or lost electrons. That tiny shift in charge is exactly what allows your nerves to fire and your heart to beat. We also see this in free radicals\u2014atoms with a lonely, unpaired electron. Because they are unstable, they become highly reactive, which can damage your cells over time. Finally, remember that your body requires trace elements like iron and iodine. Even though you only need a tiny amount, a deficiency in these specific elements leads to very clear clinical symptoms. When you look at a patient, you aren't just seeing a person; you are seeing a complex balance of atomic charges and elemental needs working in harmony."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, as we dive into the history of the atom, I want you to think of this less like a series of mistakes and more like a giant, ongoing puzzle. In science, we often imagine that a new discovery just wipes out the old one, but that isn't how it actually works. Instead, each scientist took the best evidence available at the time and added a new layer of understanding. Think of it as building a house; the first person laid the foundation, the next framed the walls, and the next added the roof. We didn't throw away the foundation just because we added a roof! So, as we walk through these different models today, keep in mind that we are seeing a progression. We're building a more complete picture of the invisible world, one discovery at a time."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Let\u2019s travel back to ancient Greece to see where this all started. A philosopher named Democritus had a fascinating intuition. He imagined that if you kept cutting a piece of matter in half, you\u2019d eventually hit a particle so tiny it simply couldn't be cut anymore. He called these 'atomos,' which literally means indivisible. Now, it's important to remember that Democritus was thinking philosophically; he didn't have a lab or a way to test this, so his idea mostly sat on a shelf for two thousand years. Fast forward to 1803, and we meet John Dalton. Dalton took those old philosophical ideas and turned them into actual science. By using precise measurements, he proposed that every element is made of its own unique type of atom. He believed these atoms combined in simple, whole-number ratios to create compounds. If you're trying to visualize Dalton's version of the atom, don't think of the complex clouds we see today. Instead, imagine a tiny, solid billiard ball. It was a simple, sturdy sphere that couldn't be broken down further. While we now know atoms are much more complex, Dalton's work gave us the first real roadmap for modern chemistry."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "For a long time, we believed atoms were just solid, indivisible spheres. But J.J. Thomson changed everything when he discovered the electron. He realized there were these tiny, negatively charged particles tucked inside the atom. To visualize this, he imagined the 'plum pudding' model. Picture a sphere of positive energy\u2014the pudding\u2014with negative electrons scattered throughout it like little pieces of fruit. It was a great start, but Ernest Rutherford took it a step further. He fired heavy particles at a thin sheet of gold foil. Now, if Thomson was right, those particles should have sailed straight through. Most did, but a few actually bounced straight back! Imagine throwing a ball at a curtain and having it fly back at your face. That told Rutherford that the atom isn't a soft pudding at all. Instead, it's mostly empty space, with almost all the mass concentrated in a tiny, dense, positively charged center we now call the nucleus. This was a massive shift in our understanding. We went from seeing the atom as a solid blob to realizing it's more like a tiny solar system with a powerful core. It really sets the stage for how we view chemistry today."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Now, let's talk about how our understanding of the atom evolved. Back in 1913, Niels Bohr gave us a great starting point. He imagined electrons orbiting the nucleus in neat, circular paths, almost like planets orbiting the sun. In his view, electrons could jump between these fixed energy levels by absorbing or releasing energy, but they couldn't exist in the spaces between. This was a huge breakthrough because it finally explained why heated elements emit very specific colors of light. However, as we dug deeper, we realized nature is a bit messier than neat circles. By the 1920s, the modern quantum model took over. Instead of predictable orbits, we discovered that electrons behave more like waves. We can't say exactly where an electron is at any moment; we can only calculate the probability of finding one in a certain region. We call these regions orbitals. Think of it less like a train track and more like a fuzzy electron cloud surrounding the nucleus. This cloud model is what chemists actually use today, and it's the foundation we'll build on for the rest of this course. It might feel a bit abstract at first, but we'll tackle it together."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Think of the atomic theory not as a list of dates to memorize, but as a long, evolving conversation. It started way back with Democritus, who simply imagined a tiny, indivisible particle called the 'atomos.' For centuries, that was just a philosophical guess until John Dalton turned it into a formal scientific theory. Then, things got exciting. Thomson discovered the electron, proving the atom wasn't a solid ball, but had smaller pieces inside. Shortly after, Rutherford realized most of the atom is actually empty space, with a dense, positive core we call the nucleus. Bohr then refined this by suggesting electrons orbit that nucleus in specific energy levels, almost like planets around a sun. Finally, we arrived at the modern Quantum Model, where we stop thinking of neat orbits and instead imagine 'electron clouds' of probability. The most important takeaway here is that none of these scientists were simply 'wrong.' Instead, each person used the tools of their time to refine the picture. In chemistry, we don't throw away old ideas; we build upon them. This progression is exactly how science works\u2014we keep layering new evidence to get closer to the truth."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, how do we actually keep track of all these different atoms? We use a specific kind of shorthand called atomic notation. Think of it like a social security number for elements. It tells us exactly which element we're dealing with and, more importantly, the specific mass of that isotope. This ensures that whether we're in the lab or reading a paper, we're all identifying the exact same atom."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let's talk about where the actual weight of an atom lives. When we look at the three subatomic particles, it turns out that almost all the mass is packed into the nucleus, specifically within the protons and neutrons. Electrons are out there, but they are so incredibly light that they barely register\u2014kind of like a single grain of sand compared to a bowling ball. Because these particles are far too small to measure in grams using a standard scale, scientists created a specialized shortcut called the atomic mass unit, or amu. Instead of dealing with a clunky decimal like 1.67 times 10 to the negative 24 grams every time we do a calculation, we just use one amu. It makes the math much more manageable as we start calculating the weights of different elements."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's talk about how we actually identify and distinguish between different atoms. Think of the atomic number as the atom's unique social security number. It tells us exactly how many protons are in the nucleus. This is the defining characteristic of an element. For example, if an atom has six protons, it is carbon. Period. No exceptions. If you change that number, you've changed the element itself. But while the proton count stays the same for an element, the mass number can vary. The mass number is simply the total count of both protons and neutrons packed into the nucleus. If you want to find out how many neutrons are hiding in there, just take that total mass number and subtract the atomic number. This leads us to a really cool concept called isotopes. Isotopes are like siblings; they are the same element because they have the same number of protons, but they have different numbers of neutrons. Because their neutron counts differ, their total mass numbers are different too. So, while they behave almost identically in a chemical reaction, one version of the atom is physically heavier than the other. It's a subtle but important distinction in how matter is built."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Let\u2019s put these concepts into practice with a real-world example: Carbon-14. When you see atomic notation, the first thing to locate is the atomic number, which is that smaller number, six. This is your North Star; it tells you exactly how many protons are in the nucleus. Since it has six protons, we know for certain this is Carbon. Now, let\u2019s figure out the neutrons. We take the mass number, which is fourteen, and subtract those six protons. That leaves us with eight neutrons. This is what makes Carbon-14 different from the standard Carbon-12 you usually see in textbooks. Finally, we need to determine the electrons. Here is the golden rule: if the atom is neutral, the positive and negative charges must balance out perfectly. Since we already established there are six positive protons, there must be six negative electrons to keep the atom stable. It\u2019s a simple balancing act. Once you master this subtraction and balancing process, you can decode any element on the periodic table. Take a moment to look at the math here and make sure the logic clicks before we move on to ions, where things get a bit more interesting."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let's talk about where electrons actually hang out. Think of the nucleus as the center of a city, and the electrons as residents living in specific neighborhoods called energy levels. But it gets a bit more detailed than that. Within those levels, we have orbitals\u2014which are essentially the specific 'addresses' or shapes where an electron is most likely to be found. Now, electrons aren't just random; they follow a strict set of house rules for how these spaces are filled. They always prefer the lowest-energy, most comfortable spot first before moving further away from the nucleus. Understanding this organization is the secret to predicting how atoms will bond and react with one another. It\u2019s like a cosmic seating chart that determines the entire personality of the element. Let's dive into those specific rules together."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, let's talk about where electrons actually live. Think of the space around the nucleus like a nested set of containers. First, we have energy levels, or shells. These are like the floors of a building; the higher the floor number, the more energy the electrons have and the more room there is for them. But each floor is further divided into sublevels, which we label as s, p, d, and f. These aren't just letters; they represent different shapes and energy tweaks. Inside those sublevels, we find orbitals. An orbital isn't a hard track, but rather a fuzzy region where an electron is most likely to be hanging out. Now, here is the key rule: every single orbital can hold a maximum of two electrons. Because of this, the s-sublevel, which has one orbital, holds two electrons. The p-sublevel has three orbitals, so it holds six. As we move into the larger d and f sublevels, the capacity jumps to ten and fourteen electrons respectively. Remember, these fill from the inside out, starting with the lowest energy first. It feels like a lot of bookkeeping, but it's just nature's way of organizing the crowd."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, think of an atom like a hotel where electrons are the guests. They follow a few strict house rules to keep things stable. First, we have the Aufbau Principle. This is just a fancy way of saying electrons are lazy; they always take the lowest-energy room available before moving upstairs to the more expensive ones. Once they find a room, the Pauli Exclusion Principle kicks in. Each orbital can only hold two electrons, and they have to be opposites. Think of them as roommates who only get along if they spin in opposite directions\u2014one up, one down. Finally, we have Hund\u2019s Rule. Imagine a row of empty beds in a shared room. Electrons are a bit antisocial; they\u2019ll each take their own bed first before they ever agree to share. They prefer to spread out across orbitals of the same energy level to minimize repulsion. When you combine these three rules\u2014filling from the bottom up, pairing with opposite spins, and spreading out first\u2014you have the complete blueprint for writing any electron configuration. It might feel like a lot of jargon right now, but once you see the pattern in the periodic table, these rules start to feel like second nature."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let\u2019s put these rules into practice by mapping out the electrons for sodium. First, we check the periodic table and see that sodium has an atomic number of eleven. Since we're dealing with a neutral atom, that means we have exactly eleven electrons to distribute into our energy levels. We start at the very bottom, the lowest energy state, following the Aufbau principle. The 1s orbital fills first with two electrons, then the 2s takes another two. Next, we move to the 2p orbital, which can hold up to six. If we pause right there and add those up\u2014two, two, and six\u2014we've placed ten electrons. But remember, we started with eleven. We have one lone electron left over. Since the second shell is now completely full, that final electron has to jump up to the next available space, which is the 3s orbital. When we write this all out as 1s2 2s2 2p6 3s1, we have a complete map of sodium's electronic structure. A great way to double-check your work on an exam is to simply add up those small superscript numbers. If they total eleven, you know you've accounted for every single electron in the atom."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we move forward, let\u2019s pause and make sure we're all speaking the same language. Think of these terms as the toolkit you'll need for the rest of the chapter. First, remember that the atomic number is the atom's unique ID; it tells us exactly which element we're dealing with based on the protons. When we add neutrons into that mix, we get the mass number. Now, if two atoms have the same ID but different weights, we call those isotopes. It's like having two versions of the same model of a car. Moving outward from the dense, positive nucleus, we encounter energy levels. I want you to think of these as general neighborhoods where electrons live. Within those neighborhoods, we have orbitals\u2014these aren't neat circles, but rather specific zones where an electron is most likely to be hanging out. To figure out where electrons go, we use the Aufbau principle, which is just a fancy way of saying electrons are lazy; they always take the lowest-energy spot available first. When we map out all these positions, we create the electron configuration. Take a moment to review these; they are the building blocks for everything we'll do next."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "We have covered a lot of ground in this unit. Think about how far we\u2019ve come\u2014starting with Democritus\u2019s simple ideas and moving through the discoveries of Dalton, Thomson, Rutherford, and Bohr, all the way to the complex quantum model we use today. It\u2019s a great example of how science evolves as our tools get better. We now have a precise language for identifying atoms using atomic numbers and isotopes, and we\u2019ve unlocked the mystery of where electrons actually live. By using the Aufbau principle, Pauli\u2019s exclusion rule, and Hund\u2019s rule, you can now map out the electron configuration for any element on the table. It feels like a lot of rules, but they really just describe a nested structure of energy levels and orbitals. Now that we understand the internal architecture of a single atom, we can finally zoom out. In our next topic, we\u2019ll explore Periodic Properties. We will look at how the elements were historically classified and dive into periodic trends, like ionization energy and electron dot notation. This is where the patterns of the periodic table really start to make sense. I'll see you in the next module, and please reach out if you have questions!"
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
