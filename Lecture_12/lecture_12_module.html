@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic 12. Today, we are stepping into the fascinating world of organic chemistry. Now, when people hear 'organic chemistry,' they often think of complex labs or expensive food, but in science, it really boils down to one single element: carbon. Carbon is essentially the backbone of life. Because of its unique ability to bond with itself and other elements in so many different ways, it creates the intricate structures that make up our DNA, the proteins in our muscles, and even the medicines we use to heal. Whether you are interested in biology, nursing, or environmental science, understanding carbon is key to understanding how living systems actually function. We have a lot of ground to cover, so let's dive in and explore why this one element is so vital to everything around us."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome to our introduction to organic chemistry! Now, don't let the name intimidate you. While 'organic' often makes us think of farming or food, in science, it really just means the chemistry of carbon. What makes carbon so special? It's essentially the ultimate LEGO brick of the natural world because of its unique ability to bond with itself and other elements in endless, complex patterns. This is what separates organic chemistry from the inorganic side of the house. We'll start by exploring hydrocarbons\u2014the simplest organic structures\u2014where we'll distinguish between alkanes, alkenes, and alkynes based on their bonds. From there, we'll dive into functional groups. Think of these as specific 'attachments' or chemical toolkits that change how a molecule behaves and reacts. We will also tackle isomers, which show us how two molecules can have the exact same ingredients but different shapes, completely changing their function. Finally, we'll tie all of this together by looking at the four major biomolecules that actually build your body. By the end of this session, you'll see that organic chemistry isn't just a set of rules to memorize, but a map of how life is constructed at the molecular level."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we\u2019re spending so much time on carbon. Well, if you're heading into healthcare, organic chemistry is essentially the language of your future patients. Think about the medications you'll administer. The vast majority of them are organic molecules. They start with a carbon backbone, and then we attach specific clusters of atoms called functional groups. These groups are the 'business end' of the molecule; they determine exactly how a drug interacts with a cell.\\n\\nIt isn't just medicine, though. Your entire body is built from organic compounds\u2014everything from the proteins in your muscles to the DNA in your nucleus. Once you start recognizing these patterns, you'll even see them in drug names. For example, when you see a name ending in '-ol,' like propofol or menthol, that\u2019s a huge clue that an alcohol group is present.\\n\\nEven something as simple as a bag of dextrose for an IV is just an organic sugar. By understanding these structures, you aren't just memorizing formulas; you're learning how the molecular machinery of the human body actually functions. It turns a list of drug names into a map of chemical interactions."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "So, when you hear the term 'Organic Chemistry,' your mind might jump to organic farming or natural foods. But in the lab, it\u2019s actually much more specific. It all boils down to one single element: carbon. Now, you might wonder why carbon gets its own entire branch of science. The secret is in its versatility. Carbon is like the ultimate LEGO brick of the molecular world; it has this unique ability to bond with itself and other elements to build incredibly complex, stable structures. From the DNA in your cells to the fuel in your car, carbon is the backbone holding it all together. As we move forward, we aren't just studying a list of chemicals; we're studying the architecture of life itself. Let's dive into what makes these carbon bonds so special and how they create the diversity we see around us."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Now, let's talk about why carbon is essentially the superstar of the biological world. To understand this, we have to look at its personality. Carbon has four valence electrons, which means it\u2019s always looking for four partners to feel stable. It almost always forms four covalent bonds, sharing electrons to lock things into place. But here is the real magic: carbon doesn't just bond with other elements; it loves to bond with itself. Imagine carbon atoms as versatile LEGO bricks that can snap together in endless directions. They can form straight long chains, complex branches, or even close up into rings. This unique ability to build upon itself is why organic chemistry is such a massive field. Because carbon can arrange itself in so many different shapes and sizes, it creates an incredible diversity of molecules. In fact, there are more known carbon-based organic compounds than every other type of chemical compound combined! This structural flexibility is exactly what allows nature to build everything from the simple sugars that give you energy to the complex DNA that makes you who you are. It is the ultimate architectural foundation for all known life."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, you might wonder what actually makes a molecule 'organic.' It really comes down to carbon. Think of carbon as the ultimate building block because it can bond with itself and other elements to create complex shapes. While inorganic chemistry deals with things like salts and metals, organic chemistry is the study of carbon-based compounds. Essentially, we're exploring the very chemistry that makes life possible, from your DNA to the fuel in your car."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Now, let's dive into the foundation of organic chemistry: hydrocarbons. As the name suggests, these are the simplest organic compounds because they are built from only two elements: carbon and hydrogen. Think of them as the basic skeleton for more complex molecules. While they seem simple, these carbon-hydrogen bonds are incredibly important because they store a lot of energy, which is why we see them so often in things like fuels."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, let's talk about why the formulas for these hydrocarbons change as we move from alkanes to alkynes. Think of it as a space issue. Every carbon atom wants to form four total bonds to stay stable. In an alkane, carbons share just one bond, leaving plenty of room for hydrogen atoms to attach. But as we move to alkenes and alkynes, those carbons start sharing two or even three bonds with each other. Because they are using up their 'bonding slots' on another carbon, there simply isn't any room left for as many hydrogens. This is why you'll notice the general formulas shrink; as the carbon-to-carbon bond gets stronger and more complex, the hydrogen count has to drop to keep the molecule balanced. It\u2019s all about managing that limited bonding capacity."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let\u2019s tackle how we actually name these molecules. It might feel like a new language at first, but it\u2019s really just a simple puzzle. We build the name in two parts. First, we look at the prefix, which tells us exactly how many carbons are in the longest chain. You'll see these four everywhere in organic chemistry: meth- for one, eth- for two, prop- for three, and but- for four. I know 'but-' sounds strange for four, but you'll get used to it quickly! Next, we add the suffix to describe the bonds. Since we're focusing on alkanes, we use '-ane,' which signals that every single bond in the chain is a single bond. If we saw a double or triple bond, that ending would change, but for now, just think 'ane equals single.' To put it all together, we get methane, ethane, propane, and butane. You\u2019ve actually encountered these your whole life! Think of the propane tank for your backyard grill or the butane in a pocket lighter. These aren't just abstract formulas on a page; they are the very fuels that power our stoves and tools every single day."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let's talk about functional groups. In organic chemistry, we deal with massive molecules, but you don't actually have to memorize every single atom. Instead, think of functional groups as the 'personality traits' of a molecule. These are small, specific clusters of atoms that consistently behave the same way, regardless of where they are attached. If you see a specific group, like a hydroxyl group, you immediately know how that molecule will react or if it will dissolve in water. It\u2019s a bit like recognizing a tool in a toolbox; once you identify the shape, you know exactly what it does. By focusing on these structural pieces, we can predict the chemical properties of a complex substance without getting overwhelmed by the size of the entire chain. It simplifies everything and gives us a roadmap for how these molecules interact."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, think of functional groups as the 'personality' of a molecule. Instead of memorizing every single organic compound, we just need to recognize these specific clusters of atoms. These groups are the active parts of the molecule where the chemical reactions actually happen. Once you can spot these patterns, you'll be able to predict how a molecule behaves without having to guess. It really simplifies how we categorize the organic world."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now, you might be wondering why we spend so much time memorizing these functional groups. The truth is, these aren't just shapes on a page; they are the active tools that make medicine actually work. Take isopropyl alcohol, for example. That hydroxyl group\u2014the OH\u2014is the secret weapon. It\u2019s what allows the alcohol to penetrate and disrupt the protective membranes of microbes on your skin, effectively neutralizing them. Then we have carboxylic acids. In a common drug like aspirin, this specific group is crucial because it dictates how the medication is absorbed into your bloodstream and eventually broken down by your liver. Finally, let's talk about amines. These nitrogen-based groups are incredibly common in everything from epinephrine to your favorite antihistamines. Think of an amine group like a specialized key. Its specific shape and charge allow the drug to lock perfectly into a biological receptor in your body, triggering the desired medical effect. When you look at a complex drug molecule, don't let the size intimidate you. Just look for these familiar groups, and you'll start to see exactly how that molecule is designed to interact with your biology."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, you might wonder why we spend so much time obsessing over where a single atom is placed. In organic chemistry, shape is everything. Think of it like a lock and key; if the key is bent just a tiny bit, it won't open the door. This is the core idea behind isomers. These are molecules that have the exact same ingredients\u2014the same number of carbons and hydrogens\u2014but they're assembled differently. Because their shapes differ, your body treats them as completely different substances. One version of a molecule might be a life-saving medicine, while its mirror image could be totally inactive or even harmful. As we move into biomolecules, keep this in mind: the way a molecule is folded or branched determines exactly how it functions in your cells. Structure isn't just a detail; it's the actual blueprint for biological function."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, let\u2019s dive into one of the most fascinating parts of organic chemistry: isomers. Think of isomers like a set of LEGO bricks. If I give you five red bricks and five blue bricks, you have a specific set of materials. But, you could use those exact same bricks to build a tall tower or a flat bridge. In chemistry, isomers work the same way. They share the identical molecular formula\u2014meaning they have the exact same number of atoms\u2014but those atoms are connected in different arrangements.\\n\\nYou might think a slight shift in connection wouldn't matter much, but in science, shape is everything. Even a tiny structural tweak can completely change how a molecule reacts or how it behaves in a living system. This is why isomers are a huge deal in pharmacology. Imagine a medication where one version of the molecule fits perfectly into a cell receptor to heal you, while its mirror image\u2014the other isomer\u2014doesn't fit at all, or worse, causes a harmful side effect. This is why chemists have to be incredibly precise. When it comes to the human body, the difference between a cure and a toxin often comes down to simple geometry."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let's dive into the four major biomolecules that make life possible. Think of these as the essential building blocks of every living organism. First, we have carbohydrates. These are your sugars and starches, like glucose, which act as the body's primary, fast-acting fuel source. When you need energy right now, your body turns here. For long-term storage, we look to lipids. These are the fats and oils you've likely heard of in a cholesterol panel. Beyond just storing energy for later, lipids are critical because they actually form the protective outer membrane of every single cell in your body. Next are proteins. These are constructed from smaller units called amino acids. Proteins are the versatile workers of the cell; they provide physical structure, transport molecules, and act as enzymes to speed up chemical reactions. Finally, we have nucleic acids, which are DNA and RNA. If the other molecules are the building materials, nucleic acids are the blueprints. They store and transmit the genetic instructions that tell the cell exactly how to function and grow. Each of these four groups plays a distinct but interconnected role in keeping you alive and healthy."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Now, before we dive deeper, let\u2019s get our vocabulary squared away. Organic chemistry sounds intimidating, but it\u2019s really just the study of carbon-based compounds. Think of carbon as the ultimate building block. When carbon bonds only with hydrogen, we call those hydrocarbons. Depending on how they connect, we categorize them as alkanes, alkenes, or alkynes. The difference is simply whether they share a single, double, or triple bond. Now, things get interesting with functional groups. These are specific clusters of atoms that act like a 'personality' for the molecule, giving it unique chemical properties. You'll also see the term isomer. This happens when two molecules have the exact same ingredients\u2014the same formula\u2014but are put together in different shapes. Finally, we have the big biological players. Carbohydrates are your body's quick-access energy, like sugars and starches. Proteins are the workhorses, built from smaller units called amino acids. And nucleic acids, which you know as DNA and RNA, are the blueprints that store all your genetic information. These terms are the foundation for everything else we'll cover in this unit, so take a moment to really let these definitions sink in before we move forward."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Take a deep breath and look at how far you've come. We started this journey with the basics of the scientific method and those tricky significant figures, and we've climbed through the complexities of atomic structure and the periodic table. You've already mastered the art of naming compounds and the logic of balancing chemical reactions. I know that moving into moles and stoichiometry can feel like a mountain to climb, but remember, those calculations are just a way of counting atoms on a scale we can actually see. We've explored how atoms bond to create shapes and how acids and bases interact to change the pH of a solution. Now, we've finally reached our final destination: Organic Chemistry. While the word 'organic' might sound intimidating, it really just means we are focusing on the incredible versatility of carbon. Carbon is the backbone of life, and by understanding its functional groups, we can unlock the secrets of the biomolecules that make up your own body. You have built a solid foundation over the last eleven topics, and all those pieces are about to click together. Let's dive into the world of carbon and wrap up this semester on a high note."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "We have officially made it! Take a second to really appreciate everything you\u2019ve tackled here. We started with the basics of measurement and atomic structure, moved through bonding and reactions, and finished with the heavy lifting of quantitative chemistry. Now, I want you to realize that this wasn't just about passing a test. Every single dosing calculation, IV drip rate, or critical lab value you will encounter in your clinical rotations traces directly back to the dimensional analysis and mole concepts we practiced in this room. You\u2019ve built the mathematical engine that powers safe patient care. As we touched on in our final topic, organic chemistry is the gateway to biochemistry\u2014which is essentially the chemistry of the human body itself. For those of you moving forward in your science track, this course has laid the groundwork for General Chemistry 103. But even if you're heading straight into your nursing core, remember that the chemistry is embedded in every one of those courses. You are now equipped with the tools to understand not just what a medication does, but why it works on a molecular level. It has been a privilege working with you all. Congratulations on completing CHEM 101!"
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>

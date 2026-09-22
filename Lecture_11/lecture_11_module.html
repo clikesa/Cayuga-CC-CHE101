@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic 11. Today, we are diving into one of the most practical areas of chemistry: acids and bases. Now, you've probably encountered these in your kitchen or under your sink, but we're going to move beyond the labels to understand what's actually happening at the molecular level. We will start by defining exactly what makes a substance acidic or basic, and then we'll tackle the pH scale to see how we quantify that intensity. Finally, we'll practice writing net ionic equations, which is just a fancy way of stripping away the 'spectator' ions to see the real chemical action. Since this is an asynchronous session, feel free to pause the video as you follow along with your notes. Let's get started and uncover the chemistry behind these everyday substances!"
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Alright, let's dive into the world of acids and bases. Now, you've probably used vinegar or baking soda at home, but in chemistry, we need a more precise way to define these substances. We'll start by comparing two major perspectives: the Arrhenius and Br\u00f8nsted-Lowry definitions. Essentially, we're moving from a simple view of what these chemicals produce to a deeper look at how they move protons around. From there, we'll explore water. It\u2019s fascinating because water can actually split itself apart, which is the secret behind the pH scale we use to measure acidity. We will also tackle the concept of electrolytes. You'll learn why some substances break apart completely in water to conduct electricity, while others stay mostly clumped together. Finally, we'll wrap up with net ionic equations. I know these can look intimidating at first, but they are actually just a way of cutting through the noise. Instead of writing out every single molecule, we'll learn to focus only on the specific ions that are actually doing the work in a reaction. It's all about simplifying the chaos to see the real chemistry happening. Let's get started."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we spend so much time on acids and bases. In healthcare, this isn't just theory\u2014it is a matter of life and death. Take your blood, for example. Your body keeps your blood pH in a tiny window between 7.35 and 7.45. If it drifts even slightly outside that range, you hit a state of acidosis or alkalosis, both of which are critical medical emergencies. To keep things stable, doctors often use sodium bicarbonate. This is a strong electrolyte that breaks apart in solution to buffer the blood and maintain that delicate balance. We see this same chemistry in simpler ways, too. When you have heartburn, you're dealing with excess hydrochloric acid in your stomach. An antacid is simply a base that neutralizes that acid to give you relief. Even a quick urinalysis strip uses these principles; by measuring pH, a clinician can spot early signs of kidney issues or an infection. Whether it is an IV drip or a simple over-the-counter tablet, the ability to manipulate pH is one of the most powerful tools in medicine. It\u2019s all about maintaining that internal equilibrium to keep the body functioning properly."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, when we talk about acids and bases, it\u2019s important to realize that there isn't just one way to define them. In chemistry, we actually use two different frameworks. One is a bit more restrictive, while the other is much broader, allowing us to categorize more substances. Don't worry if that sounds confusing at first; we're going to walk through both definitions step-by-step so you can see exactly how they differ."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Let\u2019s start with the foundation of acid-base chemistry. Long ago, a scientist named Svante Arrhenius gave us our first formal way to define these substances. He focused specifically on what happens when we dissolve things in water. According to him, an acid is simply any substance that increases the concentration of hydrogen ions\u2014those little H-plus particles\u2014once it hits the water. A classic example is hydrochloric acid. On the flip side, an Arrhenius base is something that increases the concentration of hydroxide ions, or OH-minus, like sodium hydroxide. Now, this is a great starting point because it's straightforward, but there is a catch. The biggest limitation here is that these definitions only work if water is the solvent. If we are dealing with a reaction in a different liquid, or maybe no liquid at all, the Arrhenius model completely breaks down. It just can't explain acid-base behavior outside of an aqueous environment. As we move forward, we'll see how later chemists expanded on this to create a more universal rule. For now, just remember that for Arrhenius, it's all about those H-plus and OH-minus ions appearing in water. Does that distinction make sense to everyone before we move on?"
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let's expand our horizons. Up until now, we've focused on the Arrhenius definition, which relies heavily on water. But chemistry happens in many environments, so we need a broader perspective. Enter the Br\u00f8nsted-Lowry definition. Instead of focusing on water, we're focusing on the movement of a single proton\u2014which is just a hydrogen ion, or H+. Think of this like a game of catch. The Br\u00f8nsted-Lowry acid is the pitcher; it\u2019s the proton donor that gives the H+ away. The base is the catcher; it\u2019s the proton acceptor that picks that H+ up. This shift in thinking is a game-changer because it allows us to identify acids and bases in reactions where water isn't even present. It's important to realize that this doesn't replace what we learned earlier. In fact, every Arrhenius acid is still a Br\u00f8nsted-Lowry acid, but this new definition simply casts a wider net. It gives us a more universal tool for understanding how these substances behave across different chemical settings. If you can track where that little proton is moving during a reaction, you've mastered the core of this concept. Let's take a moment to let that sink in before we move forward."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Let\u2019s put this into practice with a classic example: ammonia reacting with water. Now, at first glance, this might look confusing because we aren't adding a strong acid or base from a bottle. Instead, we just have ammonia dissolving in water. To figure out what's happening, we have to play detective and track the proton. Look at the water molecule. It starts as H2O but ends up as a hydroxide ion, OH minus. That means it lost a hydrogen ion. Now look at the ammonia. It starts as NH3 and becomes ammonium, NH4 plus. It clearly gained a proton. Based on our Bronsted-Lowry definitions, the species that gives away the proton is the acid, and the one that catches it is the base. So, in this specific reaction, water is actually acting as the acid, and ammonia is acting as the base. This is a great example of why the Bronsted-Lowry definition is so powerful; it allows us to identify acids and bases based on their behavior during the reaction, even when we aren't dealing with traditional strong acids. It's all about that proton transfer. Does that shift in perspective make sense to everyone?"
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, here is something that usually surprises people: even pure water isn't completely static. A tiny fraction of water molecules actually react with one another, splitting apart into ions. This natural process is the foundation for everything we're about to study. In fact, this specific self-reaction is exactly what allows us to define the pH scale and measure how acidic or basic a solution really is."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, here is something that feels counterintuitive: water actually reacts with itself. Even in a glass of pure water, a tiny fraction of molecules are constantly colliding and swapping protons. One water molecule steals a hydrogen ion from another, creating a hydronium ion and a hydroxide ion. It's a delicate, ongoing dance. \\n\\nWhat\u2019s really important is that these two ions exist in a strict mathematical balance called the water constant. At room temperature, if you multiply the concentration of hydronium by the concentration of hydroxide, you always get a specific, tiny number: ten to the negative fourteenth. In pure water, these two are perfectly equal, which is why we see that ten to the negative seventh value for both.\\n\\nBut here is the key takeaway for your lab work: this balance is like a seesaw. If you add an acid, you're pumping in more hydronium ions. To keep that mathematical product constant, the hydroxide levels must drop. If you add a base, the opposite happens. No matter how much you tilt the seesaw by adding chemicals, that final product always returns to ten to the negative fourteenth. It is a fundamental rule of aqueous chemistry that never changes."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let's tackle the pH scale. If we tried to track the actual concentration of hydrogen ions in a liquid, we'd be dealing with some incredibly tiny, clunky decimals that are a nightmare to write. To make our lives easier, we use a logarithmic formula to compress those massive ranges into a simple scale from zero to fourteen. Think of it as a shorthand for chemistry. In the middle, at seven, we have neutral substances like pure water. Anything below seven is acidic, and anything above seven is basic, or alkaline. But here is the part that usually trips people up: because this is a log scale, it isn't linear. Moving just one single digit on the scale actually represents a ten-fold difference in intensity. For example, a solution with a pH of four isn't just 'one step' more acidic than a pH of five; it actually contains ten times more hydrogen ions. If you move two steps, you're looking at a hundred-fold difference. It\u2019s a powerful way to measure chemical potency without needing a calculator for every single measurement. Take a moment to let that ten-fold jump sink in, as it's the key to understanding how these substances actually behave."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Let\u2019s put this formula into practice with a real example. Imagine we have a solution where the hydrogen ion concentration is 1.0 times 10 to the negative fourth molar. Now, remember that those brackets just mean 'concentration of.' To find the pH, we take the negative log of that value. If you plug this into your calculator, the log of 10 to the negative fourth is simply negative four. But since our formula has a negative sign in front, those two negatives cancel out, leaving us with a final pH of 4. Now, think back to our pH scale. Since 7 is neutral, a value of 4 tells us this solution is definitely acidic. It\u2019s a great way to see how a very small, clunky scientific number transforms into a simple, manageable digit that tells us exactly what the substance is."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now, let's talk about electrolytes. In simple terms, an electrolyte is just a substance that breaks apart into ions when it dissolves in water. Some do this completely\u2014we call those strong electrolytes\u2014while others only partially break apart. This distinction is huge because it changes how we write our chemical equations. When we write a net ionic equation, we want to cut through the noise. Instead of listing every single molecule present, we only focus on the species that actually change during the reaction. We ignore the 'spectator ions'\u2014those ions that just float around without participating. By stripping away the spectators, we get a clear, concise picture of the actual chemistry happening in the beaker. It turns a cluttered equation into a simple story of what is truly reacting. Does that conceptual shift make sense before we try a few examples?"
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let's clear up a common point of confusion regarding electrolytes. When we talk about 'strong' and 'weak' electrolytes, we aren't talking about how much of a chemical we poured into the beaker. Instead, we are talking about what happens to those molecules once they hit the water. Think of a strong electrolyte as a social butterfly; the moment it enters the solution, it completely breaks apart, or dissociates, into ions. This is what we see with strong acids and most soluble salts. Everything splits up. On the other hand, a weak electrolyte is more reserved. Only a tiny fraction of the molecules break apart, while the vast majority stay glued together as intact molecules. This is a crucial distinction because students often mistake 'strength' for 'concentration.' Remember, you can have a very dilute solution\u2014meaning there isn't much of the chemical present\u2014but if it's a strong acid, every single one of those few molecules is still fully ionized. Strength is about the percentage of dissociation, not the amount of stuff in the flask. If it splits completely, it's strong. If it only partially splits, it's weak. Does that distinction make sense as we move forward?"
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, not all acids and bases behave the same way. Think of strong acids and bases as 'all-in' players; they completely break apart in water, releasing every single particle they can. Weak ones are more hesitant. They only partially dissociate, meaning most of the molecules stay together. This difference in how they break down is exactly why some chemicals are much more reactive or corrosive than others."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let\u2019s talk about how we actually visualize what's happening inside a beaker. When we write a full ionic equation, we aren't just listing formulas; we are showing the reality of the solution. If a substance is a strong electrolyte, it doesn't stay together as a molecule\u2014it splits apart. So, we write every single one of those ions separately to show exactly what is floating around in the water.\\n\\nAs you look at your equations, you'll notice some ions appear exactly the same on both the left and right sides. We call these spectator ions. Think of them like fans at a football game; they are definitely there, and they're part of the environment, but they aren't actually playing in the game or changing the outcome. They're just along for the ride.\\n\\nTo get to the heart of the chemistry, we perform a bit of cleanup. By canceling out those spectator ions from both sides, we arrive at the net ionic equation. This is the most important part because it strips away the noise and reveals only the species that are truly reacting. It tells us exactly who is bonding and what is actually transforming during the reaction."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let\u2019s put this into practice with a real example. Imagine we mix silver nitrate and sodium chloride. At first glance, the full equation looks like a lot is happening, but we need to figure out what is actually changing. When these dissolve in water, they split into individual ions, which is why we write out the full ionic version. Now, take a close look at the sodium and nitrate ions. Notice how they look exactly the same on both the left and right sides? They aren't forming a new bond or changing state; they're just floating along for the ride. We call these spectator ions because, much like fans at a game, they're present, but they aren't playing in the action. To find the real story, we simply cross those spectators out. Once they're gone, we're left with the net ionic equation. Here, we see that the silver ion and chloride ion are the only ones truly reacting to form a solid precipitate. This final, slimmed-down equation is the most powerful way to represent the chemistry because it strips away the noise and shows us exactly which particles are interacting to create a new substance."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we dive into the calculations, let's get our vocabulary straight, because chemistry is really just a language. We have two main ways of defining acids and bases. The Arrhenius definition is the classic approach, focusing on what happens in water. But the Br\u00f8nsted-Lowry definition is more flexible; it simply asks: is a proton being donated or accepted? Think of it like a game of catch with a single hydrogen ion. Now, we track these ions using the pH scale. Since the concentration of hydrogen ions is usually a tiny, awkward decimal, we use a negative log to turn it into a simple number we can actually work with. You'll also see the water constant, K-w, which reminds us that hydrogen and hydroxide ions exist in a delicate balance. Finally, let's talk about how these substances behave in solution. Strong electrolytes are the 'all-in' players\u2014they break apart completely. Weak electrolytes are more hesitant, only partially ionizing. When we write these reactions, we often ignore the 'spectator ions'\u2014those ions that just hang out without actually doing anything. By removing them, we get a net ionic equation, which shows us the real chemistry happening."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Alright, let's take a breath and tie everything together. We've covered a lot of ground. Remember, we started with Arrhenius, who focused on what happens specifically in water, but then we expanded our view with Br\u00f8nsted-Lowry to see acids and bases as partners in a proton dance. Now, when you see those tiny, awkward concentrations of hydrogen ions, just remember that the pH scale is our shortcut. It takes those complex exponents and compresses them into a simple zero-to-fourteen scale that's much easier to manage. We also distinguished between strong electrolytes, which dive completely into the solution, and weak ones, which prefer to stay mostly together. And when we wrote those net ionic equations, we were basically clearing the clutter\u2014removing the spectator ions so we could focus only on the chemistry that actually matters. If we have time as we wrap up the semester, our next stop is Topic twelve, where we'll get a brief introduction to organic chemistry. This is where we move from simple ions to the fascinating world of carbon-based molecules. Take a moment to review your notes, and feel free to reach out if any of these connections still feel a bit fuzzy."
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
