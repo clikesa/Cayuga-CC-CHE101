@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEM 101 Topic 9: Guided Assignment</title>
+    <style>
+        :root {
+            --navy: #14213D;
+            --teal: #1C7293;
+            --orange: #F4A100;
+            --light-bg: #F1F6F8;
+            --text: #333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: var(--navy);
+            font-family: 'Cambria', 'Georgia', serif;
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .instructions {
+            background: #e7f3f7;
+            border-left: 5px solid var(--teal);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: var(--navy);
+            font-family: 'Cambria', serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .problem:hover {
+            background: #fafafa;
+        }
+        .problem-header {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #555;
+        }
+        .step {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .step-label {
+            font-weight: bold;
+            color: var(--navy);
+        }
+        .result {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHEM 101 Topic 9: Stoichiometry Calculations<br><small style="font-size: 0.6em; color: #666;">Guided Assignment</small></h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong> This assignment focuses on stoichiometry: the quantitative relationship between reactants and products in a chemical reaction. You will practice the "Stoichiometry Roadmap" to convert between masses, moles, and volumes of solutions. To get the most out of this exercise, please work through these solutions yourself on a separate sheet of paper. Practice using the analysis steps (Given &rarr; Bridge &rarr; Calculate &rarr; Check) for each problem to build your muscle memory before attempting the graded problem set for Topic 9.
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 1: Mole-Mole Calculations</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 1: Entry Level (Basic Ratio)</span>
+                Using the balanced equation N<sub>2</sub> + 3H<sub>2</sub> &rarr; 2NH<sub>3</sub>, how many moles of NH<sub>3</sub> are produced from 2.50 mol of N<sub>2</sub>?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 2.50 mol N<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Mole ratio from coefficients: 1 mol N<sub>2</sub> &rarr; 2 mol NH<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 2.50 mol N<sub>2</sub> &times; (2 mol NH<sub>3</sub> / 1 mol N<sub>2</sub>) = 5.00 mol NH<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Check:</span> The ratio is 1:2, so the product should be double the reactant.</span>
+                    <div class="result">Result: 5.00 mol NH<sub>3</sub>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 2: Medium Level (Inverse Ratio)</span>
+                Using the same equation (N<sub>2</sub> + 3H<sub>2</sub> &rarr; 2NH<sub>3</sub>), how many moles of H<sub>2</sub> are required to produce 4.00 mol of NH<sub>3</sub>?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 4.00 mol NH<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Mole ratio: 2 mol NH<sub>3</sub> &rarr; 3 mol H<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 4.00 mol NH<sub>3</sub> &times; (3 mol H<sub>2</sub> / 2 mol NH<sub>3</sub>) = 6.00 mol H<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Check:</span> The ratio is 2:3. 4 mol is double the coefficient of NH<sub>3</sub>, so we need double the coefficient of H<sub>2</sub>.</span>
+                    <div class="result">Result: 6.00 mol H<sub>2</sub>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 3: Difficult Level (Identifying the Ratio)</span>
+                For the reaction 4Al + 3O<sub>2</sub> &rarr; 2Al<sub>2</sub>O<sub>3</sub>, how many moles of O<sub>2</sub> are needed to react completely with 1.25 mol of Al?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 1.25 mol Al.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Mole ratio: 4 mol Al &rarr; 3 mol O<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 1.25 mol Al &times; (3 mol O<sub>2</sub> / 4 mol Al) = 0.938 mol O<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Check:</span> The ratio is 4:3, so we need slightly less O<sub>2</sub> than we have Al.</span>
+                    <div class="result">Result: 0.938 mol O<sub>2</sub>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 2: Mole-Mass Calculations</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 4: Entry Level (Mass to Mass)</span>
+                Using N<sub>2</sub> + 3H<sub>2</sub> &rarr; 2NH<sub>3</sub>, how many grams of NH<sub>3</sub> are produced from 5.00 g of N<sub>2</sub>? (Molar masses: N<sub>2</sub> = 28.02 g/mol, NH<sub>3</sub> = 17.03 g/mol)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Grams &rarr; Moles):</span> 5.00 g N<sub>2</sub> &div; 28.02 g/mol = 0.178 mol N<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Step 2 (Mole Ratio):</span> 0.178 mol N<sub>2</sub> &times; (2 mol NH<sub>3</sub> / 1 mol N<sub>2</sub>) = 0.357 mol NH<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Step 3 (Moles &rarr; Grams):</span> 0.357 mol NH<sub>3</sub> &times; 17.03 g/mol = 6.08 g.</span>
+                    <div class="result">Result: 6.08 g NH<sub>3</sub>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 5: Medium Level (Reverse Roadmap)</span>
+                How many grams of Fe are needed to produce 20.0 g of Fe<sub>2</sub>O<sub>3</sub> in the reaction 4Fe + 3O<sub>2</sub> &rarr; 2Fe<sub>2</sub>O<sub>3</sub>? (Molar masses: Fe = 55.85 g/mol, Fe<sub>2</sub>O<sub>3</sub> = 159.69 g/mol)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Grams &rarr; Moles):</span> 20.0 g Fe<sub>2</sub>O<sub>3</sub> &div; 159.69 g/mol = 0.125 mol Fe<sub>2</sub>O<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Step 2 (Mole Ratio):</span> 0.125 mol Fe<sub>2</sub>O<sub>3</sub> &times; (4 mol Fe / 2 mol Fe<sub>2</sub>O<sub>3</sub>) = 0.250 mol Fe.</span>
+                    <span class="step"><span class="step-label">Step 3 (Moles &rarr; Grams):</span> 0.250 mol Fe &times; 55.85 g/mol = 13.96 g.</span>
+                    <div class="result">Result: 13.96 g Fe.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 6: Difficult Level (Multi-Step Synthesis)</span>
+                In the reaction C<sub>3</sub>H<sub>8</sub> + 5O<sub>2</sub> &rarr; 3CO<sub>2</sub> + 4H<sub>2</sub>O, if 100 g of C<sub>3</sub>H<sub>8</sub> is burned, how many grams of H<sub>2</sub>O are produced? (Molar masses: C<sub>3</sub>H<sub>8</sub> = 44.11 g/mol, H<sub>2</sub>O = 18.02 g/mol)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1:</span> 100 g C<sub>3</sub>H<sub>8</sub> &div; 44.11 g/mol = 2.267 mol C<sub>3</sub>H<sub>8</sub>.</span>
+                    <span class="step"><span class="step-label">Step 2:</span> 2.267 mol C<sub>3</sub>H<sub>8</sub> &times; (4 mol H<sub>2</sub>O / 1 mol C<sub>3</sub>H<sub>8</sub>) = 9.068 mol H<sub>2</sub>O.</span>
+                    <span class="step"><span class="step-label">Step 3:</span> 9.068 mol H<sub>2</sub>O &times; 18.02 g/mol = 163.4 g.</span>
+                    <div class="result">Result: 163.4 g H<sub>2</sub>O.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 3: Molar Solutions</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 7: Entry Level (Volume to Moles)</span>
+                How many moles of HCl are in 250 mL of a 0.500 M solution?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> V = 0.250 L; M = 0.500 mol/L.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> moles = Molarity &times; Volume.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 0.500 mol/L &times; 0.250 L = 0.125 mol.</span>
+                    <div class="result">Result: 0.125 mol HCl.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 8: Medium Level (Molarity to Mass)</span>
+                What mass of NaCl is needed to prepare 500 mL of a 0.150 M solution? (Molar mass NaCl = 58.44 g/mol)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Volume &rarr; Moles):</span> 0.150 mol/L &times; 0.500 L = 0.075 mol NaCl.</span>
+                    <span class="step"><span class="step-label">Step 2 (Moles &rarr; Grams):</span> 0.075 mol &times; 58.44 g/mol = 4.38 g.</span>
+                    <div class="result">Result: 4.38 g NaCl.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 9: Difficult Level (Solution Stoichiometry)</span>
+                50.0 mL of 0.100 M AgNO<sub>3</sub> reacts with NaCl. How many grams of AgCl precipitate will form? (AgNO<sub>3</sub> + NaCl &rarr; AgCl + NaNO<sub>3</sub>; Molar mass AgCl = 143.32 g/mol)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Volume &rarr; Moles):</span> 0.100 mol/L &times; 0.0500 L = 0.00500 mol AgNO<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Step 2 (Mole Ratio):</span> Ratio is 1:1 &rarr; 0.00500 mol AgCl.</span>
+                    <span class="step"><span class="step-label">Step 3 (Moles &rarr; Grams):</span> 0.00500 mol &times; 143.32 g/mol = 0.717 g.</span>
+                    <div class="result">Result: 0.717 g AgCl.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 4: Percent Yield</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 10: Entry Level (Basic Yield)</span>
+                If a reaction has a theoretical yield of 10.0 g but only 8.5 g is collected, what is the percent yield?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Actual = 8.5 g; Theoretical = 10.0 g.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Percent Yield = (Actual / Theoretical) &times; 100%.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> (8.5 &div; 10.0) &times; 100% = 85%.</span>
+                    <div class="result">Result: 85%.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 11: Medium Level (Finding Actual Yield)</span>
+                A reaction with a theoretical yield of 25.0 g has a percent yield of 72%. What was the actual yield?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Theoretical = 25.0 g; Yield = 0.72.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> Actual = Theoretical &times; Yield = 25.0 g &times; 0.72 = 18.0 g.</span>
+                    <div class="result">Result: 18.0 g.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 12: Difficult Level (Full Chain: Mass &rarr; Theoretical &rarr; Percent)</span>
+                In the reaction 2H<sub>2</sub> + O<sub>2</sub> &rarr; 2H<sub>2</sub>O, 2.00 g of H<sub>2</sub> is reacted. If 16.0 g of H<sub>2</sub>O is actually produced, what is the percent yield? (Molar masses: H<sub>2</sub> = 2.02 g/mol, H<sub>2</sub>O = 18.02 g/mol)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Theoretical Yield):</span> 2.00 g H<sub>2</sub> &div; 2.02 g/mol = 0.99 mol H<sub>2</sub>. 0.99 mol H<sub>2</sub> &times; (2 mol H<sub>2</sub>O / 2 mol H<sub>2</sub>) = 0.99 mol H<sub>2</sub>O. 0.99 mol H<sub>2</sub>O &times; 18.02 g/mol = 17.84 g (Theoretical).</span>
+                    <span class="step"><span class="step-label">Step 2 (Percent Yield):</span> (16.0 g &div; 17.84 g) &times; 100% = 89.7%.</span>
+                    <div class="result">Result: 89.7%.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            CHE 101 &bull; Topic 9 &bull; Cayuga-CC &bull; All materials property of Dr. Patridge
+        </div>
+    </div>
+</body>
+</html>

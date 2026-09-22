@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEM 101 Topic 10: Guided Assignment</title>
+    <style>
+        :root {
+            --navy: #14213D;
+            --teal: #1C7293;
+            --orange: #F4A100;
+            --light-bg: #F1F6F8;
+            --text: #333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: var(--navy);
+            font-family: 'Cambria', 'Georgia', serif;
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .instructions {
+            background: #e7f3f7;
+            border-left: 5px solid var(--teal);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: var(--navy);
+            font-family: 'Cambria', serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .problem:hover {
+            background: #fafafa;
+        }
+        .problem-header {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #555;
+        }
+        .step {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .step-label {
+            font-weight: bold;
+            color: var(--navy);
+        }
+        .result {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHEM 101 Topic 10: Chemical Bonds<br><small style="font-size: 0.6em; color: #666;">Guided Assignment</small></h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong> This assignment explores how atoms bond to form compounds and the 3D shapes those molecules take. You will practice distinguishing between ionic and covalent bonds, drawing electron dot structures, and predicting molecular geometry using VSEPR theory. To get the most out of this exercise, please work through these solutions yourself on a separate sheet of paper. Practice using the analysis steps (Identify &rarr; Classify &rarr; Draw/Predict &rarr; Check) for each problem to build your muscle memory before attempting the graded problem set for Topic 10.
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 1: Ionic and Covalent Bonds</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 1: Entry Level (Bond Identification)</span>
+                Determine if the bond in NaCl is ionic or covalent.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Na is a metal; Cl is a nonmetal.</span>
+                    <span class="step"><span class="step-label">Classify:</span> Bonding between a metal and a nonmetal involves electron transfer.</span>
+                    <div class="result">Result: Ionic bond.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 2: Medium Level (Bond Characteristics)</span>
+                Contrast the melting points and electrical conductivity of an ionic compound (like MgO) versus a covalent molecule (like CO<sub>2</sub>).
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> MgO is ionic (metal + nonmetal); CO<sub>2</sub> is covalent (nonmetal + nonmetal).</span>
+                    <span class="step"><span class="step-label">Compare (Melting Point):</span> Ionic bonds form rigid lattices &rarr; High melting point. Covalent molecules are held by weaker intermolecular forces &rarr; Low to moderate melting point.</span>
+                    <span class="step"><span class="step-label">Compare (Conductivity):</span> MgO conducts electricity when dissolved (ions separate). CO<sub>2</sub> generally does not conduct.</span>
+                    <div class="result">Result: MgO has a higher melting point and conducts when dissolved; CO<sub>2</sub> has a lower melting point and does not conduct.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 3: Difficult Level (Structure Difference)</span>
+                Explain why NaCl forms a crystal lattice while H<sub>2</sub>O forms individual molecules.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Analysis:</span> NaCl is held by omnidirectional electrostatic attraction between Na<sup>+</sup> and Cl<sup>-</sup> ions, creating a repeating 3D grid (lattice). H<sub>2</sub>O is held by specific shared electron pairs between O and H, creating a distinct, limited unit (molecule).</span>
+                    <div class="result">Result: Ionic bonds create lattices; covalent bonds create molecules.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 2: Electron Dot Structures</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 4: Entry Level (Valence Count)</span>
+                How many total valence electrons are available to draw the structure for CH<sub>4</sub> (Methane)?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> C (Group 14) = 4 valence electrons. H (Group 1) = 1 valence electron &times; 4 atoms = 4 electrons.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 4 + 4 = 8 total valence electrons.</span>
+                    <div class="result">Result: 8 valence electrons.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 5: Medium Level (Step-by-Step Drawing)</span>
+                Draw the electron dot structure for NF<sub>3</sub>.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Count):</span> N(5) + 3 &times; F(7) = 5 + 21 = 26 total electrons.</span>
+                    <span class="step"><span class="step-label">Step 2 (Arrange):</span> N is the center atom, F atoms surround it.</span>
+                    <span class="step"><span class="step-label">Step 3 (Bond):</span> Place one pair between N and each F. (3 bonds &times; 2e<sup>-</sup> = 6e<sup>-</sup> used).</span>
+                    <span class="step"><span class="step-label">Step 4 (Fill):</span> Distribute remaining 20e<sup>-</sup>. Give each F three lone pairs (6 each &times; 3 = 18e<sup>-</sup>). Place the last pair on N.</span>
+                    <div class="result">Result: N in center with one lone pair and three single bonds to F atoms.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 6: Difficult Level (Multiple Bonds)</span>
+                Draw the electron dot structure for CO<sub>2</sub>.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Count):</span> C(4) + 2 &times; O(6) = 16 total electrons.</span>
+                    <span class="step"><span class="step-label">Step 2 (Arrange):</span> C is the center atom.</span>
+                    <span class="step"><span class="step-label">Step 3 (Bond):</span> Place single bonds O-C-O. (4 electrons used, 12 remaining).</span>
+                    <span class="step"><span class="step-label">Step 4 (Fill):</span> Fill O octets. (6 each &times; 2 = 12e<sup>-</sup> used).</span>
+                    <span class="step"><span class="step-label">Check Octets:</span> O atoms are full, but C only has 4 electrons. Move one lone pair from each O to form double bonds.</span>
+                    <div class="result">Result: O=C=O with two lone pairs on each Oxygen.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 3: Molecular Geometry (VSEPR)</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 7: Entry Level (Linear Shape)</span>
+                What is the molecular geometry of BeCl<sub>2</sub> if the central Be atom has 2 bonding pairs and 0 lone pairs?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> 2 electron groups.</span>
+                    <span class="step"><span class="step-label">VSEPR Rule:</span> Two groups repel to opposite sides (180&deg;).</span>
+                    <div class="result">Result: Linear.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 8: Medium Level (Bent Shape)</span>
+                Using the structure of H<sub>2</sub>O (2 bonding pairs, 2 lone pairs on O), explain why the shape is "Bent" rather than "Linear."
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> 4 total electron groups around O.</span>
+                    <span class="step"><span class="step-label">VSEPR Rule:</span> Lone pairs occupy more space and repel bonding pairs more strongly.</span>
+                    <span class="step"><span class="step-label">Explain:</span> The two lone pairs push the O-H bonds closer together, creating an angle of approximately 104.5&deg;.</span>
+                    <div class="result">Result: Bent.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 9: Difficult Level (Tetrahedral Prediction)</span>
+                Predict the shape of CCl<sub>4</sub>.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> C is the center; it has 4 bonding pairs and 0 lone pairs.</span>
+                    <span class="step"><span class="step-label">VSEPR Rule:</span> 4 groups arrange themselves as far apart as possible in 3D space.</span>
+                    <div class="result">Result: Tetrahedral.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 4: Coordinate Bonds & Polarity</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 10: Entry Level (Coordinate Bonds)</span>
+                In hemoglobin, how does the iron (Fe) atom bond to oxygen?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> The oxygen molecule donates both electrons of the shared pair.</span>
+                    <span class="step"><span class="step-label">Classify:</span> This "one-sided" sharing is a coordinate covalent bond.</span>
+                    <div class="result">Result: Coordinate covalent bond.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 11: Medium Level (Bond Polarity)</span>
+                Is the C-O bond in CO<sub>2</sub> polar or non-polar? Justify using electronegativity.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Oxygen is significantly more electronegative than Carbon.</span>
+                    <span class="step"><span class="step-label">Classify:</span> Electrons are shared unequally, pulled toward the Oxygen.</span>
+                    <div class="result">Result: Polar covalent bond.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 12: Difficult Level (Molecular Polarity)</span>
+                Even though the C-O bonds in CO<sub>2</sub> are polar, the entire CO<sub>2</sub> molecule is non-polar. Explain why.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> CO<sub>2</sub> is linear (O=C=O).</span>
+                    <span class="step"><span class="step-label">Analyze:</span> The two polar bonds point in exactly opposite directions.</span>
+                    <div class="result">Result: The bond polarities cancel each other out, resulting in a non-polar molecule.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            CHE 101 &bull; Topic 10 &bull; Cayuga-CC &bull; All materials property of Dr. Patridge
+        </div>
+    </div>
+</body>
+</html>

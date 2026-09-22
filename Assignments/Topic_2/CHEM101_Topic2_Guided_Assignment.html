@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEM 101 Topic 2: Guided Assignment</title>
+    <style>
+        :root {
+            --navy: #14213D;
+            --teal: #1C7293;
+            --orange: #F4A100;
+            --light-bg: #F1F6F8;
+            --text: #333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: var(--navy);
+            font-family: 'Cambria', 'Georgia', serif;
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .instructions {
+            background: #e7f3f7;
+            border-left: 5px solid var(--teal);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: var(--navy);
+            font-family: 'Cambria', serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .problem:hover {
+            background: #fafafa;
+        }
+        .problem-header {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #555;
+        }
+        .step {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .step-label {
+            font-weight: bold;
+            color: var(--navy);
+        }
+        .result {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHEM 101 Topic 2: Fundamental Measurements<br><small style="font-size: 0.6em; color: #666;">Guided Assignment</small></h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong> This assignment focuses on the measurement toolkit required for chemistry and healthcare. To get the most out of this exercise, please work through these solutions yourself on a separate sheet of paper. Practice using the guided method steps (Identify Given &rarr; Identify Desired &rarr; Find Factor &rarr; Set Up Fractions &rarr; Calculate &rarr; Check) for each problem to build your muscle memory before attempting the graded problem set for Topic 2.
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 1: The Metric System & Dimensional Analysis</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 1: Entry Level (Simple Conversion)</span>
+                A patient is prescribed 0.500 grams of a medication. How many milligrams (mg) is this?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 0.500 g</span>
+                    <span class="step"><span class="step-label">Desired:</span> mg</span>
+                    <span class="step"><span class="step-label">Factor:</span> 1 g = 1,000 mg</span>
+                    <span class="step"><span class="step-label">Set Up:</span> 0.500 g &times; (1,000 mg / 1 g)</span>
+                    <span class="step"><span class="step-label">Calculation:</span> 0.500 &times; 1,000 = 500 mg</span>
+                    <span class="step"><span class="step-label">Check:</span> Converting from a larger unit (g) to a smaller unit (mg) should result in a larger number. 500 > 0.500. Correct.</span>
+                    <div class="result">Result: 500 mg</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 2: Medium Level (Clinical Application)</span>
+                A medication dose is listed as 125 mcg (micrograms). How many milligrams (mg) is this?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 125 mcg</span>
+                    <span class="step"><span class="step-label">Desired:</span> mg</span>
+                    <span class="step"><span class="step-label">Factor:</span> 1,000 mcg = 1 mg</span>
+                    <span class="step"><span class="step-label">Set Up:</span> 125 mcg &times; (1 mg / 1,000 mcg)</span>
+                    <span class="step"><span class="step-label">Calculation:</span> 125 &div; 1,000 = 0.125 mg</span>
+                    <span class="step"><span class="step-label">Check:</span> mcg is significantly smaller than mg, so the numerical value should decrease. Correct.</span>
+                    <div class="result">Result: 0.125 mg</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 3: Difficult Level (Multi-step Conversion)</span>
+                A laboratory sample requires 0.045 kg of a reagent. If the reagent is only available in milligram (mg) increments, how many milligrams must be weighed out?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 0.045 kg</span>
+                    <span class="step"><span class="step-label">Desired:</span> mg</span>
+                    <span class="step"><span class="step-label">Factors:</span> 1 kg = 1,000 g and 1 g = 1,000 mg</span>
+                    <span class="step"><span class="step-label">Set Up:</span> 0.045 kg &times; (1,000 g / 1 kg) &times; (1,000 mg / 1 g)</span>
+                    <span class="step"><span class="step-label">Calculation:</span> 0.045 &times; 1,000 &times; 1,000 = 45,000 mg</span>
+                    <span class="step"><span class="step-label">Check:</span> kg is very large compared to mg, so the number should increase significantly. Correct.</span>
+                    <div class="result">Result: 45,000 mg</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 2: Scientific Notation</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 4: Entry Level (Standard to Scientific)</span>
+                The speed of light is approximately 300,000,000 m/s. Write this in scientific notation.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Process:</span> Move the decimal point to the left until you have a value between 1 and 10.</span>
+                    <span class="step"><span class="step-label">Step:</span> Move decimal 8 places left: 3.00 &times; 10<sup>8</sup> m/s.</span>
+                    <div class="result">Result: 3.00 &times; 10<sup>8</sup> m/s</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 5: Medium Level (Scientific to Standard)</span>
+                A sample has a mass of 4.15 &times; 10<sup>-4</sup> g. Write this in standard decimal form.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Process:</span> Negative exponent means move the decimal to the left.</span>
+                    <span class="step"><span class="step-label">Step:</span> Move decimal 4 places left: 0.000415 g.</span>
+                    <div class="result">Result: 0.000415 g</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 6: Difficult Level (Small Scale Precision)</span>
+                The diameter of a specific protein is 0.0000000052 meters. Write this in scientific notation and express it in nanometers (nm), where 1 nm = 10<sup>-9</sup> m.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step A (Scientific):</span> Move decimal 9 places right: 5.2 &times; 10<sup>-9</sup> m.</span>
+                    <span class="step"><span class="step-label">Step B (Conversion):</span> 5.2 &times; 10<sup>-9</sup> m &times; (1 nm / 10<sup>-9</sup> m) = 5.2 nm.</span>
+                    <div class="result">Result: 5.2 &times; 10<sup>-9</sup> m or 5.2 nm</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 3: Significant Figures</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 7: Entry Level (Counting Sig Figs)</span>
+                Determine the number of sig figs in the following measurements: a) 0.0045 g, b) 105.0 mL.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Analysis a:</span> 0.0045 &rarr; <strong>2 sig figs</strong> (leading zeros don't count).</span>
+                    <span class="step"><span class="step-label">Analysis b:</span> 105.0 &rarr; <strong>4 sig figs</strong> (zeros between non-zeros and trailing zeros with a decimal count).</span>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 8: Medium Level (Basic Calculation Rounding)</span>
+                Calculate the area of a lab slide: 2.5 cm &times; 2.55 cm.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Calculation:</span> 2.5 &times; 2.55 = 6.375 cm<sup>2</sup>.</span>
+                    <span class="step"><span class="step-label">Rounding Rule:</span> Round to the fewest total sig figs.</span>
+                    <span class="step"><span class="step-label">Analysis:</span> 2.5 has 2 sig figs; 2.55 has 3.</span>
+                    <div class="result">Result: 6.4 cm<sup>2</sup></div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 9: Difficult Level (Mixed Operation Rounding)</span>
+                A technician combines three solutions: 12.11 g, 1.1 g, and 0.045 g. They then divide the total mass by a volume of 5.0 mL. What is the final result rounded to the correct sig figs?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step A (Addition):</span> 12.11 + 1.1 + 0.045 = 13.255 g.</span>
+                    <span class="step"><span class="step-label">Rounding A:</span> Round to fewest decimal places (1 decimal place from 1.1). Result = 13.3 g.</span>
+                    <span class="step"><span class="step-label">Step B (Division):</span> 13.3 g &div; 5.0 mL = 2.66 g/mL.</span>
+                    <span class="step"><span class="step-label">Rounding B:</span> Round to fewest total sig figs (2 sig figs from 5.0).</span>
+                    <div class="result">Result: 2.7 g/mL</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 4: Temperature & Density</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 10: Entry Level (Temp Conversion)</span>
+                A solution is stored at 25&deg;C. What is this temperature in Kelvin?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Formula:</span> K = &deg;C + 273</span>
+                    <span class="step"><span class="step-label">Calculation:</span> 25 + 273 = 298 K</span>
+                    <div class="result">Result: 298 K</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 11: Medium Level (Density Calculation)</span>
+                A piece of metal has a mass of 27.0 g and a volume of 10.0 mL. Calculate the density.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Formula:</span> Density = mass &div; volume</span>
+                    <span class="step"><span class="step-label">Calculation:</span> 27.0 g &div; 10.0 mL = 2.70 g/mL</span>
+                    <span class="step"><span class="step-label">Sig Fig Check:</span> Both inputs have 3 sig figs, so the result should have 3.</span>
+                    <div class="result">Result: 2.70 g/mL</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 12: Difficult Level (Clinical Interpretation)</span>
+                A 10.0 mL urine sample has a mass of 10.25 g. Calculate the density and determine if it falls within the normal clinical range of 1.005&ndash;1.030 g/mL. If the density were 1.050 g/mL, what might that suggest about the patient's hydration?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Calculation:</span> 10.25 g &div; 10.0 mL = 1.025 g/mL</span>
+                    <span class="step"><span class="step-label">Interpretation:</span> 1.025 is within the normal range.</span>
+                    <span class="step"><span class="step-label">Advanced Analysis:</span> A value of 1.050 g/mL is higher than normal, meaning the urine is more dense (more solutes/less water), which typically suggests dehydration.</span>
+                    <div class="result">Result: 1.025 g/mL (Normal)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            CHE 101 &bull; Topic 2 &bull; Cayuga-CC &bull; All materials property of Dr. Patridge
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEM 101 Topic 11: Guided Assignment</title>
+    <style>
+        :root {
+            --navy: #14213D;
+            --teal: #1C7293;
+            --orange: #F4A100;
+            --light-bg: #F1F6F8;
+            --text: #333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: var(--navy);
+            font-family: 'Cambria', 'Georgia', serif;
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .instructions {
+            background: #e7f3f7;
+            border-left: 5px solid var(--teal);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: var(--navy);
+            font-family: 'Cambria', serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .problem:hover {
+            background: #fafafa;
+        }
+        .problem-header {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #555;
+        }
+        .step {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .step-label {
+            font-weight: bold;
+            color: var(--navy);
+        }
+        .result {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHEM 101 Topic 11: Acids and Bases<br><small style="font-size: 0.6em; color: #666;">Guided Assignment</small></h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong> This assignment focuses on the definitions of acids and bases, the pH scale, and the way electrolytes behave in solution. You will practice identifying proton donors and acceptors, calculating pH, and simplifying chemical equations into net ionic forms. To get the most out of this exercise, please work through these solutions yourself on a separate sheet of paper. Practice using the analysis steps (Identify &rarr; Classify &rarr; Calculate/Solve &rarr; Check) for each problem to build your muscle memory before attempting the graded problem set for Topic 11.
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 1: Defining Acids and Bases</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 1: Entry Level (Arrhenius Definition)</span>
+                Is KOH an Arrhenius acid or an Arrhenius base? Explain why.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> KOH dissociates in water to produce K<sup>+</sup> and OH<sup>-</sup>.</span>
+                    <span class="step"><span class="step-label">Classify:</span> A substance that increases the concentration of OH<sup>-</sup> ions in water is an Arrhenius base.</span>
+                    <div class="result">Result: Arrhenius base.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 2: Medium Level (Bronsted-Lowry Identification)</span>
+                In the reaction HF + H<sub>2</sub>O &rightleftharpoons; F<sup>-</sup> + H<sub>3</sub>O<sup>+</sup>, identify the Bronsted-Lowry acid and base.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> HF becomes F<sup>-</sup> (lost an H<sup>+</sup>). H<sub>2</sub>O becomes H<sub>3</sub>O<sup>+</sup> (gained an H<sup>+</sup>).</span>
+                    <span class="step"><span class="step-label">Classify:</span> The proton (H<sup>+</sup>) donor is the acid; the proton acceptor is the base.</span>
+                    <div class="result">Result: Acid: HF; Base: H<sub>2</sub>O.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 3: Difficult Level (Broader Definitions)</span>
+                Why is the Bronsted-Lowry definition considered "broader" than the Arrhenius definition?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Analysis:</span> The Arrhenius definition requires the reaction to happen in water and produce H<sup>+</sup> or OH<sup>-</sup>. The Bronsted-Lowry definition focuses only on the transfer of a proton (H<sup>+</sup>), which can happen in any solvent or even in the gas phase.</span>
+                    <div class="result">Result: It covers reactions that do not involve water or the production of hydroxide ions.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 2: Water, Ionization, and pH</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 4: Entry Level (pH Scale Basics)</span>
+                A solution has a pH of 3. Is it acidic, basic, or neutral?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> pH = 3.</span>
+                    <span class="step"><span class="step-label">Classify:</span> pH &lt; 7 is acidic; pH = 7 is neutral; pH &gt; 7 is basic.</span>
+                    <div class="result">Result: Acidic.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 5: Medium Level (Calculating pH)</span>
+                Calculate the pH of a solution where [H<sup>+</sup>] = 1.0 &times; 10<sup>-9</sup> M.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> [H<sup>+</sup>] = 1.0 &times; 10<sup>-9</sup> M.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> pH = -&log[H<sup>+</sup>].</span>
+                    <span class="step"><span class="step-label">Calculate:</span> pH = -&log(1.0 &times; 10<sup>-9</sup>) = -(-9) = 9.</span>
+                    <span class="step"><span class="step-label">Check:</span> pH 9 is basic, which matches a very low hydrogen ion concentration.</span>
+                    <div class="result">Result: pH = 9.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 6: Difficult Level (The Logarithmic Scale)</span>
+                How many times more acidic is a solution with pH 2 compared to a solution with pH 4?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Difference in pH = 4 - 2 = 2 units.</span>
+                    <span class="step"><span class="step-label">Classify:</span> The pH scale is logarithmic (base 10). Each whole unit is a 10-fold change.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 10<sup>2</sup> = 100.</span>
+                    <div class="result">Result: The pH 2 solution is 100 times more acidic.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 3: Electrolytes & Net Ionic Equations</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 7: Entry Level (Strong vs. Weak)</span>
+                Which of the following is a strong electrolyte: HCl (hydrochloric acid) or CH<sub>3</sub>COOH (acetic acid)?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> HCl is a strong acid; CH<sub>3</sub>COOH is a weak acid.</span>
+                    <span class="step"><span class="step-label">Classify:</span> Strong electrolytes ionize completely; weak electrolytes ionize partially.</span>
+                    <div class="result">Result: HCl.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 8: Medium Level (Finding Spectators)</span>
+                In the reaction Ba(NO<sub>3</sub>)<sub>2</sub>(aq) + Na<sub>2</sub>SO<sub>4</sub>(aq) &rarr; BaSO<sub>4</sub>(s) + 2NaNO<sub>3</sub>(aq), identify the spectator ions.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Dissolve strong electrolytes: Ba<sup>2+</sup>, NO<sub>3</sub><sup>-</sup>, Na<sup>+</sup>, SO<sub>4</sub><sup>2-</sup>.</span>
+                    <span class="step"><span class="step-label">Compare:</span> Na<sup>+</sup> and NO<sub>3</sub><sup>-</sup> appear as ions on both the reactant and product sides.</span>
+                    <div class="result">Result: Na<sup>+</sup> and NO<sub>3</sub><sup>-</sup>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 9: Difficult Level (Writing the Net Ionic Equation)</span>
+                Write the net ionic equation for the reaction between aqueous silver nitrate (AgNO<sub>3</sub>) and aqueous potassium chloride (KCl).
+                <div class="solution">
+                    <span class="step"><span class="step-label">Step 1 (Full):</span> AgNO<sub>3</sub>(aq) + KCl(aq) &rarr; AgCl(s) + KNO<sub>3</sub>(aq).</span>
+                    <span class="step"><span class="step-label">Step 2 (Ionic):</span> Ag<sup>+</sup>(aq) + NO<sub>3</sub><sup>-</sup>(aq) + K<sup>+</sup>(aq) + Cl<sup>-</sup>(aq) &rarr; AgCl(s) + K<sup>+</sup>(aq) + NO<sub>3</sub><sup>-</sup>(aq).</span>
+                    <span class="step"><span class="step-label">Step 3 (Net):</span> Cancel K<sup>+</sup> and NO<sub>3</sub><sup>-</sup>.</span>
+                    <div class="result">Result: Ag<sup>+</sup>(aq) + Cl<sup>-</sup>(aq) &rarr; AgCl(s).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 4: Clinical Applications</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 10: Entry Level (Blood pH)</span>
+                If a patient's blood pH drops to 7.2, is this considered acidosis or alkalosis?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Normal range is 7.35 - 7.45.</span>
+                    <span class="step"><span class="step-label">Classify:</span> pH below normal range is acidosis.</span>
+                    <div class="result">Result: Acidosis.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 11: Medium Level (Antacid Action)</span>
+                Explain the chemistry of how an antacid like NaHCO<sub>3</sub> (sodium bicarbonate) works to relieve heartburn.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Heartburn is caused by excess HCl (strong acid) in the stomach.</span>
+                    <span class="step"><span class="step-label">Classify:</span> NaHCO<sub>3</sub> is a base.</span>
+                    <span class="step"><span class="step-label">Explain:</span> A neutralization reaction occurs where the base reacts with the acid to produce water and a salt, lowering the acidity.</span>
+                    <div class="result">Result: It neutralizes HCl through an acid-base reaction.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 12: Difficult Level (Strong Electrolyte Impact)</span>
+                Why is sodium bicarbonate (NaHCO<sub>3</sub>) useful for blood pH stability?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> NaHCO<sub>3</sub> is a strong electrolyte.</span>
+                    <span class="step"><span class="step-label">Analysis:</span> Because it dissociates completely, it provides a readily available source of bicarbonate ions (HCO<sub>3</sub><sup>-</sup>) which can act as a buffer to neutralize excess H<sup>+</sup> in the blood.</span>
+                    <div class="result">Result: Its complete dissociation ensures a constant supply of ions to stabilize pH.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            CHE 101 &bull; Topic 11 &bull; Cayuga-CC &bull; All materials property of Dr. Patridge
+        </div>
+    </div>
+</body>
+</html>

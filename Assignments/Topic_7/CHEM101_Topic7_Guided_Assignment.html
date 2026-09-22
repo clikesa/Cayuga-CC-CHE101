@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEM 101 Topic 7: Guided Assignment</title>
+    <style>
+        :root {
+            --navy: #14213D;
+            --teal: #1C7293;
+            --orange: #F4A100;
+            --light-bg: #F1F6F8;
+            --text: #333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: var(--navy);
+            font-family: 'Cambria', 'Georgia', serif;
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .instructions {
+            background: #e7f3f7;
+            border-left: 5px solid var(--teal);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: var(--navy);
+            font-family: 'Cambria', serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .problem:hover {
+            background: #fafafa;
+        }
+        .problem-header {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #555;
+        }
+        .step {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .step-label {
+            font-weight: bold;
+            color: var(--navy);
+        }
+        .result {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHEM 101 Topic 7: Chemical Reactions<br><small style="font-size: 0.6em; color: #666;">Guided Assignment</small></h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong> This assignment focuses on the language of chemical reactions: writing equations, balancing them, identifying reaction types, and predicting precipitates using solubility rules. To get the most out of this exercise, please work through these solutions yourself on a separate sheet of paper. Practice using the analysis steps (Identify &rarr; Classify &rarr; Balance/Predict &rarr; Check) for each problem to build your muscle memory before attempting the graded problem set for Topic 7.
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 1: Writing and Balancing Equations</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 1: Entry Level (The Basics)</span>
+                Identify the reactants and products in the following equation: 2H<sub>2</sub>(g) + O<sub>2</sub>(g) &rarr; 2H<sub>2</sub>O(l)
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Substances on the left are reactants; substances on the right are products.</span>
+                    <span class="step"><span class="step-label">Classify:</span> Reactants: Hydrogen gas (H<sub>2</sub>) and Oxygen gas (O<sub>2</sub>). Product: Liquid water (H<sub>2</sub>O).</span>
+                    <span class="step"><span class="step-label">Check:</span> The arrow indicates the direction of the reaction (reactants &rarr; products).</span>
+                    <div class="result">Result: Reactants: H<sub>2</sub>, O<sub>2</sub>; Product: H<sub>2</sub>O.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 2: Medium Level (Balancing a Simple Equation)</span>
+                Balance the following equation: Mg + HCl &rarr; MgCl<sub>2</sub> + H<sub>2</sub>
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Unbalanced atoms: Mg (1 vs 1), Cl (1 vs 2), H (1 vs 2).</span>
+                    <span class="step"><span class="step-label">Classify:</span> The Cl and H atoms are deficient on the reactant side.</span>
+                    <span class="step"><span class="step-label">Balance:</span> Place a coefficient of 2 in front of HCl.</span>
+                    <span class="step"><span class="step-label">Check:</span> Left side: 1Mg, 2H, 2Cl. Right side: 1Mg, 2H, 2Cl. Balanced!</span>
+                    <div class="result">Result: Mg + 2HCl &rarr; MgCl<sub>2</sub> + H<sub>2</sub>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 3: Difficult Level (Complex Balancing)</span>
+                Balance the following equation: C<sub>3</sub>H<sub>8</sub> + O<sub>2</sub> &rarr; CO<sub>2</sub> + H<sub>2</sub>O
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Most complex molecule first (C<sub>3</sub>H<sub>8</sub>).</span>
+                    <span class="step"><span class="step-label">Step 1 (Carbon):</span> 3 C on left &rarr; place 3 in front of CO<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Step 2 (Hydrogen):</span> 8 H on left &rarr; place 4 in front of H<sub>2</sub>O (since 4 &times; 2 = 8).</span>
+                    <span class="step"><span class="step-label">Step 3 (Oxygen):</span> Count oxygens on right: (3 &times; 2) + (4 &times; 1) = 10. To get 10 O on left, place 5 in front of O<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Check:</span> Left: 3C, 8H, 10O. Right: 3C, 8H, 10O. Balanced!</span>
+                    <div class="result">Result: C<sub>3</sub>H<sub>8</sub> + 5O<sub>2</sub> &rarr; 3CO<sub>2</sub> + 4H<sub>2</sub>O.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 2: Types of Chemical Reactions</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 4: Entry Level (Identifying a Pattern)</span>
+                Classify the reaction: 2KClO<sub>3</sub> &rarr; 2KCl + 3O<sub>2</sub>
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> One complex reactant breaking down into two simpler products.</span>
+                    <span class="step"><span class="step-label">Classify:</span> This fits the general form AB &rarr; A + B.</span>
+                    <div class="result">Result: Decomposition reaction.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 5: Medium Level (Predicting Combustion)</span>
+                Predict the products for the combustion of methane (CH<sub>4</sub>).
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Hydrocarbon (CH<sub>4</sub>) + Oxygen (O<sub>2</sub>).</span>
+                    <span class="step"><span class="step-label">Classify:</span> Combustion reaction.</span>
+                    <span class="step"><span class="step-label">Predict:</span> Complete combustion of any hydrocarbon always yields carbon dioxide (CO<sub>2</sub>) and water (H<sub>2</sub>O).</span>
+                    <div class="result">Result: CH<sub>4</sub> + 2O<sub>2</sub> &rarr; CO<sub>2</sub> + 2H<sub>2</sub>O.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 6: Difficult Level (Single vs. Double Replacement)</span>
+                Contrast these two reactions: (a) Zn + CuSO<sub>4</sub> &rarr; ZnSO<sub>4</sub> + Cu; (b) AgNO<sub>3</sub> + NaCl &rarr; AgCl + NaNO<sub>3</sub>
+                <div class="solution">
+                    <span class="step"><span class="step-label">Analysis (a):</span> A single element (Zn) swaps places with a metal in a compound (Cu). &rarr; Single Replacement.</span>
+                    <span class="step"><span class="step-label">Analysis (b):</span> Two compounds swap their positive ions (cations). &rarr; Double Replacement.</span>
+                    <div class="result">Result: (a) is Single Replacement; (b) is Double Replacement.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 3: Solubility Rules & Precipitation</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 7: Entry Level (Using Rules)</span>
+                Will a precipitate form if you mix KNO<sub>3</sub>(aq) and LiCl(aq)?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Potential products are KCl and LiNO<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Classify:</span> Group 1 metals (K, Li) and Nitrates (NO<sub>3</sub><sup>-</sup>) are always soluble.</span>
+                    <span class="step"><span class="step-label">Predict:</span> Both products are soluble; no solid forms.</span>
+                    <div class="result">Result: No precipitate.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 8: Medium Level (Predicting the Solid)</span>
+                Predict the precipitate when mixing BaCl<sub>2</sub>(aq) and Na<sub>2</sub>SO<sub>4</sub>(aq).
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Swap partners &rarr; BaSO<sub>4</sub> and NaCl.</span>
+                    <span class="step"><span class="step-label">Classify:</span> NaCl is soluble (Group 1). BaSO<sub>4</sub> is an exception to the sulfate rule (insoluble).</span>
+                    <span class="step"><span class="step-label">Predict:</span> BaSO<sub>4</sub> will be the precipitate.</span>
+                    <div class="result">Result: BaSO<sub>4</sub>(s).</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 9: Difficult Level (Full Prediction & Balance)</span>
+                Predict and balance the reaction between aqueous lead(II) nitrate and aqueous potassium iodide.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Pb(NO<sub>3</sub>)<sub>2</sub>(aq) + KI(aq) &rarr; ?</span>
+                    <span class="step"><span class="step-label">Swap Partners:</span> PbI<sub>2</sub> and KNO<sub>3</sub>.</span>
+                    <span class="step"><span class="step-label">Solubility Check:</span> KNO<sub>3</sub> is soluble. PbI<sub>2</sub> is an exception to the iodide rule (insoluble &rarr; precipitate).</span>
+                    <span class="step"><span class="step-label">Balance:</span> Pb(NO<sub>3</sub>)<sub>2</sub> + 2KI &rarr; PbI<sub>2</sub>(s) + 2KNO<sub>3</sub>(aq).</span>
+                    <div class="result">Result: Pb(NO<sub>3</sub>)<sub>2</sub>(aq) + 2KI(aq) &rarr; PbI<sub>2</sub>(s) + 2KNO<sub>3</sub>(aq).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 4: Clinical Applications & Synthesis</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 10: Entry Level (Antacids)</span>
+                What type of reaction occurs when calcium carbonate (CaCO<sub>3</sub>) neutralizes stomach acid (HCl)?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> CaCO<sub>3</sub> + HCl.</span>
+                    <span class="step"><span class="step-label">Classify:</span> Two compounds swapping ions.</span>
+                    <div class="result">Result: Double-replacement reaction.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 11: Medium Level (Kidney Stones)</span>
+                Kidney stones often consist of calcium oxalate. Write the formula for calcium oxalate given Ca<sup>2+</sup> and C<sub>2</sub>O<sub>4</sub><sup>2-</sup>.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Cation +2; Anion -2.</span>
+                    <span class="step"><span class="step-label">Balance:</span> 1:1 ratio.</span>
+                    <div class="result">Result: CaC<sub>2</sub>O<sub>4</sub>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 12: Difficult Level (Metabolism)</span>
+                Cellular respiration is compared to combustion. Write the unbalanced equation for the combustion of glucose (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>).
+                <div class="solution">
+                    <span class="step"><span class="step-label">Identify:</span> Fuel (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) + O<sub>2</sub>.</span>
+                    <span class="step"><span class="step-label">Predict:</span> Products are always CO<sub>2</sub> and H<sub>2</sub>O.</span>
+                    <div class="result">Result: C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + O<sub>2</sub> &rarr; CO<sub>2</sub> + H<sub>2</sub>O.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            CHE 101 &bull; Topic 7 &bull; Cayuga-CC &bull; All materials property of Dr. Patridge
+        </div>
+    </div>
+</body>
+</html>

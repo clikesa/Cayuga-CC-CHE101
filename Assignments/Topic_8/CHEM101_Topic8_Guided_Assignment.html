@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEM 101 Topic 8: Guided Assignment</title>
+    <style>
+        :root {
+            --navy: #14213D;
+            --teal: #1C7293;
+            --orange: #F4A100;
+            --light-bg: #F1F6F8;
+            --text: #333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: var(--navy);
+            font-family: 'Cambria', 'Georgia', serif;
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .instructions {
+            background: #e7f3f7;
+            border-left: 5px solid var(--teal);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            color: var(--navy);
+            font-family: 'Cambria', serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .problem:hover {
+            background: #fafafa;
+        }
+        .problem-header {
+            font-weight: bold;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #555;
+        }
+        .step {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .step-label {
+            font-weight: bold;
+            color: var(--navy);
+        }
+        .result {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHEM 101 Topic 8: Chemical Quantities<br><small style="font-size: 0.6em; color: #666;">Guided Assignment</small></h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong> This assignment focuses on the fundamental tools used to count atoms and molecules: the mole, molar mass, molarity, and formula scaling. These calculations are the bedrock of chemistry and healthcare dosing. To get the most out of this exercise, please work through these solutions yourself on a separate sheet of paper. Practice using the analysis steps (Given &rarr; Bridge &rarr; Calculate &rarr; Check) for each problem to build your muscle memory before attempting the graded problem set for Topic 8.
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 1: Avogadro's Number and the Mole</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 1: Entry Level (Particles to Moles)</span>
+                A sample contains 1.204 &times; 10<sup>24</sup> atoms of Gold (Au). How many moles of gold are present?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 1.204 &times; 10<sup>24</sup> atoms.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Avogadro's number: 1 mol = 6.022 &times; 10<sup>23</sup> particles.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 1.204 &times; 10<sup>24</sup> atoms &div; 6.022 &times; 10<sup>23</sup> atoms/mol &approx; 2.00 mol.</span>
+                    <span class="step"><span class="step-label">Check:</span> The number of atoms is roughly double Avogadro's number, so 2 moles makes sense.</span>
+                    <div class="result">Result: 2.00 mol.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 2: Medium Level (Moles to Particles)</span>
+                How many molecules are in 0.250 moles of Water (H<sub>2</sub>O)?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 0.250 mol.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> 1 mol = 6.022 &times; 10<sup>23</sup> particles.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 0.250 mol &times; 6.022 &times; 10<sup>23</sup> molecules/mol = 1.51 &times; 10<sup>23</sup> molecules.</span>
+                    <span class="step"><span class="step-label">Check:</span> 0.25 is a quarter of a mole; the result should be a quarter of Avogadro's number.</span>
+                    <div class="result">Result: 1.51 &times; 10<sup>23</sup> molecules.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 3: Difficult Level (Atomic vs Molecular Count)</span>
+                How many total atoms are in 1.00 mole of Glucose (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>)?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> 1.00 mol of C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>.</span>
+                    <span class="step"><span class="step-label">Bridge 1:</span> 1 mol = 6.022 &times; 10<sup>23</sup> molecules.</span>
+                    <span class="step"><span class="step-label">Bridge 2:</span> One molecule of glucose contains 6 + 12 + 6 = 24 atoms.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 1.00 mol &times; (6.022 &times; 10<sup>23</sup> molecules/mol) &times; (24 atoms/molecule) = 1.45 &times; 10<sup>25</sup> atoms.</span>
+                    <span class="step"><span class="step-label">Check:</span> The total atom count must be significantly larger than Avogadro's number because each molecule contains many atoms.</span>
+                    <div class="result">Result: 1.45 &times; 10<sup>25</sup> atoms.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 2: Molar Mass and Mass-Mole Conversions</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 4: Entry Level (Calculating Molar Mass)</span>
+                Calculate the molar mass of Sodium Chloride (NaCl).
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Formula NaCl.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Atomic masses from Periodic Table: Na = 22.99 g/mol, Cl = 35.45 g/mol.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 22.99 + 35.45 = 58.44 g/mol.</span>
+                    <span class="step"><span class="step-label">Check:</span> The sum of the two elements matches the expected molar mass.</span>
+                    <div class="result">Result: 58.44 g/mol.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 5: Medium Level (Grams to Moles)</span>
+                A patient is given 117 g of NaCl in an IV bag. How many moles of NaCl is this?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Mass = 117 g; Molar Mass = 58.44 g/mol.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> moles = grams &div; molar mass.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 117 g &div; 58.44 g/mol &approx; 2.00 mol.</span>
+                    <span class="step"><span class="step-label">Check:</span> 117 is roughly double 58.44, so 2 moles is correct.</span>
+                    <div class="result">Result: 2.00 mol.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 6: Difficult Level (Moles to Grams)</span>
+                A lab requires 0.050 moles of Calcium Carbonate (CaCO<sub>3</sub>). How many grams should be weighed?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Moles = 0.050 mol.</span>
+                    <span class="step"><span class="step-label">Bridge 1 (Molar Mass):</span> Ca(40.08) + C(12.01) + 3 &times; O(16.00) = 100.09 g/mol.</span>
+                    <span class="step"><span class="step-label">Bridge 2:</span> grams = moles &times; molar mass.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 0.050 mol &times; 100.09 g/mol = 5.00 g.</span>
+                    <span class="step"><span class="step-label">Check:</span> 0.05 is 1/20th of a mole; 100/20 = 5. Correct.</span>
+                    <div class="result">Result: 5.00 g.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 3: Molarity</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 7: Entry Level (Basic Molarity)</span>
+                Calculate the molarity of a solution containing 2.00 moles of solute in 4.00 L of solution.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Moles = 2.00; Volume = 4.00 L.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> M = moles &div; liters.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 2.00 mol &div; 4.00 L = 0.500 M.</span>
+                    <span class="step"><span class="step-label">Check:</span> Half a mole per liter.</span>
+                    <div class="result">Result: 0.500 M.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 8: Medium Level (Mass to Molarity)</span>
+                What is the molarity of a solution prepared by dissolving 5.84 g of NaCl (molar mass 58.44 g/mol) in enough water to make 500 mL of solution?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Mass = 5.84 g; Molar Mass = 58.44 g/mol; Volume = 500 mL = 0.500 L.</span>
+                    <span class="step"><span class="step-label">Bridge 1 (Moles):</span> 5.84 g &div; 58.44 g/mol &approx; 0.100 mol.</span>
+                    <span class="step"><span class="step-label">Bridge 2 (Molarity):</span> M = moles &div; liters.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 0.100 mol &div; 0.500 L = 0.200 M.</span>
+                    <span class="step"><span class="step-label">Check:</span> A small amount of salt in a small volume results in a low but significant molarity.</span>
+                    <div class="result">Result: 0.200 M.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 9: Difficult Level (Molarity to Mass)</span>
+                An IV bag contains 1.00 L of 0.150 M Glucose (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>, molar mass 180.16 g/mol). How many grams of glucose are in the bag?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Volume = 1.00 L; Molarity = 0.150 mol/L; Molar Mass = 180.16 g/mol.</span>
+                    <span class="step"><span class="step-label">Bridge 1 (Moles):</span> moles = Molarity &times; Volume = 0.150 mol/L &times; 1.00 L = 0.150 mol.</span>
+                    <span class="step"><span class="step-label">Bridge 2 (Mass):</span> grams = moles &times; molar mass.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 0.150 mol &times; 180.16 g/mol = 27.02 g.</span>
+                    <span class="step"><span class="step-label">Check:</span> 15% of 180 is roughly 27. Correct.</span>
+                    <div class="result">Result: 27.02 g.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Section 4: Empirical and Molecular Formulas</div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 10: Entry Level (Empirical to Molecular)</span>
+                A compound has an empirical formula of CH<sub>2</sub> and a molecular formula of C<sub>4</sub>H<sub>8</sub>. What is the multiplier?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Empirical CH<sub>2</sub>; Molecular C<sub>4</sub>H<sub>8</sub>.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> Compare subscripts: C: 4/1 = 4; H: 8/2 = 4.</span>
+                    <div class="result">Result: Multiplier = 4.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 11: Medium Level (Finding Molecular Formula)</span>
+                A compound has an empirical formula of NO<sub>2</sub> (molar mass 46.01 g/mol) and a measured molar mass of 92.02 g/mol. What is the molecular formula?
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Empirical Molar Mass = 46.01 g/mol; Molecular Molar Mass = 92.02 g/mol.</span>
+                    <span class="step"><span class="step-label">Bridge:</span> Multiplier = Molecular Mass &div; Empirical Mass.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 92.02 &div; 46.01 = 2.</span>
+                    <span class="step"><span class="step-label">Apply:</span> Multiply NO<sub>2</sub> subscripts by 2 &rarr; N<sub>2</sub>O<sub>4</sub>.</span>
+                    <div class="result">Result: N<sub>2</sub>O<sub>4</sub>.</div>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-header">Problem 12: Difficult Level (Scaling Complex Formula)</span>
+                A compound has an empirical formula of C<sub>2</sub>H<sub>3</sub>O (molar mass 57.05 g/mol) and a measured molar mass of 171.15 g/mol. Determine the molecular formula.
+                <div class="solution">
+                    <span class="step"><span class="step-label">Given:</span> Empirical Molar Mass = 57.05 g/mol; Molecular Molar Mass = 171.15 g/mol.</span>
+                    <span class="step"><span class="step-label">Calculate:</span> 171.15 &div; 57.05 = 3.</span>
+                    <span class="step"><span class="step-label">Apply:</span> Multiply C<sub>2</sub>H<sub>3</sub>O subscripts by 3 &rarr; C<sub>6</sub>H<sub>9</sub>O<sub>3</sub>.</span>
+                    <div class="result">Result: C<sub>6</sub>H<sub>9</sub>O<sub>3</sub>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            CHE 101 &bull; Topic 8 &bull; Cayuga-CC &bull; All materials property of Dr. Patridge
+        </div>
+    </div>
+</body>
+</html>
