@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic ten. Up until now, we\u2019ve spent a lot of time looking at the individual atom\u2014the protons, neutrons, and electrons. But in the real world, atoms rarely like to be alone. They want to connect, and that is exactly what we are diving into today: chemical bonding. Think of bonding as the 'glue' of the universe. We're going to explore how atoms hold onto each other to find stability, and more importantly, how those connections dictate the actual shape of a molecule. Whether it's a simple water molecule or a complex protein, the geometry determines how it functions in your body. Since this is an asynchronous session, take your time with the materials. I'm excited to see how you all tackle these concepts. Let's get started and see what makes these atomic partnerships work!"
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome everyone! Today we are diving into the invisible glue that holds our entire universe together: chemical bonding. We'll start by comparing ionic and covalent bonds. Think of these as the two primary ways atoms interact\u2014one is more like a total hand-off of electrons, while the other is a cooperative partnership where electrons are shared. To make these abstract ideas visible, we\u2019ll practice drawing electron dot structures. These diagrams act like a map, showing us exactly where the bonding electrons live and where the lone pairs are just hanging out. But remember, molecules aren't flat drawings on a page; they exist in three dimensions. That\u2019s why we\u2019ll explore molecular geometry to predict the actual 3D shapes these molecules take in space. Finally, we will tackle the nuances. We'll look at coordinate covalent bonds, where one atom provides all the 'funding' for the bond, and polar bonds, where electrons are shared unevenly\u2014almost like a cosmic game of tug-of-war. By the end of this session, you'll be able to look at a chemical formula and visualize exactly how those atoms are gripping onto each other and why that specific shape matters for how the molecule behaves."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we spend so much time on these bonding theories. The truth is, if you're heading into healthcare, these concepts are the foundation of how the human body actually functions. Take electrolytes like sodium and potassium. In a solid state, they're held by strong ionic bonds, but once they dissolve in your body, they split apart. This separation is exactly what allows your nerves to send electrical signals to your muscles. But why do they dissolve at all? That comes down to water. Because water has polar covalent bonds, it acts like a chemical magnet, pulling those electrolytes apart and creating the hydrogen bonds that sustain life. We see this specificity again with hemoglobin. It uses a very special coordinate covalent bond to grab oxygen from your lungs and carry it through your bloodstream. Finally, think about pharmacology. When a doctor prescribes a medication, that drug has to fit into a cellular receptor perfectly\u2014almost like a lock and key. If the molecular geometry is off by even a tiny bit, the drug won't work. So, as we dive deeper, remember that these aren't just abstract formulas; they are the actual mechanisms keeping your patients alive."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, let's talk about how atoms actually stick together. Think of chemical bonding as a set of strategies atoms use to find stability. Essentially, they have two main options: they can either completely trade electrons, which gives us ionic bonds, or they can decide to share them, creating covalent bonds. It all comes down to whether an atom wants to give something away or collaborate to stay connected."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Let\u2019s circle back to ionic bonds. Remember, this isn't about sharing; it's about a total transfer. A metal gives up electrons to a nonmetal, creating two oppositely charged ions. Because opposites attract, they snap together with incredible force. This creates a very strong, rigid bond that works in every direction, which is why these compounds form hard crystals that require intense heat to melt. We call this arrangement a lattice. If you've ever seen a garden trellis, it's the same idea\u2014a repeating, three-dimensional grid where every ion is locked into place. Now, here is the interesting part: in their solid form, these ions can't move, so they don't conduct electricity. But the moment you dissolve that crystal in water, the lattice breaks apart. Those ions are suddenly free to swim around and carry an electrical charge through the liquid. This is exactly what we mean when we call a substance an electrolyte. It\u2019s that freedom of movement in the solution that allows the current to flow. It's a great example of how the physical structure of a bond directly dictates how a material behaves in the real world. Does that connection make sense to everyone?"
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let's shift our focus to covalent bonding. Unlike ionic bonds, where one atom essentially steals an electron from another, covalent bonding is all about cooperation. Think of it as a partnership. When two nonmetals meet, neither is strong enough to pull the electron away completely, so they decide to share. By contributing electrons to a shared pair, both atoms can feel like their outer shells are full and stable.\\n\\nDepending on how much stability they need, they might share just one pair of electrons, which we call a single bond. If they need more, they can share two pairs for a double bond, or even three pairs for a triple bond. The more pairs they share, the stronger that connection becomes.\\n\\nOne really important distinction here is the end result. While ionic bonds create those massive, repeating crystal lattices we discussed earlier, covalent bonds create distinct, individual units called molecules. Whether it's a simple water molecule or a carbon dioxide molecule, these are separate entities rather than one giant grid. It\u2019s a fundamental shift in how matter is organized, moving from a rigid structure to these independent, versatile little packages of atoms."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "So, how do we tell these two apart? Think of it as a tug-of-war. In an ionic bond, one atom is much stronger and simply steals an electron away from the other. But in a covalent bond, the atoms are more evenly matched, so they decide to share those electrons instead. It\u2019s the difference between taking something entirely and working together to hold onto it."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now that we understand how atoms bond, we need a way to actually visualize these molecules. That\u2019s where electron dot structures come in. Think of these as a blueprint; we\u2019re mapping out where every single valence electron lives to see how they\u2019re shared between atoms. But here is the interesting part: molecules aren't flat drawings on a page. They exist in three-dimensional space. Once we have our dot structure, we can use it to predict the actual molecular geometry. Because electrons are all negatively charged, they naturally push away from each other, forcing the molecule into a specific shape to minimize that tension. Whether it's a straight line or a bent angle, the arrangement of those electrons determines the final structure. This shape is crucial because it dictates how the molecule behaves and interacts with everything else in the world around it."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let's walk through the process of drawing electron dot structures. Think of this like building a puzzle where the pieces are electrons. First, we need to know exactly how many pieces we have to work with. Go back to Topic 5 and sum up all the valence electrons from every single atom in your molecule. This is your total budget; you can't use more or fewer than this number. Next, decide where the atoms go. Generally, the atom that is the least electronegative\u2014meaning it's the most willing to share\u2014goes in the center. Just remember that hydrogen is always on the outside. Once your skeleton is set, connect the atoms using a single bonding pair of electrons. This uses up two electrons per bond. Finally, we distribute whatever is left from our budget as lone pairs. Your goal here is to make sure every atom feels stable by completing its octet, which means surrounding it with eight electrons. The only exception is hydrogen, which is happy with just two. If you follow these steps in order, you'll avoid the common mistake of adding extra electrons that aren't actually there. Let's try a few examples together."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let\u2019s put these rules into practice by drawing a water molecule. First, we need our total electron budget. Oxygen brings six valence electrons to the table, and each hydrogen brings one, giving us a total of eight electrons to work with. Now, where do they go? Since hydrogen can only form one bond, it can never be the center of a molecule. That means oxygen takes center stage, with the two hydrogens flanking it on either side. To connect them, we place a bonding pair\u2014two electrons\u2014between the oxygen and each hydrogen. That uses up four of our eight electrons. But we aren't finished yet. Oxygen is still craving a full octet of eight electrons to feel stable. We have four electrons left in our budget, so we place those around the oxygen as two lone pairs. Now, if we count them up, oxygen has eight electrons surrounding it, and each hydrogen has two. Everything is balanced, and our water molecule is complete. It might feel like a lot of steps at first, but once you get the rhythm of counting, arranging, and filling, these structures start to feel like a puzzle that always fits together."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's dive into how we actually predict the three-dimensional shape of a molecule. We use a concept called VSEPR, which is just a fancy way of saying that electrons hate being near each other. Think of electron pairs as little magnets with the same charge; they naturally push away from one another. Because they want as much personal space as possible, they spread out around the central atom to maximize the distance between them. Now, here is the key part: it doesn't matter if those electrons are shared in a bond or sitting alone as a lone pair. Both types of electron clouds take up space and exert a push. This explains why a water molecule isn't a straight line. Even though we only see two bonds connecting the oxygen to the hydrogens, there are two invisible lone pairs of electrons sitting on top of that oxygen. Those lone pairs act like bulky spacers, pushing the two O\u2013H bonds downward and creating that characteristic bent shape. If those lone pairs weren't there, water would be linear, and the chemistry of life would be completely different. Just remember, it's all about minimizing that repulsion to find the most stable arrangement."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now, let's visualize how these molecules actually sit in space. Think of these shapes as the most natural way for atoms to spread out to avoid crowding each other. Whether it's a simple straight line or a balanced triangle, the geometry is all about minimizing tension. Once you recognize these basic patterns, predicting how a molecule will behave becomes much more intuitive. Let's walk through the most common ones together."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, we usually think of covalent bonds as a fair trade, but sometimes one atom does all the heavy lifting. In a coordinate covalent bond, one atom provides both electrons for the pair. But even when they share, it isn't always equal. Depending on how strongly an atom pulls on those electrons, we get polarity. Think of it like a friendly game of tug-of-war where one side is just a bit stronger."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, let's talk about a slightly different way atoms share electrons. Usually, we think of a covalent bond as a fair partnership where each atom brings one electron to the table to create a pair. But sometimes, one atom is feeling extra generous. In a coordinate covalent bond, one single atom provides both electrons for the shared pair. It\u2019s essentially a one-sided contribution to start the relationship. Here is the interesting part: once that bond is established, it behaves exactly like any other covalent bond. If you were looking at the molecule under a microscope, you wouldn't be able to tell the difference; only the origin of the electrons is unique. A great real-world example of this is happening inside your body right now. In your blood, the iron atom within your hemoglobin forms this specific type of bond with oxygen molecules. The oxygen donates the electron pair, which allows the hemoglobin to grip the oxygen tightly and transport it through your bloodstream to your tissues. It\u2019s a specialized mechanism that is absolutely vital for our survival. Take a moment to think about that distinction\u2014it's not about how the bond acts, but how it actually begins."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let's talk about how atoms actually share their electrons, because it's rarely a perfectly equal split. To understand this, we use a concept called electronegativity. Think of this as a game of tug-of-war. Electronegativity is simply a measure of how hard an atom pulls on those shared electrons. When two identical atoms\u2014like two oxygens\u2014bond together, they have the exact same pulling power. Since neither side wins the tug-of-war, the electrons stay right in the middle. We call this a non-polar covalent bond because there are no poles or charged ends. But things get interesting when the atoms are different. Imagine a bond between oxygen and hydrogen. Oxygen is much stronger, so it pulls the electrons closer to itself. Because electrons carry a negative charge, the oxygen end becomes slightly negative, while the hydrogen end is left feeling slightly positive. This unequal sharing creates a polar covalent bond. It\u2019s very similar to how a battery has a positive and negative end. This tiny difference in charge is actually what gives water its amazing properties, allowing it to dissolve things and support life as we know it."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let\u2019s put these concepts into practice by looking at a molecule you're very familiar with: water. To figure out if the bond between oxygen and hydrogen is polar, we first have to look at their electronegativity. Think of this as a game of tug-of-war. Oxygen is much stronger than hydrogen, meaning it pulls on those shared electrons with significantly more force. Because of this imbalance, the electrons don't just hover in the middle; they spend most of their time huddled closer to the oxygen atom. Now, since electrons carry a negative charge, this creates a bit of a shift in the electrical balance. The oxygen side becomes slightly negative, while the hydrogen side is left feeling slightly positive. We call this a polar covalent bond. It\u2019s not a full separation of charges like you see in ionic bonds, but it's enough to give the molecule a distinct 'pole.' This specific unevenness is actually the secret to why water is such a universal solvent. It allows water to attract and surround other polar or ionic substances, pulling them apart and dissolving them. It all comes down to that initial tug-of-war we talked about."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we move into our lab, let's ground ourselves in the language of bonding. Think of ionic bonds as a complete hand-off of electrons, while covalent bonds are more like a partnership where electrons are shared. Now, not every electron joins the party; those staying put are our lone pairs. These are crucial because they take up space. This leads us to VSEPR theory. Don't let the name intimidate you; it simply means that electron pairs hate each other and push apart. That repulsion is what forces a molecule into its specific 3D molecular geometry. Sometimes, one atom is generous enough to provide both electrons for a bond\u2014that's a coordinate covalent bond. But the real drama happens with electronegativity. This is essentially a tug-of-war over those shared electrons. If one atom pulls much harder than the other, the sharing becomes unequal, creating a polar bond. This polarity is what gives molecules their personality and determines how they interact with everything around them. Take a moment to review these terms, as they are the building blocks for everything we'll discuss regarding molecular behavior. If any of these feel fuzzy, please reach out during office hours or post in our discussion forum."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "We have covered a lot of ground in this unit, so let\u2019s take a breath and tie everything together. Remember, the core difference between ionic and covalent bonds is simply whether electrons are being completely transferred or shared between atoms. To visualize this, we used electron dot structures, which act like a map showing us exactly where those bonding pairs and lone electrons live. From there, we applied VSEPR theory. Just remember that electrons are all negatively charged, so they push away from each other; that repulsion is what forces the molecule into its specific three-dimensional shape. We also touched on coordinate covalent bonds, where one atom does all the giving, and how electronegativity creates polar bonds by pulling electrons closer to one side. If you're feeling a bit overwhelmed, that's completely normal\u2014these are abstract concepts. Take some time to review the practice problems before we move forward. Next, we\u2019re diving into Topic 11: Acids and Bases. We will explore the Arrhenius and Bronsted-Lowry definitions, look at how water ionizes, and finally demystify the pH scale and the difference between strong and weak electrolytes. I'll see you in the next module, and please reach out if you have questions!"
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>

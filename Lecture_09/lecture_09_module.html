@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic Nine. Today, we are diving into stoichiometry. Now, that is a big, intimidating word, but conceptually, it is actually quite simple. Think of stoichiometry as the 'recipe' of chemistry. Just like you need a specific ratio of flour and eggs to bake a cake, chemical reactions require specific ratios of molecules to work correctly. Up until now, we have learned how to balance equations to make sure nothing disappears into thin air. Now, we are going to use those balanced equations as a roadmap. This allows us to predict exactly how much of a reactant we need to start with, or exactly how much product we can expect to create at the end. It turns chemistry from a guessing game into a precise science. Let\u2019s get started and break down how these calculations actually work."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Alright, let's dive into stoichiometry. I know that word sounds intimidating, but it's really just the bookkeeping of chemistry. We're essentially learning how to use a chemical recipe to predict exactly how much stuff we need or will make. First, we'll start with mole-to-mole calculations. Think of this as the heart of the process, where we use the coefficients from our balanced equations as a direct bridge between different substances. Once we've mastered that, we'll expand our toolkit to include mass. We'll build a roadmap that lets us move from grams of one substance to grams of another by using molar mass as our translator. But since we spend a lot of time in the lab with liquids, we're also going to bring molarity into the mix. This allows us to handle reactants that are dissolved in solution rather than just dry powders. Finally, we'll talk about percent yield. In a perfect world, reactions go exactly as planned, but in the real world, things happen. We'll learn how to compare what you actually gathered in your beaker versus what the math says you should have produced. It's a lot, but we'll take it one step at a time."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, I know stoichiometry can feel like a lot of abstract math, but it is actually the backbone of safe healthcare. Think about an IV drip. When a doctor orders a specific dose, the nurse doesn't just guess the volume; they use proportional reasoning to ensure the patient gets the exact amount of medication needed. It is the same logic we use for mole ratios. If you move into compounding pharmacy, you'll see this again. Scaling a medication recipe up or down for a specific patient requires that same precise ratio thinking to avoid dangerous errors. Even in large-scale drug manufacturing, we track the percent yield. This tells us how much usable medicine we actually produced compared to what we expected on paper, which is vital for cost and safety. We even see this in biology. When we calculate how much oxygen your body consumes during metabolism, we are using the exact same mole-ratio math we are covering in this unit. Whether you are in a lab or at a patient's bedside, these calculations are what keep people safe. It is all about the relationship between the amount of one substance and another."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, let's dive into the most straightforward part of stoichiometry: mole-to-mole calculations. Think of this as the 'purest' form of chemical bookkeeping. In these problems, we aren't worrying about grams or liters yet; we're staying entirely in the world of moles. The secret key here is your balanced chemical equation. Those coefficients\u2014the big numbers in front of the formulas\u2014act exactly like a recipe. If the recipe says two moles of hydrogen produce one mole of water, that ratio is your conversion factor. It tells you exactly how much of one substance you need to react with another. Once you have that ratio, you can simply multiply your starting amount to find your output. It\u2019s a direct path from one substance to another, providing the foundation for every other calculation we'll do in this unit."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Now, let's talk about the heart of stoichiometry: the mole ratio. Think of a balanced chemical equation as a recipe. If a recipe says you need two eggs for every one cup of flour, that's a ratio. Chemistry works the exact same way. Those big numbers in front of your molecules\u2014the coefficients\u2014tell us exactly how many moles of one substance are required to react with another. \\n\\nBut here is the magic part: we can treat that ratio as a conversion factor. Just like we converted inches to centimeters back in Topic 2, we can use this ratio as a fraction to switch from moles of substance A to moles of substance B. It\u2019s simply a bridge that lets us move across the equation to find our unknown value.\\n\\nOne critical warning, though: this bridge only works if your equation is perfectly balanced. If you're off by even one atom, your ratio will be wrong, and every calculation following it will be incorrect. Never guess these numbers or rely on an unbalanced equation. Always double-check your coefficients first, ensure the law of conservation of mass is satisfied, and then you can confidently move forward with your conversion."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let\u2019s put these concepts into practice with a real-world example: creating ammonia. In this reaction, nitrogen gas and hydrogen gas combine. We are starting with five moles of nitrogen, and we have plenty of hydrogen, so we don't need to worry about running out of it. The key here is the balanced equation, which acts like our recipe. If you look at the coefficients, you'll see a one-to-two ratio. This tells us that for every single mole of nitrogen we use, we get two moles of ammonia in return. It\u2019s a simple doubling effect. To find our final answer, we just multiply our starting amount of five moles by that ratio of two. This gives us a total of ten moles of ammonia. When you're working through these on your own, always start by identifying that molar ratio first. It is the bridge that connects your starting material to your final product. If you can master that bridge, the rest of stoichiometry becomes much more intuitive. Take a moment to look at how that math flows from the equation to the final result, and let me know if that ratio makes sense before we move on."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Now that we understand the individual pieces, let's put them together. Think of this as your master roadmap for stoichiometry. We aren't just jumping from one substance to another; we're using the molar mass as a bridge to get into moles, and the mole ratio to switch chemicals. Once you master this sequence, you can calculate exactly how much product you'll get from any amount of starting material."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, let's tackle the 'roadmap' for stoichiometry. Think of this as your GPS for moving from one substance to another in a chemical reaction. We can't just jump straight from the mass of one chemical to the mass of another because different molecules have different weights. Instead, we use the mole as our universal bridge.\\n\\nFirst, we take the grams of our starting material and convert them into moles. This is where you'll use the periodic table to find the molar mass. Once we're in 'mole world,' we can finally use the balanced equation. This is the most critical step; the coefficients tell us the exact ratio of how substance A reacts with substance B. It's like a recipe\u2014if the equation says two moles of A produce one mole of B, we adjust our amount accordingly.\\n\\nFinally, we have the moles of our target substance, but we usually need a real-world measurement, like grams, to weigh it in the lab. So, we perform one last conversion using the molar mass of substance B. By chaining these three steps together\u2014mass to mole, mole to mole, then mole back to mass\u2014you can accurately predict exactly how much product your reaction will yield."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let's put our roadmap into action with a real example. Imagine we have ten grams of nitrogen gas reacting with plenty of hydrogen to create ammonia. We can't compare grams of one thing directly to grams of another, so our first step is to translate those ten grams into moles. By dividing by the molar mass of nitrogen, we find we're working with about zero point three five seven moles. From here, we use the balanced equation as our bridge. Since the ratio is one to two, we double that amount to get zero point seven one four moles of ammonia. Finally, we translate those moles back into a mass we can actually weigh in the lab. By multiplying by the molar mass of ammonia, we land at twelve point two grams. It\u2019s a simple three-step process: grams to moles, mole ratio, then moles back to grams."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now that we've mastered the basics of stoichiometry, it's time to move from theoretical textbook problems into how chemistry actually works in the lab. First, we're bringing concentration into our roadmap. In the real world, we rarely work with pure solids; we usually deal with molar solutions. We'll learn how to use molarity as a bridge to convert liquid volumes into the moles we need for our calculations. But here is the catch: chemistry is messy. You will almost never get a perfect amount of product. This is where percent yield comes in. It's essentially a performance review for your reaction. We'll compare what you actually collected in your beaker against what the math said you should have gotten. By the end of this section, you'll be able to track a reaction from a liquid measurement all the way to a final, real-world percentage."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's talk about what happens when our reactants aren't solids, but are dissolved in a liquid. This is where molarity becomes our bridge. Think of molarity as just another tool in your kit to find the number of moles. If you see a problem giving you both a volume and a concentration\u2014like 25 milliliters of a 0.5 molar solution\u2014that is your signal to use the formula: moles equals molarity times liters. But here is the part where most students trip up: molarity is always based on liters. If your problem gives you milliliters, you must convert those to liters first, or your final answer will be off by a factor of a thousand. Once you've used that bridge to find your moles, the hard part is over. From there, you just follow the same roadmap we've used all week. You'll use your mole ratio from the balanced equation to switch substances, and then use molar mass if you need to find grams. The starting point has changed slightly, but the logic of the stoichiometry remains exactly the same. Just find those moles first, keep your units straight, and you'll be golden. Let's try an example together."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Let\u2019s put these concepts into practice with a real-world scenario. Imagine we have a piece of magnesium ribbon and we want to know exactly how much hydrochloric acid solution we need to react with it completely. To start, we can't compare grams to molarity directly; we need a common language, which in chemistry is always the mole. By dividing our 2.43 grams of magnesium by its molar mass, we find we have exactly 0.100 moles of metal. Now, we look at our balanced equation. Notice the ratio between magnesium and the acid is one-to-two. This means for every single mole of magnesium, we need two moles of acid to get the job done. So, our 0.100 moles of magnesium requires 0.200 moles of HCl. Finally, we use the molarity\u2014which is essentially the concentration or 'strength' of the solution\u2014to find the physical volume. By dividing those 0.200 moles by the 0.500 molar concentration, we calculate that we need 0.400 liters, or 400 milliliters, of the acid. It\u2019s a simple three-step journey: convert to moles, use the recipe from the balanced equation, and then convert back to a measurable volume. Does that flow make sense to everyone?"
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let's talk about the gap between what happens on paper and what actually happens at the lab bench. In a perfect world, we have the theoretical yield. This is the maximum amount of product we could possibly make if every single molecule behaved exactly as the stoichiometry predicts. It\u2019s our gold standard, assuming a flawless reaction. However, science is rarely flawless. In the real world, we have the actual yield. This is the amount you physically weigh on the balance at the end of your experiment. You'll notice this number is almost always lower than the theoretical one. Why? Maybe some product stuck to the glassware, or perhaps a side reaction occurred. To figure out how efficient our process actually was, we calculate the percent yield. You simply take the actual amount you recovered, divide it by that perfect theoretical number, and multiply by one hundred. Think of it like a grade for your reaction's efficiency. If you get a ninety percent yield, you did great! If you get ten percent, we need to look at where we lost our material. It\u2019s a vital way to measure precision and understand the practical limitations of chemistry."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Now, let's put this into practice with a real-world scenario. In a perfect world, our chemistry calculations tell us exactly what should happen. Based on our previous stoichiometry work, we predicted a theoretical yield of 12.2 grams of ammonia. That is our gold standard\u2014the maximum amount we could possibly produce if everything went perfectly. However, science is rarely perfect. When we actually ran the experiment in the lab, we measured an actual yield of only 10.5 grams. Why the difference? Maybe some gas escaped the flask, or a bit of product stuck to the glassware. To find out how efficient our process was, we calculate the percent yield. We simply take what we actually got\u2014the 10.5 grams\u2014and divide it by what we expected\u2014the 12.2 grams. When we do that math, we get about 0.861. Multiply that by one hundred to turn it into a percentage, and we arrive at 86.1%. This tells us that our reaction was quite successful, capturing the vast majority of our potential product. It's a great way to measure the efficiency of your lab work and identify where things might have gone wrong during the process."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Alright, let's take a breath and look at the big picture. Stoichiometry can feel like a maze, but it\u2019s actually just a four-step roadmap that works for every single problem we\u2019ll encounter in this unit. Think of it as a translation process. We always start with what the problem gives us\u2014usually the mass or volume of our first substance. But here is the secret: chemistry doesn't happen in grams; it happens in moles. That\u2019s why our first move is always to convert those starting units into moles. Once we have moles of substance A, we can finally use that balanced equation to switch over to substance B. This mole-to-mole ratio is the bridge that connects your two chemicals. Now that we've crossed that bridge, we're in the home stretch. We just translate those moles of B back into a usable measurement, like grams or liters, depending on what the question asks for. If you ever feel lost during a calculation, just stop and ask yourself: 'Where am I on the map?' Are you still at the start, crossing the bridge, or heading toward the finish line? Just follow the chain, and you'll get it right every time."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Now, before we dive into the problem sets, let's talk about where most students trip up in stoichiometry. First and foremost: always balance your equation. I cannot stress this enough. If your equation isn't balanced, your mole ratio is wrong, and that creates a domino effect that ruins every single calculation that follows. It\u2019s the foundation of the entire process.\\n\\nNext, keep a very close eye on your units. A classic mistake is plugging milliliters directly into a molarity formula. Remember, molarity is moles per liter, so convert those milliliters to liters first. Also, double-check your conversion factors. Make sure they are 'right-side-up' so the units actually cancel out diagonally. If the units don't cancel, the math won't work.\\n\\nFinally, let's talk about rounding. It is tempting to round your numbers after every step to keep things clean, but please don't do that. If you round too early, those tiny differences compound, and by the time you reach the end, your final answer could be significantly off. Keep those extra digits in your calculator throughout the intermediate steps and only round your very final answer to the correct number of significant figures."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Now, before we dive into the math, let's get comfortable with the language of stoichiometry. Think of stoichiometry simply as the 'recipe' of chemistry. It allows us to predict exactly how much product we'll get based on our starting materials. The secret ingredient here is the mole ratio. This is just a bridge that lets us switch from talking about one substance to another using the coefficients from our balanced equation. When we chain these ratios with mass, we call it a mole-mass calculation. Now, in a perfect world, we\u2019d get the 'theoretical yield'\u2014the maximum amount of product possible. But in the lab, things happen. Some product sticks to the beaker or spills, leaving us with the 'actual yield.' By comparing the two, we find the percent yield, which tells us how efficient our reaction actually was. Finally, we have molarity. This is just a way to describe concentration\u2014specifically, how many moles of a solute are packed into one liter of solution. If you know the molarity and the volume, you can find the exact number of moles you're working with. Take a moment to review these terms; they are the essential tools we'll use for every calculation moving forward."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Alright, let's take a breath and tie everything together. Stoichiometry can feel like a lot of moving parts, but it really boils down to one central roadmap. Remember, those coefficients in your balanced equation are your golden ticket; they provide the mole ratio that lets you jump from one substance to another. Whether you're starting with a solid mass or a liquid solution using molarity, the goal is always the same: get into moles first. Once you're in 'mole-land,' you can navigate anywhere. We also looked at percent yield, which is just a reality check between the perfect world of our math and what actually happens in the lab. If you're feeling a bit overwhelmed, that's completely normal. Just keep practicing that chain of conversions. Now, we're shifting gears. We've spent a lot of time calculating how much stuff reacts, but next, we're going to explore why they react in the first place. In Topic ten, we'll dive into chemical bonding. We will look at how electrons move to create ionic and covalent bonds, and how that determines the actual shape and polarity of a molecule. I'll see you in the next module, and please reach out if you have questions!"
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
