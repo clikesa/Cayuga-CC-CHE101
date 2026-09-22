@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic 8. Today, we're tackling one of the most important concepts in chemistry: chemical quantities. Now, if I asked you to count a handful of sand, you'd probably realize that counting every single grain one by one is practically impossible. Atoms are exactly the same way\u2014they're just too small and too numerous to count individually. So, how do chemists handle this? We use a clever workaround. Instead of counting atoms, we weigh them. We're going to introduce the 'mole,' which acts like a bridge between the microscopic world of atoms and the macroscopic world of the balance scale in our lab. We'll also dive into molar mass and molarity to see how these measurements work in real-time. Let's get started and turn those tiny particles into numbers we can actually use."
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Alright, let's dive into the roadmap for today. We're tackling chemical quantities, which is essentially the 'accounting' side of chemistry. Now, atoms are unimaginably small, so we can't exactly count them one by one in a lab. To solve this, we use a special counting unit called the mole. Think of it like a 'dozen'\u2014just as a dozen always means twelve, a mole is just a specific, very large number that lets us bridge the gap between the microscopic world of atoms and the macroscopic world we can actually weigh on a scale. Once we grasp the mole, we'll move into molar mass, where we learn how to convert those weights into actual particle counts. From there, we'll explore molarity, which is just a fancy way of describing how 'strong' or concentrated a liquid solution is. Finally, we'll wrap up with empirical and molecular formulas. This is where we play detective to find the simplest ratio of atoms in a compound and then scale that up to find the actual formula. It might feel like a lot of math at first, but we'll take it step-by-step. Let's get started with the mole."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we spend so much time on moles and molar mass. In a healthcare setting, these aren't just chemistry problems\u2014they are safety protocols. Think about medication dosing. You can't just weigh out a powder; you have to know exactly how many active molecules are in those grams to ensure a patient gets the right dose. It\u2019s all about that conversion from mass to moles.\\n\\nThis precision extends to IV fluids, too. When we talk about normal saline, we are talking about a specific molarity. This ensures the concentration of ions in the bag perfectly matches the concentration in the patient's blood to avoid complications. You'll see this in the clinic, too. When you read a lab report for blood glucose or electrolytes, the results are often listed in millimoles per liter. That is just molarity on a smaller, clinical scale.\\n\\nFinally, consider trace nutrients. Vitamins and minerals exist in such tiny amounts that counting individual atoms is impossible. Using the Avogadro scale allows us to describe these essential nutrients in a practical, manageable way. Mastering these quantities is what allows us to move from theoretical chemistry to safe, effective patient care."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Now, imagine trying to count every single atom in a beaker. It's practically impossible because they're just too small. That\u2019s where the mole comes in. Think of it like a 'chemist's dozen.' Instead of counting individual particles one by one, we use Avogadro\u2019s number to bridge the gap. This clever trick allows us to simply weigh a sample on a scale to figure out exactly how many molecules are inside."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Now, let's tackle one of the most important concepts in chemistry: the mole. I know the name sounds a bit strange, but think of it simply as a counting unit. You already use this logic every day. When you buy a dozen eggs, you know exactly how many you're getting\u2014twelve\u2014regardless of whether those eggs are jumbo or small. The mole works the exact same way; it's just a much larger 'dozen.'\\n\\nBecause atoms and molecules are so incredibly tiny, counting them one by one is impossible. That\u2019s where Avogadro\u2019s number comes in. One mole is equal to 6.022 times 10 to the 23rd power. That is a massive number\u2014a six followed by twenty-three zeros! It seems overwhelming, but this specific number is the magic bridge that allows us to take things we can't see, like individual atoms, and turn them into amounts we can actually weigh on a balance in the lab.\\n\\nThe best part is that this unit is universal. Whether you are counting single atoms, complex molecules, or charged ions, one mole always contains that same fixed number of particles. It\u2019s our standard way of keeping track of the invisible world."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Let\u2019s put this into practice with a real example. Imagine we have a sample of carbon containing 3.011 times 10 to the 24th power of atoms. That is a massive number to wrap your head around, which is exactly why chemists use the mole. To make this manageable, we use Avogadro\u2019s number as our bridge. Think of it like a conversion factor, similar to how you'd convert inches to feet. By dividing our total number of atoms by 6.022 times 10 to the 23rd, we're essentially grouping those billions of tiny particles into neat, usable packages. When we do the math here, we find that our huge pile of carbon atoms simplifies down to exactly 5.00 moles. It\u2019s much easier to write '5 moles' on a lab label than a giant exponent, right? Now, let's try another one together."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Now, here is where the magic happens. In the lab, we can't actually count individual atoms or molecules because they're just too small. Instead, we use a scale to weigh things in grams. But chemistry happens in moles, not grams. This is where molar mass comes in. Think of molar mass as your bridge. It\u2019s the specific conversion factor that lets you translate the physical mass you measure on your balance into the actual number of particles you're working with. If you know the molar mass from the periodic table, you can cross that bridge in either direction. Whether you're starting with a pile of powder or a calculated amount of moles, this relationship is what allows us to accurately predict how much of a chemical we need for a reaction to work perfectly."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, let's walk through how we actually calculate molar mass. Think of this as finding the total weight of a recipe. First, we head over to the periodic table to find the atomic mass for every single element in our compound. Once we have those numbers, we have to account for the quantity. If a formula has a subscript, like a two or a three, we simply multiply the atomic mass by that number. This ensures every single atom is counted in our final total. Finally, we add all those values together. The result is our molar mass, expressed in grams per mole. Now, here is the part that usually trips people up: why does the number on the periodic table, which is in atomic mass units, suddenly become grams? This is where Avogadro\u2019s number comes in. Because there are exactly 6.022 times ten to the twenty-third particles in one mole, the math works out perfectly so that the numerical value stays the same, but the scale shifts from a single atom to a macroscopic amount we can actually weigh on a balance in the lab. It\u2019s a beautiful bridge between the invisible world of atoms and the physical world we see."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Let\u2019s put these concepts into practice with something we see every day: water. To find the molar mass of H2O, we just need to account for every single atom in the molecule. First, we look at hydrogen. Since we have two hydrogen atoms, we take that atomic mass of 1.01 and double it, giving us 2.02 grams per mole. Next, we add in our single oxygen atom, which weighs in at 16.00 grams per mole. When we combine those two values, we get a total of 18.02 grams per mole. Think of this as the 'recipe' for one mole of water; it tells us exactly how much a massive collection of these molecules weighs in the real world. It might seem like a small number, but this calculation is the foundation for almost everything we'll do in the lab this semester."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let's tackle one of the most important skills in chemistry: moving between the world we can see and the world we can't. In the lab, you can use a balance to measure grams, but you can't actually count individual atoms or molecules because they're just too small. That\u2019s where the mole comes in. Think of the mole as a bridge that connects the measurable mass of a sample to the actual number of particles inside it. To cross this bridge, we use the molar mass, which you'll find on the periodic table. If you have a pile of powder in grams and you need to know how many moles that is, you simply divide your mass by the molar mass. It\u2019s like dividing the total weight of a bag of marbles by the weight of one single marble to find out how many are inside. Conversely, if your chemical equation tells you that you need a specific number of moles, you multiply that amount by the molar mass to figure out exactly how many grams to weigh out on your scale. Once you get comfortable with this back-and-forth movement, the rest of stoichiometry will start to feel much more intuitive."
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's put this into practice with a real example. Imagine we have 36 grams of water in a beaker. To figure out how many moles that actually is, we need to use that molar mass we just found\u2014about 18 grams per mole. Think of the molar mass as a conversion bridge; it tells us exactly how much one mole of water weighs. To cross that bridge, we simply divide our starting mass by the molar mass. When we divide 36 by 18.02, we get exactly 2.00 moles. It\u2019s a straightforward process: we take the physical weight we can measure on a scale and translate it into the chemical count that scientists use to track reactions. If you're following along, notice how the grams cancel out, leaving us with just the moles. Does that connection make sense to everyone?"
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now that we understand the basics of chemical formulas, let's talk about how we actually use these substances in the lab. First, we have molarity. Think of this as the 'strength' of your solution. It tells us exactly how many moles of a solute are packed into one liter of liquid, which ensures our reactions are consistent every time. But before we can mix a solution, we need the right formula. You'll often start with an empirical formula, which is just the simplest, reduced ratio of atoms. However, nature usually builds molecules larger than that. To find the actual molecular formula, we simply scale that basic ratio up by a whole number to match the real-world molar mass of the substance. It's like moving from a simplified recipe to the full-sized version used in a professional kitchen."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, let\u2019s talk about molarity. In simple terms, molarity is just a way to describe the concentration of a solution. Think of it like making a cup of coffee; some people like it weak, and some like it strong. In chemistry, we need a precise way to define that 'strength.' Molarity tells us exactly how many moles of a substance\u2014whether that's a molecule or an ion\u2014are dissolved in one single liter of liquid. To find this, we take the total moles of our solute and divide that by the total liters of the solution. The resulting unit is moles per liter, which we shorten to a capital M. You'll see this constantly in clinical settings. For example, when a nurse hangs an IV bag or a doctor reviews lab results, they aren't just looking at the total amount of a drug in the bag; they are looking at the molarity. This is crucial because it tells them the exact concentration entering the patient's bloodstream, regardless of whether the bag holds fifty milliliters or a full liter. It ensures the dosage is safe and consistent every single time, which is why mastering this calculation is so important for your future careers."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "Let\u2019s put this into practice with a real-world example using table salt, or sodium chloride. Imagine we take 58.5 grams of salt and dissolve it in enough water to reach a total volume of exactly one liter. Now, we can't just plug grams directly into our molarity formula; we have to speak the language of chemistry first, which means converting that mass into moles. Since the molar mass of salt is 58.5 grams per mole, our 58.5 grams equals exactly one mole of particles. Now the easy part: we take that one mole and divide it by our one liter of solution, giving us a final concentration of 1.00 Molar. You might be wondering why we bother with this extra conversion step instead of just using grams. Here is the key: chemical reactions don't happen based on how much a substance weighs, but on the actual number of atoms and molecules that collide. A gram of lead has far fewer atoms than a gram of salt. By using molarity, we ensure we are counting the actual particles involved in the reaction, which is the only way to get our stoichiometry right."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, let's clear up the difference between empirical and molecular formulas, because these terms often get mixed up. Think of an empirical formula as the 'simplified version' of a molecule. It doesn't tell us exactly how many atoms are there; it just gives us the lowest whole-number ratio. For example, if we see CH\u2082O, we know there are two hydrogens for every one carbon and one oxygen. It\u2019s like a reduced fraction in math.\\n\\nBut in the real world, molecules are often larger. That\u2019s where the molecular formula comes in. This is the 'actual' recipe. Using our example, glucose is actually C\u2086H\u2081\u2082O\u2086. If you look closely, that is exactly six times larger than our simplified ratio. \\n\\nSo, how do we figure out that multiplier if we only have the empirical formula and the total molar mass? It\u2019s a simple division problem. You take the actual molar mass of the entire molecule and divide it by the mass of the empirical unit. The result is a whole number\u2014like our six\u2014which tells you exactly how many times to multiply the simplified formula to get the real thing. Does that conceptual leap make sense?"
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Now, let's put this into practice with a real-world example. Imagine we have a mystery compound with the empirical formula CH\u2082O. Remember, that's just the simplest ratio of atoms. To find the actual molecular formula, we need to figure out how many times larger the real molecule is compared to that basic ratio. We do this by dividing the measured molar mass\u2014about 180 grams per mole\u2014by the empirical mass, which is 30 grams. That gives us a multiplier of six. This tells us the actual molecule is six times heavier than the simplest version. So, we just multiply every subscript in our ratio by six. C becomes C\u2086, H\u2082 becomes H\u2081\u2082, and O becomes O\u2086. This gives us C\u2086H\u2081\u2082O\u2086, which you might recognize as glucose, the primary energy source for your cells. It's a great example of how these ratios build into complex molecules."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Now, I know this list looks like a lot of vocabulary, but let's simplify it. Think of the mole just like a 'dozen.' If I say a dozen eggs, you think twelve. In chemistry, a mole is just a giant dozen\u2014specifically, 6.022 times 10 to the 23rd power. We call that specific number Avogadro\u2019s number. It\u2019s a massive scale because atoms are incredibly tiny. To bridge the gap between those tiny atoms and the grams we measure on a scale, we use molar mass. This tells us exactly how much one mole of a specific element weighs. When we mix these substances into liquids, we talk about solutions. The solute is what you're dissolving\u2014like salt\u2014and the solution is the final mixture. To measure how 'strong' or concentrated that mixture is, we use molarity. Finally, let's distinguish between formulas. An empirical formula is like a simplified ratio\u2014the bare minimum. But the molecular formula is the real-world truth; it tells us the actual number of atoms in a single molecule. Take a breath; we'll practice these calculations together in the next few modules. Just remember, we're simply moving from the invisible world of atoms to the visible world of the lab."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Alright, let's take a breath and tie everything together. We've covered a lot of ground, but the big takeaway here is that the mole is our bridge. Since we can't possibly count individual atoms with our eyes, we use the mole to turn a massive number of particles into something we can actually measure on a scale. By using molar mass, you're essentially converting the weight of your sample into a count of molecules. Once we move those molecules into a liquid, we use molarity to describe exactly how crowded those particles are in a specific volume. We also learned how to use those ratios to scale an empirical formula up to a full molecular formula. Now, this is where the real magic happens. In our next topic, we're diving into stoichiometry. This is basically the recipe book of chemistry. We will learn how to predict exactly how much product we'll get from a reaction and how to calculate the percent yield to see how efficient our experiment actually was. If you're feeling a bit overwhelmed, don't worry\u2014that's normal. Just keep practicing those conversions, and I'll see you in the next module where we put these tools to work."
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>

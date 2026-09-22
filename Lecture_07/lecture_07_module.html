@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Course Lecture Player</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .player-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 90%; max-width: 1200px; text-align: center; }
+        .slide-viewer { background: #eaeef3; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; border: 2px dashed #cbd5e1; overflow: hidden; }
+        .slide-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .transcript-box { background: #f8fafc; padding: 15px; border-radius: 6px; min-height: 80px; text-align: left; border-left: 4px solid #0284c7; font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn { background: #0284c7; color: white; }
+        .nav-btn:hover { background: #0369a1; }
+        .repeat-btn { background: #64748b; color: white; }
+        .repeat-btn:hover { background: #475569; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="player-container">
+    <h2 id="lecture-title">Science Lecture Course Module</h2>
+    <div class="slide-viewer" id="slide-display"></div>
+    <div class="transcript-box" id="transcript-display"></div>
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Previous Slide</button>
+        <button class="repeat-btn" id="repeat-btn" onclick="repeatSlide()">🔁 Repeat Slide Audio</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next Slide</button>
+    </div>
+</div>
+<script>
+    const lectureData = [
+    {
+        "slide_number": 1,
+        "voiceover_script": "Hello everyone! Welcome to Topic 7. Up until now, we\u2019ve spent a lot of time looking at the building blocks of matter\u2014the atoms and molecules that make up everything around us. But chemistry really comes alive when those substances start interacting. That is exactly what we are diving into this week: chemical reactions. We aren't just going to memorize formulas; we're going to learn how to translate a chemical change into a written equation, how to balance those equations so we don't lose any matter, and eventually, how to predict what will happen before you even step foot in the lab. It can feel like learning a new language at first, but we will take it one step at a time. I'm excited to get started, so let's jump in and see how these molecules rearrange themselves!"
+    },
+    {
+        "slide_number": 2,
+        "voiceover_script": "Welcome everyone! Today we are diving into the heart of chemistry: chemical reactions. Think of this as learning a new language. Before we can speak it, we have to understand the grammar, which is where writing and balancing equations comes in. We'll start by breaking down the anatomy of an equation\u2014identifying exactly what's reacting and what's being produced\u2014and I'll show you the golden rules for balancing them so we don't accidentally create or destroy matter. Once we have the basics, we'll categorize these reactions. Some molecules combine, some break apart, and others swap partners, almost like a dance. We will also tackle solubility rules. This sounds intimidating, but it's really just a way to predict if a reaction will create a solid precipitate\u2014basically, a tiny cloud of powder forming in a liquid. To make sure this all sticks, we aren't just going to talk about theory. We will spend a good chunk of our time working through real-world examples together, step-by-step. By the end of this session, you'll be able to look at two chemicals and predict exactly what will happen when they meet. Let's jump in and get started with the basics of the chemical equation."
+    },
+    {
+        "slide_number": 3,
+        "voiceover_script": "Now, you might be wondering why we're spending so much time on these reaction types. The truth is, your body is essentially one giant chemistry lab. Take antacids, for example. When you have heartburn, you're dealing with excess hydrochloric acid. By taking calcium carbonate, you're triggering a double-replacement reaction that neutralizes that acid, bringing your stomach back to a comfortable balance. We see similar chemistry with kidney stones. This happens when calcium and oxalate ions bond and precipitate, turning from dissolved substances into solid crystals. It's the exact same precipitation process we've been practicing in our problem sets. Even the way you get energy to move and think is a form of chemistry. Cellular respiration is basically a slow, controlled version of combustion; your body takes glucose as fuel, adds oxygen, and releases carbon dioxide and water. Finally, we have to be careful with drug interactions. Sometimes, mixing two medications can trigger an unwanted reaction, creating gas or a solid precipitate that prevents the medicine from working correctly. Understanding these patterns isn't just about passing a test; it's about understanding how the human body maintains its delicate balance every single second of the day."
+    },
+    {
+        "slide_number": 4,
+        "voiceover_script": "Think of a chemical equation as a sentence. Instead of using words, we use chemical formulas to tell a story about how substances transform. But there is one golden rule in chemistry: everything must add up. This is the law of conservation of mass. Essentially, nature doesn't just delete atoms or create them out of thin air during a reaction. If you start with four atoms of oxygen on the left side of your equation, you absolutely must end up with four atoms of oxygen on the right. Balancing an equation is simply our way of making sure the math reflects reality. It can feel like a puzzle at first, but once you get the hang of it, it becomes a logical process of accounting. We're just making sure that every single atom is accounted for from start to finish."
+    },
+    {
+        "slide_number": 5,
+        "voiceover_script": "Think of a chemical equation as a recipe for a reaction. It tells us exactly what we start with and what we end up with. We place our starting materials, the reactants, on the left side. After the reaction happens, we get our products, which we list on the right. That arrow connecting them isn't just a pointer; it actually means 'yields,' signaling a transformation has occurred. Now, you'll notice some numbers sitting in front of the formulas. These are coefficients. They tell us the specific quantity of molecules or moles needed for the reaction to work. If you don't see a number there, just assume it's a one; we leave the one invisible to keep things clean. Finally, let's talk about those small letters in parentheses. These are the states of matter. You'll see 's' for solid, 'l' for liquid, and 'g' for gas. But keep an eye out for 'aq,' which stands for aqueous. This is just a fancy way of saying the substance is dissolved in water. When you put it all together\u2014the coefficients, the formulas, and the states\u2014you have a complete map of a chemical change. Take a moment to look at the example and see if you can spot each part."
+    },
+    {
+        "slide_number": 6,
+        "voiceover_script": "Now, let's talk about the 'golden rules' of balancing equations. First, remember the Law of Conservation of Mass. In simple terms, atoms don't just vanish or appear out of thin air during a reaction. Whatever atoms you start with on the left side must be exactly what you end up with on the right. It's like a strict accounting system for matter.\\n\\nWhen you're balancing, you have one very important restriction: you can only change the coefficients\u2014those big numbers in front of the molecules. Whatever you do, never touch the subscripts. If you change a small subscript, you've actually changed the chemical identity of the substance, and you're no longer solving the original problem. Think of the coefficient as the number of boxes you have, while the subscript is what's inside the box.\\n\\nAs for a strategy to keep you from getting overwhelmed, always start with the most complex molecule first. Find the one with the most atoms or the most different elements and balance that one first. Once the 'big' piece is settled, work your way outward to the simpler molecules. This usually prevents you from having to erase your work and start over."
+    },
+    {
+        "slide_number": 7,
+        "voiceover_script": "Let\u2019s put our balancing skills into practice with a real-world example: rusting. When iron is exposed to oxygen in the air, it creates iron(III) oxide. If we look at our initial equation, we can see it's unbalanced. We have one iron atom on the left, but two on the right. Now, you might be tempted to just put a two in front of the iron, but remember, we have to keep an eye on the oxygen too. To make this work, let's try placing a four in front of the iron and a two in front of the iron oxide. That gives us four iron atoms on both sides, which is great! But now we've changed our oxygen count. On the right side, we now have six oxygen atoms. To fix this, we just need to place a three in front of the oxygen gas on the left. Three molecules of O2 give us those six atoms we need. Finally, let's do a quick double-check. We have four iron and six oxygen atoms on the left, and four iron and six oxygen atoms on the right. Everything is perfectly balanced. It\u2019s like a puzzle; sometimes you just have to adjust one piece to make the rest fit."
+    },
+    {
+        "slide_number": 8,
+        "voiceover_script": "Now, chemistry can feel like a chaotic mix of symbols, but there's actually a lot of order here. Most of the reactions we'll encounter in this course follow five basic patterns. Think of these like recipes; once you recognize the pattern, you can predict exactly how the molecules will behave and what the final product will be. Let's dive into these five types and see how they work."
+    },
+    {
+        "slide_number": 9,
+        "voiceover_script": "Now, let's dive into two fundamental ways chemicals interact. First, we have combination reactions, which you might also hear called synthesis. Think of this like building something from scratch. You start with two or more simple ingredients, and they join together to create one single, more complex product. A great everyday example is how hydrogen and oxygen gases combine to form water. It\u2019s a straightforward process of addition: A plus B equals AB. On the flip side, we have decomposition reactions. As the name suggests, this is the exact opposite. Here, a single complex compound breaks apart into smaller, simpler pieces. Now, these reactions usually don't happen spontaneously; they typically need a little nudge to get started, like a burst of heat, a flash of light, or a catalyst to lower the energy barrier. A common example is hydrogen peroxide breaking down into water and oxygen gas. If you've ever put peroxide on a cut and seen it bubble, you've witnessed decomposition in action. Essentially, if combination is about building up, decomposition is about breaking down. Once you recognize these patterns, predicting the products of a reaction becomes much more intuitive. Let's take a moment to let that sink in."
+    },
+    {
+        "slide_number": 10,
+        "voiceover_script": "Now, let's dive into how atoms actually trade places during a reaction. Think of a single replacement reaction like a game of musical chairs. You have one lone element and a compound. If that lone element is reactive enough, it simply pushes one of the atoms out of the compound and takes its spot. In our example, zinc is the newcomer; it kicks out the hydrogen from the hydrochloric acid to form zinc chloride, leaving the hydrogen to bubble away as a gas. It is a straightforward swap. Double replacement is a bit more social\u2014it is more like two couples switching partners at a dance. Here, we have two different compounds, and the positive ions, or cations, trade their negative partners. When silver nitrate meets sodium chloride, the silver and sodium essentially swap places. This creates two entirely new compounds: silver chloride and sodium nitrate. The key here is that nobody is left standing alone; everyone ends up with a new partner. As you study these, don't get bogged down by the letters A and B in the general formulas. Instead, focus on the movement. Ask yourself: is one element cutting in, or are two pairs trading partners?"
+    },
+    {
+        "slide_number": 11,
+        "voiceover_script": "Now, let's dive into combustion. You encounter this every time you start a car or light a candle. At its heart, combustion is just a rapid reaction between a fuel\u2014typically a hydrocarbon made of carbon and hydrogen\u2014and oxygen gas. When these collide, they release a burst of energy as heat and light, which is why we call it 'burning.' Here is the really cool part: no matter which hydrocarbon you start with, the end result of complete combustion is always the same. You will always end up with carbon dioxide and water. It doesn't matter if the fuel is a tiny molecule or a massive one; the chemistry follows this predictable pattern every single time. Take a look at pentane, which is a common component in the gasoline we put in our tanks. When pentane reacts with oxygen, the carbon atoms shift over to form carbon dioxide, and the hydrogen atoms pair up with oxygen to create water vapor. It looks complex when you see the balanced equation with all those coefficients, but conceptually, it's just a reorganization of atoms that releases a lot of energy. Keep that pattern in mind, as it makes predicting these reactions much simpler."
+    },
+    {
+        "slide_number": 12,
+        "voiceover_script": "Now that we've covered the basics, let's put these reaction types side-by-side. Think of this as a cheat sheet for your brain. Instead of memorizing every single equation, focus on the patterns. Are two things combining into one, or is a single compound splitting apart? Once you recognize these visual cues, predicting the products becomes much more intuitive. Take a moment to spot those differences before we move on to some practice problems."
+    },
+    {
+        "slide_number": 13,
+        "voiceover_script": "Now, imagine you're mixing two clear liquids in a beaker. At first glance, it looks like nothing is happening, but internally, the ions are dancing around and swapping partners. The big question is: will those new partners stay dissolved, or will they bond so tightly that they crash out of the solution as a solid? This is what we call a precipitation reaction. To predict this, we use solubility rules. Think of these as a cheat sheet that tells us which ion combinations are 'happy' staying apart in the water and which ones are 'attracted' to each other enough to form a solid crystal. When that solid forms, it\u2019s like a chemical signal that a reaction actually occurred. We'll practice using these rules together to figure out exactly which combinations create that cloudy precipitate and which ones just stay as a clear mixture."
+    },
+    {
+        "slide_number": 14,
+        "voiceover_script": "So, what exactly is a precipitate? Imagine you have two clear liquids, each containing dissolved ions. When you mix them, some of those positive cations and negative anions find a partner they like even more than water. They bond together to form a brand new compound that simply cannot stay dissolved. Instead of floating freely, they clump together and crash out of the solution as a solid. In your chemical equations, we mark this change by switching the label from 'aqueous' to 'solid,' or '(s),' to show that a physical change has occurred.\\n\\nTo make this real, let's look at a clinical example: kidney stones. These happen when calcium and oxalate ions in the urine bond together. Because calcium oxalate has very poor solubility, it precipitates into hard, solid crystals. Now, it's important to remember that this doesn't always happen automatically. Whether a precipitate forms depends on a few key variables, including which specific ions are present, how concentrated they are, and even the temperature of the solution. If the solution is too hot or too dilute, that solid might never form. It's all about that delicate balance of solubility."
+    },
+    {
+        "slide_number": 15,
+        "voiceover_script": "Now, we don't have to guess whether a compound will dissolve in water. We can use these general solubility rules as a reliable cheat sheet. Think of these as a set of guidelines that help us predict if a solid precipitate will form during a reaction. If a combination is listed as soluble, it stays dissolved; if it's insoluble, it crashes out of the solution. Let's walk through how to apply these."
+    },
+    {
+        "slide_number": 16,
+        "voiceover_script": "Let\u2019s put this into practice with a classic example. Imagine we have two clear liquids: silver nitrate and sodium chloride. Both are dissolved in water, so the ions are just floating around freely. When we mix them, we have a double-replacement reaction. Think of this as a partner swap at a dance. The silver ion leaves the nitrate and pairs up with the chloride, while the sodium ion takes the nitrate. Now, the big question is: does anything actually happen, or do they just stay dissolved? This is where our solubility rules come in. While most chlorides dissolve easily, silver chloride is a stubborn exception. It\u2019s insoluble, meaning it can't stay dissolved in water. Because of this, the silver and chloride ions lock together to form a solid. If you were doing this in the lab, you\u2019d see a cloudy, white powder suddenly appear in your beaker. That solid is our precipitate. The sodium nitrate, however, is perfectly happy staying dissolved as an aqueous solution. So, our final equation shows that silver chloride as a solid, while everything else remains liquid. It\u2019s a great visual reminder that chemistry isn't just symbols on a page; it's a physical change you can actually see."
+    },
+    {
+        "slide_number": 17,
+        "voiceover_script": "Before we dive into the math of chemical reactions, let's get our vocabulary straight. Think of a chemical equation like a recipe. The reactants are your starting ingredients, and the products are what you end up with after the reaction happens. To make sure we aren't creating or destroying matter, we use coefficients\u2014those big numbers in front of the formulas\u2014to create a balanced equation. This just means we have the exact same number of atoms on both sides of the arrow.\\n\\nNow, you'll see a few specific types of reactions. Combustion is essentially a rapid burn where fuel reacts with oxygen to release energy. In a single replacement reaction, one element basically cuts in line to swap places with another. Double replacement is more like a dance where two compounds trade partners. Finally, keep an eye out for a precipitate. This happens when you mix two clear liquids, but a chemical change creates a solid that doesn't dissolve, making the solution look cloudy. It's a great visual cue that a reaction has actually occurred. Take a moment to review these terms, as they are the foundation for everything we'll do in the lab this week."
+    },
+    {
+        "slide_number": 18,
+        "voiceover_script": "Alright, let's take a breath and tie everything together. We've covered a lot of ground. The big takeaway here is that nature is a strict accountant; in any chemical equation, every single atom we start with must be accounted for at the end. That\u2019s why we use coefficients to balance our equations\u2014it ensures we aren't accidentally creating or destroying matter. We also discovered that most reactions aren't random; they usually follow one of those five predictable patterns, like combination or combustion. When we dealt with double-replacement reactions, those solubility rules were our secret weapon for predicting if a solid precipitate would actually form in the beaker. Now, I want you to see these patterns not as isolated rules, but as the foundation for what comes next. We are moving from the 'what' to the 'how much.' In Topic Eight, we dive into chemical quantities. We'll meet Avogadro\u2019s number and tackle the mole, which is essentially the chemist's version of a dozen. We will learn how to convert mass into moles and calculate molarity for solutions. It might seem intimidating at first, but if you understand the reaction types we just finished, the math will fall right into place."
+    }
+];
+    let currentIdx = 0;
+    let currentAudio = new Audio();
+
+    function updateUI() {
+        const currentSlide = lectureData[currentIdx];
+        document.getElementById('slide-display').innerHTML = `<img src="slides/Slide${currentSlide.slide_number}.png" alt="Slide ${currentSlide.slide_number}">`;
+        document.getElementById('transcript-display').innerText = currentSlide.voiceover_script;
+        document.getElementById('prev-btn').disabled = currentIdx === 0;
+        document.getElementById('next-btn').disabled = currentIdx === lectureData.length - 1;
+        playAudio(currentSlide.slide_number);
+    }
+
+    function playAudio(slideNum) {
+        currentAudio.pause();
+        currentAudio = new Audio(`audio/Slide${slideNum}.mp3`);
+        currentAudio.play().catch(e => console.log("Autoplay blocked, waiting for user interaction."));
+    }
+
+    function changeSlide(direction) {
+        currentIdx += direction;
+        updateUI();
+    }
+
+    function repeatSlide() {
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
