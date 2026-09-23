@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Guide | General Chemistry 101</title>
+    <style>
+        :root {
+            --primary-blue: #0284c7;
+            --dark-blue: #0369a1;
+            --bg-gray: #f4f6f9;
+            --text-main: #334155;
+            --text-light: #64748b;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg-gray); 
+            color: var(--text-main); 
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .header { 
+            background: white; 
+            padding: 40px 20px; 
+            text-align: center; 
+            border-bottom: 4px solid var(--primary-blue);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header h1 { margin: 0; color: var(--primary-blue); font-size: 2.5rem; }
+        .header p { color: var(--text-light); font-size: 1.1rem; margin-top: 10px; }
+        
+        .container { 
+            max-width: 1100px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+        }
+        .section-title { 
+            border-left: 5px solid var(--primary-blue); 
+            padding-left: 15px; 
+            margin-bottom: 25px;
+            color: var(--dark-blue);
+        }
+        
+        .course-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .course-table th { 
+            background: var(--primary-blue); 
+            color: white; 
+            text-align: left; 
+            padding: 15px; 
+            font-weight: 600;
+        }
+        .course-table td { 
+            padding: 15px; 
+            border-bottom: 1px solid #e2e8f0; 
+        }
+        .course-table tr:hover { background: #f8fafc; }
+        
+        .btn { 
+            display: inline-block; 
+            padding: 6px 12px; 
+            border-radius: 4px; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            transition: background 0.2s;
+        }
+        .btn-lecture { background: #e0f2fe; color: var(--primary-blue); border: 1px solid var(--primary-blue); }
+        .btn-lecture:hover { background: var(--primary-blue); color: white; }
+        
+        .btn-assignment { background: #f1f5f9; color: var(--text-main); border: 1px solid #cbd5e1; }
+        .btn-assignment:hover { background: #e2e8f0; }
+
+        .footer { text-align: center; margin-top: 60px; color: var(--text-light); font-size: 0.9rem; padding-bottom: 40px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>General Chemistry 101</h1>
+    <p>Interactive Course Modules & Digital Resources</p>
+</div>
+
+<div class="container">
+    <h2 class="section-title">Course Roadmap</h2>
+    <p>Click the links below to access your interactive lectures and guided assignments. Please follow the sequence as outlined in Brightspace.</p>
+    
+    <table class="course-table">
+        <thead>
+            <tr>
+                <th>Lecture</th>
+                <th>Topic</th>
+                <th>Learning Materials</th>
+                <th>Assessment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>01</strong></td>
+                <td>Introduction to Chemistry</td>
+                <td><a href="Lecture_01/lecture_01_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic1/guided_assignment_1.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>02</strong></td>
+                <td>Fundamental Measurements</td>
+                <td><a href="Lecture_02/lecture_02_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic2/guided_assignment_2.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>03</strong></td>
+                <td>Lecture Topic 03</td>
+                <td><a href="Lecture_03/lecture_03_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic3/guided_assignment_3.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>04</strong></td>
+                <td>Lecture Topic 04</td>
+                <td><a href="Lecture_04/lecture_04_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic4/guided_assignment_4.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>05</strong></td>
+                <td>Lecture Topic 05</td>
+                <td><a href="Lecture_05/lecture_05_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic5/guided_assignment_5.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>06</strong></td>
+                <td>Lecture Topic 06</td>
+                <td><a href="Lecture_06/lecture_06_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic6/guided_assignment_6.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>07</strong></td>
+                <td>Lecture Topic 07</td>
+                <td><a href="Lecture_07/lecture_07_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic7/guided_assignment_7.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>08</strong></td>
+                <td>Lecture Topic 08</td>
+                <td><a href="Lecture_08/lecture_08_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic8/guided_assignment_8.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>09</strong></td>
+                <td>Lecture Topic 09</td>
+                <td><a href="Lecture_09/lecture_09_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic9/guided_assignment_9.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>10</strong></td>
+                <td>Lecture Topic 10</td>
+                <td><a href="Lecture_10/lecture_10_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic10/guided_assignment_10.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>11</strong></td>
+                <td>Lecture Topic 11</td>
+                <td><a href="Lecture_11/lecture_11_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic11/guided_assignment_11.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+            <tr>
+                <td><strong>12</strong></td>
+                <td>Lecture Topic 12</td>
+                <td><a href="Lecture_12/lecture_12_module.html" class="btn btn-lecture">▶ Watch Lecture</a></td>
+                <td><a href="assignments/Topic12/guided_assignment_12.html" class="btn btn-assignment">Guided Exercise</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 40px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <h3 class="section-title">Course Navigation Tips</h3>
+        <ul>
+            <li><strong>Interactive Player:</strong> Use the "Repeat Slide" button if you need to hear a complex concept again.</li>
+            <li><strong>Guided Assignments:</strong> These are self-checking. Ensure you complete them before attempting the Problem Sets.</li>
+            <li><strong>Answer Keys:</strong> Available in Brightspace after Problem Set submission.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="footer">
+    &copy; 2026 | Cayuga CC | Chemistry Department
+</div>
+
+</body>
+</html>
